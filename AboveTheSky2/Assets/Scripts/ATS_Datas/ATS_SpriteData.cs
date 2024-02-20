@@ -171,7 +171,6 @@ namespace ATS
                 return;
             }
             var aSprite = await GetSpriteAsync(iToken);
-            iToken.ThrowIfCancellationRequested();
             iImage.sprite = aSprite;
             iImage.preserveAspect = IsPreserveAspect;
         }

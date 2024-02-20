@@ -34,7 +34,7 @@ namespace ATS.Page
                         ATSI_CommonData aUtil = ATSI_CommonData.GetUtilByType(aType);//Get Util
                         if (aUtil != null)
                         {
-                            if(GUILayout.Button($"Edit: {aType.FullName}", UCL_GUIStyle.ButtonStyle))
+                            if(GUILayout.Button($"Edit: {aType.Name}", UCL_GUIStyle.ButtonStyle))
                             {
                                 aUtil.CreateSelectPage();
                             }

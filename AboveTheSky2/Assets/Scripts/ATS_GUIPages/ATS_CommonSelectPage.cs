@@ -86,15 +86,15 @@ namespace ATS.Page
             {
                 Util.RefreshAllDatas();
             }
-            if (GUILayout.Button(UCL_LocalizeManager.Get("RemoveMetas"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
-            {
-                var aPath = Util.StreamingAssetFolderPath;
-                var aFiles = UCL.Core.FileLib.Lib.GetFiles(aPath, "*.meta");
-                foreach (var aFile in aFiles)
-                {
-                    System.IO.File.Delete(aFile);
-                }
-            }
+            //if (GUILayout.Button(UCL_LocalizeManager.Get("RemoveMetas"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
+            //{
+            //    var aPath = Util.StreamingAssetFolderPath;
+            //    var aFiles = UCL.Core.FileLib.Lib.GetFiles(aPath, "*.meta");
+            //    foreach (var aFile in aFiles)
+            //    {
+            //        System.IO.File.Delete(aFile);
+            //    }
+            //}
 #endif
 #if UNITY_STANDALONE_WIN
             if (GUILayout.Button(UCL_LocalizeManager.Get("OpenFolder"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))

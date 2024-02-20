@@ -1,4 +1,4 @@
-
+ï»¿
 // ATS_AutoHeader
 // to change the auto header please go to RCG_AutoHeader.cs
 // Create time : 02/20 2024 19:01
@@ -13,7 +13,7 @@ using UnityEngine;
 namespace ATS
 {
     /// <summary>
-    /// ·|¦bEditor¼Ò¦¡¤U§â¸ê·½¤À¦¨Editorª©¥»¸òPlayModeª©¥»
+    /// æœƒåœ¨Editoræ¨¡å¼ä¸‹æŠŠè³‡æºåˆ†æˆEditorç‰ˆæœ¬è·ŸPlayModeç‰ˆæœ¬
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class ATS_ResourceDic<T>

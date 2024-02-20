@@ -21,6 +21,7 @@ namespace ATS
         {
             Debug.LogWarning($"OnWillCreateAsset iNewFileMeta:{iNewFileMeta}");
             //RCG_GameManager.RefreshFileInspectorsStatic();
+            ATS_StaticEvents.TriggerOnRefreshGamedata();
 
             string aFilePath = iNewFileMeta.Replace(".meta", "");
             if (aFilePath.EndsWith(".cs"))

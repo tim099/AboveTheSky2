@@ -150,10 +150,10 @@ namespace ATS.Page
             //}
 
 
-            //if (GUILayout.Button("RefreshGamedata", UCL_GUIStyle.ButtonStyle))
-            //{
-            //    RCG_GameManager.TriggerOnRefreshGamedata();
-            //}
+            if (GUILayout.Button("RefreshGamedata", UCL_GUIStyle.ButtonStyle))
+            {
+                ATS_StaticEvents.TriggerOnRefreshGamedata();
+            }
 
             //GUILayout.Space(20);
 

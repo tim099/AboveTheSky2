@@ -71,6 +71,20 @@ namespace ATS
         }
         #endregion
     }
+    public static class ATS_StaticEvents
+    {
+        static public System.Action s_OnRefreshGamedata = null;
+        /// <summary>
+        /// 觸發刷新資料事件(清除檔案 資料夾路徑等快取)
+        /// </summary>
+        public static void TriggerOnRefreshGamedata()
+        {
+            if (s_OnRefreshGamedata != null)
+            {
+                s_OnRefreshGamedata.Invoke();
+            }
+        }
+    }
     public static class ATS_StaticFunctions
     {
 

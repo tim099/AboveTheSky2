@@ -10,8 +10,8 @@ namespace ATS.Page
     public class ATS_EditorMenuPage : ATS_EditorPage
     {
         public override string WindowName => UCL_LocalizeManager.Get("EditorMenu");
-        protected override bool ShowCloseButton => !ATS_EditorMenu.IsInEditWindow;
-        protected override bool ShowBackButton => ATS_EditorMenu.IsInEditWindow ? false : base.ShowBackButton;
+        protected override bool ShowCloseButton => !UI.ATS_EditorMenu.IsInEditWindow;
+        protected override bool ShowBackButton => UI.ATS_EditorMenu.IsInEditWindow ? false : base.ShowBackButton;
 
         UCL_ObjectDictionary m_Dic = new UCL_ObjectDictionary();
 

@@ -52,7 +52,7 @@ namespace ATS
             public FilterMode m_FilterMode = FilterMode.Bilinear;
 
         }
-        public const string SpriteFolder = "Install/.Sprites";
+        public const string SpriteFolder = ".Install/Sprites";
 
         public DataLoadType m_LoadType = DataLoadType.StreamingAssets;
 

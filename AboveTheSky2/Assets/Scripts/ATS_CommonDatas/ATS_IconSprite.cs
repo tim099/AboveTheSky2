@@ -20,7 +20,12 @@ namespace ATS
 {
     public class ATS_IconSpriteGenData : ATS_CommonGenDataDefault<ATS_IconSprite>
     {
-        public const string DefaultID = "AbsorbShield";
+        public const string HealID = "Icon_Heal";
+        public const string DefaultID = HealID;
+
+        static public ATS_IconSpriteGenData Icon_Heal => new ATS_IconSpriteGenData(HealID);
+
+
         public ATS_IconSpriteGenData() { m_ID = DefaultID; }
         public ATS_IconSpriteGenData(string iID) { m_ID = iID; }
 
@@ -92,9 +97,9 @@ namespace ATS
             return aAsset;
         }
         #endregion
-        public const string DefaultIconsPath = ATS_SpriteData.SpriteFolder + "/Skills";
+        public const string DefaultIconsPath = ATS_SpriteData.SpriteFolder + "/Icons";
 
-        static public ATS_IconSprite EffectIcon_CountDown => Util.GetData("EffectIcon_CountDown");
+        
         public override ATS.Page.ATS_CommonSelectPage<ATS_IconSprite> CreateCommonSelectPage()
         {
             var aPage = new RCG_IconSpriteEditorPage();
@@ -104,20 +109,17 @@ namespace ATS
 
         #region must override 一定要override的部份
         /// <summary>
-        /// 檔案路徑
-        /// </summary>
-        //override public string FolderPath => $"Install/.CommonData/{GetType().Name.Replace("RCG_", string.Empty)}";
-        /// <summary>
         /// 預覽
         /// </summary>
         /// <param name="iIsShowEditButton">是否顯示編輯按鈕</param>
         override public void Preview(bool iIsShowEditButton = false)
         {
+            base.Preview(iIsShowEditButton);
             GUILayout.BeginHorizontal();
             using (var aScope = new GUILayout.VerticalScope("box", GUILayout.MinWidth(130)))
             {
 
-                UCL.Core.UI.UCL_GUILayout.LabelAutoSize(UCL_LocalizeManager.Get("Preview"));
+                GUILayout.Label($"{UCL_LocalizeManager.Get("Preview")}({ID})", UCL.Core.UI.UCL_GUIStyle.LabelStyle);
                 if (IconTexture != null) GUILayout.Box(IconTexture, GUILayout.Width(64), GUILayout.Height(64));
                 //UCL.Core.UI.UCL_GUILayout.LabelAutoSize(LocalizeName);
 
@@ -172,12 +174,12 @@ namespace ATS
         protected override void TopBarButtons()
         {
             base.TopBarButtons();
-#if UNITY_EDITOR
-            if (GUILayout.Button("Output sprite sheet", GUILayout.ExpandWidth(false)))
-            {
-                ATS_TMPTools.CreateIconSpriteSheetEditor();
-            }
-#endif
+//#if UNITY_EDITOR
+//            if (GUILayout.Button("Output sprite sheet", GUILayout.ExpandWidth(false)))
+//            {
+//                ATS_TMPTools.CreateIconSpriteSheetEditor();
+//            }
+//#endif
             if (GUILayout.Button("Refresh SpriteAsset", GUILayout.ExpandWidth(false)))
             {
                 ATS_IconSprite.ClearSpriteAsset();

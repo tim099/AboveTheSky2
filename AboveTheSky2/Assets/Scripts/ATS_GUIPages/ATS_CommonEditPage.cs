@@ -100,7 +100,7 @@ namespace ATS.Page
                 m_Data.Save();
                 UpdateInitJson();
             }
-            if (GUILayout.Button(UCL_LocalizeManager.Get("CopyToClipboard"), GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button(UCL_LocalizeManager.Get("Copy"), GUILayout.ExpandWidth(false)))
             {
                 var aData = m_Data.SerializeToJson();
                 string aSaveData = aData.ToJsonBeautify();
@@ -108,7 +108,7 @@ namespace ATS.Page
             }
             if (!string.IsNullOrEmpty(GUIUtility.systemCopyBuffer))
             {
-                if (GUILayout.Button(UCL_LocalizeManager.Get("PasteFromClipboard"), GUILayout.ExpandWidth(false)))
+                if (GUILayout.Button(UCL_LocalizeManager.Get("Paste"), GUILayout.ExpandWidth(false)))
                 {
                     try
                     {
@@ -131,7 +131,7 @@ namespace ATS.Page
             //    RCG_FindReferencePage.Create(m_Data);//開啟尋找連接分頁
             //}
 #if UNITY_STANDALONE_WIN
-            if (GUILayout.Button(UCL_LocalizeManager.Get("CardEditor_OpenFile"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button(UCL_LocalizeManager.Get("OpenFile"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
             {
                 UCL.Core.FileLib.WindowsLib.OpenExplorer(m_Data.SavePath);
             }

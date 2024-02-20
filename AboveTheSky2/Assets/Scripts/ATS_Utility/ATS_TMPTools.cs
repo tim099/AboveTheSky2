@@ -159,159 +159,159 @@ namespace ATS
             return aSpriteAsset;
         }
 
-        public static void CreateIconSpriteSheetEditor(string iOuputAtlasPath = "Assets/Resources/Sprites/TMPIconSprites")
-        {
-#if UNITY_EDITOR
-            int MAX_ATLAS_SIZE = 4096;
-            int SPRITE_SIZE = 64;
+//        public static void CreateIconSpriteSheetEditor(string iOuputAtlasPath = "Assets/Resources/Sprites/TMPIconSprites")
+//        {
+//#if UNITY_EDITOR
+//            int MAX_ATLAS_SIZE = 4096;
+//            int SPRITE_SIZE = 64;
 
-            var aSpriteAssetElements = new List<SpriteAssetElement>();
-            foreach (var iIconSpriteID in ATS_IconSprite.Util.GetAllIDs())
-            {
-                var aSpriteData = ATS_IconSprite.Util.GetData(iIconSpriteID);
+//            var aSpriteAssetElements = new List<SpriteAssetElement>();
+//            foreach (var iIconSpriteID in ATS_IconSprite.Util.GetAllIDs())
+//            {
+//                var aSpriteData = ATS_IconSprite.Util.GetData(iIconSpriteID);
 
-                var aSpriteAssetElement = new SpriteAssetElement();
-                aSpriteAssetElements.Add(aSpriteAssetElement);
+//                var aSpriteAssetElement = new SpriteAssetElement();
+//                aSpriteAssetElements.Add(aSpriteAssetElement);
 
-                //aSpriteAssetElement.path = aSpriteData.m_Icon.Path;
-                aSpriteAssetElement.name = iIconSpriteID;// System.IO.Path.GetFileNameWithoutExtension(element.path);
+//                //aSpriteAssetElement.path = aSpriteData.m_Icon.Path;
+//                aSpriteAssetElement.name = iIconSpriteID;// System.IO.Path.GetFileNameWithoutExtension(element.path);
 
-                //scale the input texture
-                aSpriteAssetElement.outputTexture = aSpriteData.IconTexture.CreateResizeTexture(SPRITE_SIZE, SPRITE_SIZE);
-                aSpriteAssetElement.outputTexture.name = aSpriteAssetElement.name;
-            }
+//                //scale the input texture
+//                aSpriteAssetElement.outputTexture = aSpriteData.IconTexture.CreateResizeTexture(SPRITE_SIZE, SPRITE_SIZE);
+//                aSpriteAssetElement.outputTexture.name = aSpriteAssetElement.name;
+//            }
 
-            //pack the textures into the atlas
-            var textures = aSpriteAssetElements.ConvertAll<Texture2D>(e => e.outputTexture).ToArray();
+//            //pack the textures into the atlas
+//            var textures = aSpriteAssetElements.ConvertAll<Texture2D>(e => e.outputTexture).ToArray();
 
-            var atlasTexture = new Texture2D(0, 0, TextureFormat.ARGB32, true, false);
-            atlasTexture.filterMode = FilterMode.Bilinear;
-            var rects = atlasTexture.PackTextures(textures, 0, MAX_ATLAS_SIZE, false);
+//            var atlasTexture = new Texture2D(0, 0, TextureFormat.ARGB32, true, false);
+//            atlasTexture.filterMode = FilterMode.Bilinear;
+//            var rects = atlasTexture.PackTextures(textures, 0, MAX_ATLAS_SIZE, false);
 
-            float scaleW = (float)atlasTexture.width;
-            float scaleH = (float)atlasTexture.height;
-            var spriteMetaDatas = new UnityEditor.SpriteMetaData[textures.Length];
-            for (int i = 0; i < aSpriteAssetElements.Count; i++)
-            {
-                var element = aSpriteAssetElements[i];
-                var rect = rects[i];
-                element.rect = rect;
+//            float scaleW = (float)atlasTexture.width;
+//            float scaleH = (float)atlasTexture.height;
+//            var spriteMetaDatas = new UnityEditor.SpriteMetaData[textures.Length];
+//            for (int i = 0; i < aSpriteAssetElements.Count; i++)
+//            {
+//                var element = aSpriteAssetElements[i];
+//                var rect = rects[i];
+//                element.rect = rect;
 
-                var pixelRect = new Rect(rect.x * scaleW, rect.y * scaleH, rect.width * scaleW, rect.height * scaleH); //metadata needs pixel rects;
+//                var pixelRect = new Rect(rect.x * scaleW, rect.y * scaleH, rect.width * scaleW, rect.height * scaleH); //metadata needs pixel rects;
 
-                //https://docs.unity3d.com/ScriptReference/SpriteMetaData.html
-                var aMeta = new UnityEditor.SpriteMetaData()
-                {
-                    name = element.name,
-                    rect = pixelRect,
-                    //element.meta.pivot = new Vector2(0f, 0f); // no need if using alignment ?
-                    border = new Vector4(0, 0, 0, 0),
-                    alignment = 6,
-                };
-                spriteMetaDatas[i] = aMeta;
+//                //https://docs.unity3d.com/ScriptReference/SpriteMetaData.html
+//                var aMeta = new UnityEditor.SpriteMetaData()
+//                {
+//                    name = element.name,
+//                    rect = pixelRect,
+//                    //element.meta.pivot = new Vector2(0f, 0f); // no need if using alignment ?
+//                    border = new Vector4(0, 0, 0, 0),
+//                    alignment = 6,
+//                };
+//                spriteMetaDatas[i] = aMeta;
 
-            }
-            atlasTexture.Apply(true, false);
-            System.IO.File.WriteAllBytes(iOuputAtlasPath + ".png", atlasTexture.EncodeToPNG());
+//            }
+//            atlasTexture.Apply(true, false);
+//            System.IO.File.WriteAllBytes(iOuputAtlasPath + ".png", atlasTexture.EncodeToPNG());
 
-            //set up the sprite importer settings
-            UnityEditor.AssetDatabase.Refresh();
+//            //set up the sprite importer settings
+//            UnityEditor.AssetDatabase.Refresh();
 
-            UnityEditor.TextureImporter importer = UnityEditor.AssetImporter.GetAtPath(iOuputAtlasPath + ".png")
-                as UnityEditor.TextureImporter;
-            importer.textureType = UnityEditor.TextureImporterType.Sprite;
-            importer.spriteImportMode = UnityEditor.SpriteImportMode.Multiple;
-            importer.textureCompression = UnityEditor.TextureImporterCompression.Uncompressed;
-            importer.filterMode = FilterMode.Bilinear;
-            importer.mipmapEnabled = true;
-            importer.maxTextureSize = MAX_ATLAS_SIZE;
-            importer.spritesheet = spriteMetaDatas;
+//            UnityEditor.TextureImporter importer = UnityEditor.AssetImporter.GetAtPath(iOuputAtlasPath + ".png")
+//                as UnityEditor.TextureImporter;
+//            importer.textureType = UnityEditor.TextureImporterType.Sprite;
+//            importer.spriteImportMode = UnityEditor.SpriteImportMode.Multiple;
+//            importer.textureCompression = UnityEditor.TextureImporterCompression.Uncompressed;
+//            importer.filterMode = FilterMode.Bilinear;
+//            importer.mipmapEnabled = true;
+//            importer.maxTextureSize = MAX_ATLAS_SIZE;
+//            importer.spritesheet = spriteMetaDatas;
 
-            UnityEditor.EditorUtility.SetDirty(importer);
-            importer.SaveAndReimport();
+//            UnityEditor.EditorUtility.SetDirty(importer);
+//            importer.SaveAndReimport();
 
-            //cleanup textures
-            foreach (var element in aSpriteAssetElements)
-            {
-                Object.DestroyImmediate(element.outputTexture);
-            }
+//            //cleanup textures
+//            foreach (var element in aSpriteAssetElements)
+//            {
+//                Object.DestroyImmediate(element.outputTexture);
+//            }
 
-            //NEXT: add all the sprite metadata to the sprite asset
+//            //NEXT: add all the sprite metadata to the sprite asset
 
-            var spriteSheetTexture = UnityEditor.AssetDatabase.LoadAssetAtPath<Texture>(iOuputAtlasPath + ".png");
+//            var spriteSheetTexture = UnityEditor.AssetDatabase.LoadAssetAtPath<Texture>(iOuputAtlasPath + ".png");
 
-            // Create new Sprite Asset
-            TMP_SpriteAsset spriteAsset = ScriptableObject.CreateInstance<TMP_SpriteAsset>();
-            UnityEditor.AssetDatabase.CreateAsset(spriteAsset, (iOuputAtlasPath + ".asset"));
+//            // Create new Sprite Asset
+//            TMP_SpriteAsset spriteAsset = ScriptableObject.CreateInstance<TMP_SpriteAsset>();
+//            UnityEditor.AssetDatabase.CreateAsset(spriteAsset, (iOuputAtlasPath + ".asset"));
 
-            // Compute the hash code for the sprite asset.
-            spriteAsset.hashCode = TMP_TextUtilities.GetSimpleHashCode(spriteAsset.name);
-            spriteAsset.spriteInfoList = new List<TMP_Sprite>();
+//            // Compute the hash code for the sprite asset.
+//            spriteAsset.hashCode = TMP_TextUtilities.GetSimpleHashCode(spriteAsset.name);
+//            spriteAsset.spriteInfoList = new List<TMP_Sprite>();
 
-            List<TMP_SpriteGlyph> spriteGlyphTable = new List<TMP_SpriteGlyph>();
-            List<TMP_SpriteCharacter> spriteCharacterTable = new List<TMP_SpriteCharacter>();
+//            List<TMP_SpriteGlyph> spriteGlyphTable = new List<TMP_SpriteGlyph>();
+//            List<TMP_SpriteCharacter> spriteCharacterTable = new List<TMP_SpriteCharacter>();
 
-            // Assign new Sprite Sheet texture to the Sprite Asset.
-            spriteAsset.spriteSheet = spriteSheetTexture;
+//            // Assign new Sprite Sheet texture to the Sprite Asset.
+//            spriteAsset.spriteSheet = spriteSheetTexture;
 
-            string filePath = UnityEditor.AssetDatabase.GetAssetPath(spriteSheetTexture);
+//            string filePath = UnityEditor.AssetDatabase.GetAssetPath(spriteSheetTexture);
 
-            // Get all the Sprites sorted by Index
-            Sprite[] sprites = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(filePath).
-                Select(x => x as Sprite).Where(x => x != null).OrderByDescending(x => x.rect.y).ThenBy(x => x.rect.x).ToArray();
+//            // Get all the Sprites sorted by Index
+//            Sprite[] sprites = UnityEditor.AssetDatabase.LoadAllAssetsAtPath(filePath).
+//                Select(x => x as Sprite).Where(x => x != null).OrderByDescending(x => x.rect.y).ThenBy(x => x.rect.x).ToArray();
 
-            for (int i = 0; i < sprites.Length; i++)
-            {
-                Sprite sprite = sprites[i];
+//            for (int i = 0; i < sprites.Length; i++)
+//            {
+//                Sprite sprite = sprites[i];
 
-                TMP_SpriteGlyph spriteGlyph = new TMP_SpriteGlyph();
-                spriteGlyph.index = (uint)i;
-                spriteGlyph.metrics = new UnityEngine.TextCore.GlyphMetrics(sprite.rect.width, sprite.rect.height,
-                    -sprite.pivot.x, sprite.rect.height - sprite.pivot.y, sprite.rect.width);
-                spriteGlyph.glyphRect = new UnityEngine.TextCore.GlyphRect(sprite.rect);
-                spriteGlyph.scale = 1.0f;
-                spriteGlyph.sprite = sprite;
+//                TMP_SpriteGlyph spriteGlyph = new TMP_SpriteGlyph();
+//                spriteGlyph.index = (uint)i;
+//                spriteGlyph.metrics = new UnityEngine.TextCore.GlyphMetrics(sprite.rect.width, sprite.rect.height,
+//                    -sprite.pivot.x, sprite.rect.height - sprite.pivot.y, sprite.rect.width);
+//                spriteGlyph.glyphRect = new UnityEngine.TextCore.GlyphRect(sprite.rect);
+//                spriteGlyph.scale = 1.0f;
+//                spriteGlyph.sprite = sprite;
 
-                spriteGlyphTable.Add(spriteGlyph);
+//                spriteGlyphTable.Add(spriteGlyph);
 
-                TMP_SpriteCharacter spriteCharacter = new TMP_SpriteCharacter(0, spriteGlyph);
-                spriteCharacter.name = sprite.name;
-                spriteCharacter.scale = 1.0f;
+//                TMP_SpriteCharacter spriteCharacter = new TMP_SpriteCharacter(0, spriteGlyph);
+//                spriteCharacter.name = sprite.name;
+//                spriteCharacter.scale = 1.0f;
 
-                spriteCharacterTable.Add(spriteCharacter);
-            }
+//                spriteCharacterTable.Add(spriteCharacter);
+//            }
 
 
-            // Add new default material for sprite asset.
-            Shader shader = Shader.Find("TextMeshPro/Sprite");
-            Material material = new Material(shader);
-            material.SetTexture(ShaderUtilities.ID_MainTex, spriteAsset.spriteSheet);
+//            // Add new default material for sprite asset.
+//            Shader shader = Shader.Find("TextMeshPro/Sprite");
+//            Material material = new Material(shader);
+//            material.SetTexture(ShaderUtilities.ID_MainTex, spriteAsset.spriteSheet);
 
-            spriteAsset.material = material;
-            material.hideFlags = HideFlags.HideInHierarchy;
-            UnityEditor.AssetDatabase.AddObjectToAsset(material, spriteAsset);
+//            spriteAsset.material = material;
+//            material.hideFlags = HideFlags.HideInHierarchy;
+//            UnityEditor.AssetDatabase.AddObjectToAsset(material, spriteAsset);
 
-            // Update Lookup tables.
-            spriteAsset.UpdateLookupTables();
+//            // Update Lookup tables.
+//            spriteAsset.UpdateLookupTables();
 
-            spriteAsset.spriteCharacterTable.Clear();
-            spriteAsset.spriteGlyphTable.Clear();
-            spriteAsset.spriteCharacterTable.AddRange(spriteCharacterTable);
-            spriteAsset.spriteGlyphTable.AddRange(spriteGlyphTable);
+//            spriteAsset.spriteCharacterTable.Clear();
+//            spriteAsset.spriteGlyphTable.Clear();
+//            spriteAsset.spriteCharacterTable.AddRange(spriteCharacterTable);
+//            spriteAsset.spriteGlyphTable.AddRange(spriteGlyphTable);
 
-            for (int i = 0; i < spriteAsset.spriteCharacterTable.Count; i++)
-            {
-                TMP_SpriteCharacter spriteCharacter = spriteAsset.spriteCharacterTable[i];
-                if (spriteCharacter.unicode == 0)
-                    spriteCharacter.unicode = 0xFFFE;
-            }
+//            for (int i = 0; i < spriteAsset.spriteCharacterTable.Count; i++)
+//            {
+//                TMP_SpriteCharacter spriteCharacter = spriteAsset.spriteCharacterTable[i];
+//                if (spriteCharacter.unicode == 0)
+//                    spriteCharacter.unicode = 0xFFFE;
+//            }
 
-            UnityEditor.EditorUtility.SetDirty(spriteAsset);
-            UnityEditor.AssetDatabase.SaveAssets();
-            UnityEditor.AssetDatabase.ImportAsset(UnityEditor.AssetDatabase.GetAssetPath(spriteAsset));  // Re-import font asset to get the new updated version.
-            UnityEditor.AssetDatabase.Refresh(UnityEditor.ImportAssetOptions.ForceUpdate);
-#endif
-        }
+//            UnityEditor.EditorUtility.SetDirty(spriteAsset);
+//            UnityEditor.AssetDatabase.SaveAssets();
+//            UnityEditor.AssetDatabase.ImportAsset(UnityEditor.AssetDatabase.GetAssetPath(spriteAsset));  // Re-import font asset to get the new updated version.
+//            UnityEditor.AssetDatabase.Refresh(UnityEditor.ImportAssetOptions.ForceUpdate);
+//#endif
+//        }
     }
 }
 

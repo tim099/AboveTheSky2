@@ -1,4 +1,8 @@
-﻿using System;
+
+// ATS_AutoHeader
+// to change the auto header please go to RCG_AutoHeader.cs
+// Create time : 02/20 2024 19:50
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -33,7 +37,10 @@ namespace ATS
         /// <returns></returns>
         ATSI_CommonData GetCommonData(string iID, bool iUseCache = true);
         void RefreshAllDatas();
-
+        /// <summary>
+        /// 生成一個編輯選單頁面(用來選取要編輯的物品)
+        /// </summary>
+        void CreateSelectPage();
 
         #region static
         /// <summary>
@@ -65,32 +72,46 @@ namespace ATS
             Debug.LogError($"RCGI_CommonData.GetUtilByType aType:{iType.FullName},Fail!!");
             return default;
         }
+        private static List<Type> s_AllCommonDataTypes = null;
+        /// <summary>
+        /// 抓取所有CommonData的Type
+        /// </summary>
+        /// <returns></returns>
+        public static List<Type> GetAllCommonDataTypes()
+        {
+            if(s_AllCommonDataTypes == null)
+            {
+                var aAllTypes = typeof(ATSI_CommonData).GetAllITypesAssignableFrom();
+                s_AllCommonDataTypes = new List<Type>();
+                foreach (var aType in aAllTypes)
+                {
+                    if (aType.IsGenericType || aType.IsInterface)
+                    {
+                        continue;
+                    }
+                    s_AllCommonDataTypes.Add(aType);
+                }
+            }
+
+            return s_AllCommonDataTypes;
+        }
         public static void RefreshAllCommonDatasWithReflection()
         {
             //RCG_GameInitData.Ins.Save();
             //HashSet<Type> aIgnoreTypes = new HashSet<Type>() { typeof(RCG_CommonTag)};
-            foreach (var aType in typeof(ATSI_CommonData).GetAllITypesAssignableFrom())
+            foreach (var aType in GetAllCommonDataTypes())
             {
-                if (aType.IsGenericType || aType.IsInterface)
-                {
-                    Debug.LogWarning($"RCGI_CommonData aType:{aType.FullName} IsGenericType!!");
-                    continue;
-                }
                 try
                 {
-
                     string aPropInfosStr = string.Empty;
                     try
                     {
-                        var aUtil = GetUtilByType(aType);//Get Util
+                        ATSI_CommonData aUtil = GetUtilByType(aType);//Get Util
                         if (aUtil != null)
                         {
                             //aMethInfosStr += $"Result:{aUtil.GetType().FullName}";
-                            if (aUtil is ATSI_CommonData aCommonData)
-                            {
-                                aCommonData.RefreshAllDatas();
-                                Debug.LogWarning($"Util:{aUtil.GetType().FullName}.RefreshAllDatas()");
-                            }
+                            aUtil.RefreshAllDatas();
+                            Debug.LogWarning($"Util:{aUtil.GetType().FullName}.RefreshAllDatas()");
                         }
                     }
                     catch (Exception iE)
@@ -242,6 +263,13 @@ namespace ATS
         {
             FileDatas.DeleteFile(iID);
             ClearCache();
+        }
+        /// <summary>
+        /// 生成一個編輯選單頁面(用來選取要編輯的物品)
+        /// </summary>
+        virtual public void CreateSelectPage()
+        {
+            CreateCommonSelectPage();
         }
         /// <summary>
         /// 生成一個編輯選單頁面(用來選取要編輯的物品)

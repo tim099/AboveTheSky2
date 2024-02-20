@@ -143,11 +143,11 @@ namespace ATS.Page
         }
         protected override void ContentOnGUI()
         {
-            //if (GUILayout.Button("RefreshAllDatas(With Reflection)", UCL_GUIStyle.ButtonStyle))
-            //{
-            //    RCGI_CommonData.RefreshAllCommonDatasWithReflection();
+            if (GUILayout.Button("RefreshAllDatas(With Reflection)", UCL_GUIStyle.ButtonStyle))
+            {
+                ATSI_CommonData.RefreshAllCommonDatasWithReflection();
 
-            //}
+            }
 
 
             if (GUILayout.Button("RefreshGamedata", UCL_GUIStyle.ButtonStyle))

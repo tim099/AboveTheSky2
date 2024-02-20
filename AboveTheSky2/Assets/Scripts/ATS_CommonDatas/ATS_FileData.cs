@@ -7,7 +7,7 @@ namespace ATS
 {
     public class ATS_FileData
     {
-        public static string GetFolderPath(System.Type iType) => $".Install/.CommonData/{iType.Name}";
+        public static string GetFolderPath(System.Type iType) => $".Install/CommonData/{iType.Name}";
 
         /// <summary>
         /// 檔案格式(例如json)

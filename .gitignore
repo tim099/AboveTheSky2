@@ -1,0 +1,16 @@
+.svn/
+.vs/
+Library/
+obj/
+Temp/
+Build/
+.gradle/
+*.csproj
+*.sln
+Logs/
+Ignore/
+Ignore.meta
+AddressableAssetsData/
+AddressableAssetsData.meta
+UserSettings/
+UIElementsSchema/

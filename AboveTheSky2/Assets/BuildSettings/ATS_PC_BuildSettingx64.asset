@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8426d920d4e6d4ab622ad70ba5f108, type: 3}
+  m_Name: ATS_PC_BuildSettingx64
+  m_EditorClassIdentifier: 
+  m_OutputBuildLog: 1
+  m_DefaultSetting: {fileID: 0}
+  m_ProductName: Above The Sky II
+  m_ApplicationIdentifier: com.ATS.AboveTheSkyII
+  m_BuildTargetGroup: 1
+  m_BuildTarget: 19
+  m_BuildOption: 0
+  m_Icons: []
+  m_DefaultIcon: {fileID: 2800000, guid: 911b8efe2e2f1ab4c823b032b45cd476, type: 3}
+  m_BuildAppBundle: 0
+  m_OutputPath: Build/PC/Above The Sky II
+  m_OutputName: game.exe
+  m_ScenesInBuild:
+  - {fileID: 102900000, guid: 1b1e43047cdc35b4aae4b082080fbbe6, type: 3}
+  m_KeyStoreSetting:
+    m_KeystoreName: 
+    m_KeystorePass: 
+    m_KeyaliasName: 
+    m_KeyaliasPass: 
+  m_VersionSetting:
+    m_BundleVersion: 1.1.4
+    m_BundleVersionCode: 1
+    m_BuildNumber: 1
+  m_ScriptingDefineSymbols: 
+  m_PreBuildProcess:
+  - {fileID: 7237054001825890601, guid: 1822f0b0991c3af46828d5862709af24, type: 3}

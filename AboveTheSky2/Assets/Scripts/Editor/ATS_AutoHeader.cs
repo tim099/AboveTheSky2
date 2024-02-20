@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ATS
 {
-    public class ATS_AutoHeader : MonoBehaviour
+    public class ATS_AutoHeader : UnityEditor.AssetModificationProcessor
     {
         const string Header =
 @"
@@ -17,24 +17,40 @@ namespace ATS
         /// Adding automatically namespace in created script
         /// Edit -> Project Settings -> Editor -> C# Project Generation Section, then add your name of namespace in Root Namespace
         /// </summary>
-        const string NameSpaceName = "RCG";
         public static void OnWillCreateAsset(string iNewFileMeta)
         {
-            //Debug.LogWarning($"OnWillCreateAsset iNewFileMeta:{iNewFileMeta}");
+            Debug.LogWarning($"OnWillCreateAsset iNewFileMeta:{iNewFileMeta}");
             //RCG_GameManager.RefreshFileInspectorsStatic();
 
-            string aFilePath = iNewFileMeta.Replace(".meta", "");
-            if (aFilePath.EndsWith(".cs"))
-            {
-                Debug.LogWarning("Create New File:" + aFilePath);
-                string aStr = System.IO.File.ReadAllText(aFilePath);
-                System.Text.StringBuilder aSB = new System.Text.StringBuilder();
-                aSB.AppendLine(Header);
 
-                aSB.AppendLine(string.Format(HeaderFormat, "Create time", System.DateTime.Now.ToString("MM/dd yyyy HH:mm")));// HH:mm
-                //aSB.AppendLine(string.Format(HeaderFormat, "Author", System.Security.Principal.WindowsIdentity.GetCurrent().Name));
-                aSB.Append(aStr);
-                System.IO.File.WriteAllText(aFilePath, aSB.ToString());
+            try
+            {
+                string aFilePath = iNewFileMeta.Replace(".meta", "");
+                if (aFilePath.EndsWith(".cs"))
+                {
+                    Debug.LogWarning("Create New File:" + aFilePath);
+                    string aStr = System.IO.File.ReadAllText(aFilePath);
+                    System.Text.StringBuilder aSB = new System.Text.StringBuilder();
+                    aSB.AppendLine(Header);
+
+                    aSB.AppendLine(string.Format(HeaderFormat, "Create time", System.DateTime.Now.ToString("MM/dd yyyy HH:mm")));// HH:mm
+                                                                                                                                 //aSB.AppendLine(string.Format(HeaderFormat, "Author", System.Security.Principal.WindowsIdentity.GetCurrent().Name));
+                    aSB.Append(aStr);
+                    System.IO.File.WriteAllText(aFilePath, aSB.ToString());
+                }
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogException(e);
+            }
+
+            try
+            {
+                ATS_StaticEvents.TriggerOnRefreshGamedata();
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogException(e);
             }
         }
     }

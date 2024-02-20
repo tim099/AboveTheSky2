@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ATS
+namespace ATS.UI
 {
     public class ATS_EditorMenu
     {

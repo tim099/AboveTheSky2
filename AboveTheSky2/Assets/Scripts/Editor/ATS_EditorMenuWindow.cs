@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace ATS
+namespace ATS.UI
 {
     public class ATS_EditorMenuWindow : EditorWindow
     {

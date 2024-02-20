@@ -247,9 +247,9 @@ namespace ATS
         /// 生成一個編輯選單頁面(用來選取要編輯的物品)
         /// </summary>
         /// <returns></returns>
-        virtual public Page.RCG_CommonSelectPage<T> CreateCommonSelectPage()
+        virtual public Page.ATS_CommonSelectPage<T> CreateCommonSelectPage()
         {
-            return Page.RCG_CommonSelectPage<T>.Create();
+            return Page.ATS_CommonSelectPage<T>.Create();
         }
         #endregion
 

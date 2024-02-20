@@ -66,7 +66,7 @@ namespace ATS
             if (s_LoadedDic.ContainsKey(m_AddressableKey))//Need to Fix
             {
                 var aData = s_LoadedDic[m_AddressableKey];
-                if (!aData.m_Loaded)
+                if (!aData.m_Loaded)//Wait Until Loaded
                 {
                     await UniTask.WaitUntil(() => aData.m_Loaded, cancellationToken: iToken);
                 }

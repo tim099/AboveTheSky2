@@ -9,11 +9,11 @@ using UnityEngine;
 
 namespace ATS.Page
 {
-    public class RCG_CommonSelectPage<T> : UCL_EditorPage where T : class, ATSI_CommonData, new()
+    public class ATS_CommonSelectPage<T> : UCL_EditorPage where T : class, ATSI_CommonData, new()
     {
-        static public RCG_CommonSelectPage<T> Create()
+        static public ATS_CommonSelectPage<T> Create()
         {
-            var aPage = new RCG_CommonSelectPage<T>();
+            var aPage = new ATS_CommonSelectPage<T>();
             UCL_GUIPageController.CurrentRenderIns.Push(aPage);
 
             return aPage;

@@ -28,6 +28,10 @@ namespace ATS.Page
                     ATS_DeveloperPage.Create();
                 }
 
+                if (GUILayout.Button(UCL_LocalizeManager.Get("Edit CommonData"), UCL_GUIStyle.GetButtonStyle(Color.yellow)))
+                {
+                    ATS_EditCommonDataPage.Create();
+                }
                 //#region GameSetting
                 //{//Edit GameSetting
                 //    using (var aTagScope = new GUILayout.HorizontalScope())

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ATS
 {
-    public class ATS_AutoHeader : MonoBehaviour
+    public class ATS_AutoHeader : UnityEditor.AssetModificationProcessor
     {
         const string Header =
 @"
@@ -17,10 +17,9 @@ namespace ATS
         /// Adding automatically namespace in created script
         /// Edit -> Project Settings -> Editor -> C# Project Generation Section, then add your name of namespace in Root Namespace
         /// </summary>
-        const string NameSpaceName = "RCG";
         public static void OnWillCreateAsset(string iNewFileMeta)
         {
-            //Debug.LogWarning($"OnWillCreateAsset iNewFileMeta:{iNewFileMeta}");
+            Debug.LogWarning($"OnWillCreateAsset iNewFileMeta:{iNewFileMeta}");
             //RCG_GameManager.RefreshFileInspectorsStatic();
 
             string aFilePath = iNewFileMeta.Replace(".meta", "");

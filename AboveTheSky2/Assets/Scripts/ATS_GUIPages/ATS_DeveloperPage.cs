@@ -13,15 +13,9 @@ namespace ATS.Page
 {
     public class ATS_DeveloperPage : ATS_EditorPage
     {
-        public enum EditMode
-        {
-            Normal,
-            LowRam,
-        }
         [System.Serializable]
         public class RunTimeData : UCL.Core.JsonLib.UnityJsonSerializable
         {
-            public EditMode m_EditMode = EditMode.Normal;
             /// <summary>
             /// 是否要開啟Debug模式?
             /// </summary>
@@ -31,7 +25,6 @@ namespace ATS.Page
             public string m_RegexMatchTarget = string.Empty;
         }
         static public ATS_DeveloperPage Create() => UCL_EditorPage.Create<ATS_DeveloperPage>();
-        static public bool IsLowRamMode => Data.m_EditMode == Page.ATS_DeveloperPage.EditMode.LowRam;
         static public RunTimeData Data
         {
             get

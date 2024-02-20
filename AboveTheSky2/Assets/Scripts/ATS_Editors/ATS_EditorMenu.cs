@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ namespace ATS
     public class ATS_EditorMenu
     {
         /// <summary>
-        /// ¼Ğ°O¥Ø«e¬O§_¦b½s¿è¾¹µøµ¡¤¤
+        /// æ¨™è¨˜ç›®å‰æ˜¯å¦åœ¨ç·¨è¼¯å™¨è¦–çª—ä¸­
         /// </summary>
         public static bool IsInEditWindow = false;
 #if UNITY_EDITOR
@@ -39,7 +39,7 @@ namespace ATS
             GUI.contentColor = Color.white;
 
             GUILayout.BeginVertical();
-            if (m_GUIPageController.TopPage == null)//ªÅªº ·s¼W¤@­Ó¿ï³æ­¶­±
+            if (m_GUIPageController.TopPage == null)//ç©ºçš„ æ–°å¢ä¸€å€‹é¸å–®é é¢
             {
                 m_GUIPageController.Push(new Page.ATS_EditorMenuPage());
             }

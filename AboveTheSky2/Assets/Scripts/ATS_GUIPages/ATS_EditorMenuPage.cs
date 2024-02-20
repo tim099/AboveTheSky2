@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UCL.Core;
 using UCL.Core.LocalizeLib;
@@ -16,12 +16,18 @@ namespace ATS.Page
         UCL_ObjectDictionary m_Dic = new UCL_ObjectDictionary();
 
         /// <summary>
-        /// √∏ªsøÔ≥Ê ∂}±“®‰•LΩsøËæπ
+        /// Áπ™Ë£ΩÈÅ∏ÂñÆ ÈñãÂïüÂÖ∂‰ªñÁ∑®ËºØÂô®
         /// </summary>
         protected override void ContentOnGUI()
         {
             using (var aScope = new GUILayout.VerticalScope("box"))//, GUILayout.MaxWidth(320)
             {
+
+                if (GUILayout.Button(UCL_LocalizeManager.Get("DeveloperEditor"), UCL_GUIStyle.GetButtonStyle(Color.yellow)))
+                {
+                    ATS_DeveloperPage.Create();
+                }
+
                 //#region GameSetting
                 //{//Edit GameSetting
                 //    using (var aTagScope = new GUILayout.HorizontalScope())

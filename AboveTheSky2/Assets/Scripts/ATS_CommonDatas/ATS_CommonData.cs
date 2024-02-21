@@ -13,18 +13,8 @@ using UnityEngine;
 
 namespace ATS
 {
-    /// <summary>
-    /// 預覽介面
-    /// </summary>
-    public interface ATSI_Preview
-    {
-        /// <summary>
-        /// 預覽
-        /// </summary>
-        /// <param name="iIsShowEditButton">是否顯示編輯按鈕</param>
-        void Preview(bool iIsShowEditButton = false);
-    }
-    public interface ATSI_CommonData : ATSI_CommonEditable, ATSI_Preview
+
+    public interface ATSI_CommonData : UCLI_CommonEditable, UCLI_Preview
     {
         string FolderPath { get; }
         ATSI_CommonData CreateCommonData(string iID);
@@ -131,7 +121,7 @@ namespace ATS
 
         #endregion
     }
-    public class ATS_CommonData<T> : ATS_Util<T>, ATSI_CommonData where T : class, ATSI_CommonData, ATSI_CommonEditable, new()
+    public class ATS_CommonData<T> : ATS_Util<T>, ATSI_CommonData where T : class, ATSI_CommonData, UCLI_CommonEditable, new()
     {
         #region must override 一定要override的部份
         //public static string GetFolderPath(System.Type iType) => $"Install/.CommonData/{iType.Name.Replace("RCG_", string.Empty)}";
@@ -148,7 +138,7 @@ namespace ATS
         /// 預覽
         /// </summary>
         /// <param name="iIsShowEditButton"></param>
-        virtual public void Preview(bool iIsShowEditButton = false)
+        virtual public void Preview(UCL.Core.UCL_ObjectDictionary iDataDic, bool iIsShowEditButton = false)
         {
             GUILayout.BeginHorizontal();
             using (var aScope = new GUILayout.VerticalScope("box", GUILayout.MinWidth(130)))
@@ -187,10 +177,12 @@ namespace ATS
                 }
 
                 if (aIsShow)
+                {
                     using (new GUILayout.VerticalScope(GUILayout.Width(200)))
                     {
-                        Preview(false);
+                        Preview(iDataDic.GetSubDic("Preview"), false);
                     }
+                }
             }
 
             GUILayout.EndVertical();
@@ -203,7 +195,6 @@ namespace ATS
         /// 生成一個編輯選單頁面(用來選取要編輯的物品)
         /// </summary>
         /// <returns></returns>
-        //static public Page.RCG_CommonSelectPage<T> CreateSelectPage() => Page.RCG_CommonSelectPage<T>.Create();
         private Dictionary<string, T> s_DataDic = null;
 
 
@@ -281,33 +272,6 @@ namespace ATS
         }
         #endregion
 
-        #region RuntimeData
-        [UCL.Core.ATTR.UCL_HideOnGUI] public DataType m_DataType = DataType.BuiltIn;
-
-        public DataType DataType { get => m_DataType; set => m_DataType = value; }
-        virtual public JsonData SaveDataToJson(T iData)
-        {
-            JsonData aData = new JsonData();
-            aData["ID"] = iData.ID;
-            aData["DataType"] = iData.DataType.ToString();
-            return aData;
-        }
-        virtual public T GetDataFromJson(JsonData iData)
-        {
-            string aID = iData.GetString("ID", string.Empty);
-            var aDataType = iData.GetEnum("DataType", DataType.BuiltIn);
-            switch (aDataType)
-            {
-                case DataType.BuiltIn:
-                    {
-                        return GetData(aID);
-                    }
-
-            }
-            return null;
-            //return RCG_DataService.Ins.m_GameRuntimeData.GetRuntimeData<T>(aID);
-        }
-        #endregion
 
         private UCL.Core.UCL_ObjectDictionary m_PreviewDic = null;
         protected UCL.Core.UCL_ObjectDictionary PreviewDic
@@ -459,7 +423,7 @@ namespace ATS
         /// 複製一份
         /// </summary>
         /// <returns></returns>
-        virtual public ATSI_CommonEditable CloneInstance()
+        virtual public UCLI_CommonEditable CloneInstance()
         {
             var aClone = this.CloneObject();
             aClone.ID = this.ID;
@@ -473,23 +437,5 @@ namespace ATS
         {
             JsonConvert.LoadFieldFromJsonUnityVer(this, iJson);
         }
-    }
-
-    public enum DataType
-    {
-        /// <summary>
-        /// 內建在遊戲中的資料
-        /// </summary>
-        BuiltIn,
-        /// <summary>
-        /// 在戰鬥中生成的資料
-        /// (戰鬥結束後移除)
-        /// </summary>
-        BattleRuntime,
-
-        /// <summary>
-        /// 本局遊戲內生成的資料(例如強化卡牌事件產生的)
-        /// </summary>
-        InGameRuntime,
     }
 }

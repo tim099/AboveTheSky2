@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UCL.Core;
 using UnityEngine;
 
 namespace ATS
@@ -16,7 +17,7 @@ namespace ATS
         /// <summary>
         /// 資料夾路徑
         /// </summary>
-        [UCL.Core.PA.UCL_FolderExplorer(typeof(ATS_StreamingAssets), ATS_StreamingAssets.ReflectKeyStreamingAssetsPath)]
+        [UCL.Core.PA.UCL_FolderExplorer(typeof(UCL_StreamingAssets), UCL_StreamingAssets.ReflectKeyStreamingAssetsPath)]
         public string m_FolderPath = string.Empty;
         public SearchOption m_SearchOption = SearchOption.TopDirectoryOnly;
         /// <summary>
@@ -51,9 +52,9 @@ namespace ATS
         {
             if (m_FileIDs == null || !iIsUseCache)
             {
-                ATS_StreamingAssets.CheckAndCreateDirectory(m_FolderPath);
+                UCL_StreamingAssets.CheckAndCreateDirectory(m_FolderPath);
                 //Debug.LogError("m_FolderPath:" + m_FolderPath);
-                m_FileIDs = ATS_StreamingAssets.GetFilesName(m_FolderPath, "*." + m_FileFormat);
+                m_FileIDs = UCL_StreamingAssets.GetFilesName(m_FolderPath, "*." + m_FileFormat);
             }
             return m_FileIDs;
         }
@@ -61,17 +62,17 @@ namespace ATS
         public string CommonDataMetaPath => System.IO.Path.Combine(m_FolderPath, CommonDataMetaName);
         public string GetCommonDataMetaJson()
         {
-            ATS_StreamingAssets.CheckAndCreateDirectory(m_FolderPath);
-            if (!ATS_StreamingAssets.FileExists(CommonDataMetaPath))
+            UCL_StreamingAssets.CheckAndCreateDirectory(m_FolderPath);
+            if (!UCL_StreamingAssets.FileExists(CommonDataMetaPath))
             {
                 return string.Empty;
             }
-            return ATS_StreamingAssets.ReadAllText(CommonDataMetaPath);
+            return UCL_StreamingAssets.ReadAllText(CommonDataMetaPath);
         }
         public void SaveCommonDataMetaJson(string iJson)
         {
-            ATS_StreamingAssets.CheckAndCreateDirectory(m_FolderPath);
-            ATS_StreamingAssets.WriteAllText(CommonDataMetaPath, iJson);
+            UCL_StreamingAssets.CheckAndCreateDirectory(m_FolderPath);
+            UCL_StreamingAssets.WriteAllText(CommonDataMetaPath, iJson);
         }
         /// <summary>
         /// 抓取所有檔名(含副檔名
@@ -84,7 +85,7 @@ namespace ATS
             {
                 //RCG_StreamingAssets.CheckAndCreateDirectory(m_FolderPath);
                 //Debug.LogError("m_FolderPath:" + m_FolderPath);
-                m_FileNames = ATS_StreamingAssets.GetFilesName(m_FolderPath, "*." + m_FileFormat, false);
+                m_FileNames = UCL_StreamingAssets.GetFilesName(m_FolderPath, "*." + m_FileFormat, false);
             }
             return m_FileNames;
         }
@@ -105,7 +106,7 @@ namespace ATS
         public void WriteAllText(string iID, string iContents)
         {
             //RCG_StreamingAssets.CheckAndCreateDirectory(m_FolderPath);
-            ATS_StreamingAssets.WriteAllText(GetSavePath(iID), iContents);
+            UCL_StreamingAssets.WriteAllText(GetSavePath(iID), iContents);
         }
 
         /// <summary>
@@ -115,7 +116,7 @@ namespace ATS
         /// <returns></returns>
         public string ReadAllText(string iID)
         {
-            return ATS_StreamingAssets.ReadAllText(GetSavePath(iID));
+            return UCL_StreamingAssets.ReadAllText(GetSavePath(iID));
         }
         /// <summary>
         /// 根據ID刪除檔案
@@ -123,7 +124,7 @@ namespace ATS
         /// <param name="path"></param>
         public void DeleteFile(string iID)
         {
-            ATS_StreamingAssets.DeleteFile(GetSavePath(iID));
+            UCL_StreamingAssets.DeleteFile(GetSavePath(iID));
         }
         /// <summary>
         /// 根據ID判斷檔案是否存在
@@ -132,7 +133,7 @@ namespace ATS
         /// <returns></returns>
         public bool FileExists(string iID)
         {
-            return ATS_StreamingAssets.FileExists(GetSavePath(iID));
+            return UCL_StreamingAssets.FileExists(GetSavePath(iID));
         }
         /// <summary>
         /// 抓取系統中實際檔案路徑
@@ -141,7 +142,7 @@ namespace ATS
         /// <returns></returns>
         public string GetFileSystemPath(string iID)
         {
-            return ATS_StreamingAssets.GetFileSystemPath(GetSavePath(iID));
+            return UCL_StreamingAssets.GetFileSystemPath(GetSavePath(iID));
         }
     }
 }

@@ -112,9 +112,8 @@ namespace ATS
         /// 預覽
         /// </summary>
         /// <param name="iIsShowEditButton">是否顯示編輯按鈕</param>
-        override public void Preview(bool iIsShowEditButton = false)
+        override public void Preview(UCL.Core.UCL_ObjectDictionary iDataDic, bool iIsShowEditButton = false)
         {
-            base.Preview(iIsShowEditButton);
             GUILayout.BeginHorizontal();
             using (var aScope = new GUILayout.VerticalScope("box", GUILayout.MinWidth(130)))
             {

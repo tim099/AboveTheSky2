@@ -15,6 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using UCL.Core;
 using UCL.Core.JsonLib;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -23,7 +24,7 @@ namespace ATS
 {
     public class ATS_StreamingAssetsData : UCL.Core.JsonLib.UnityJsonSerializable
     {
-        [UCL.Core.PA.UCL_FolderExplorer(typeof(ATS_StreamingAssets), ATS_StreamingAssets.ReflectKeyStreamingAssetsPath)]
+        [UCL.Core.PA.UCL_FolderExplorer(typeof(UCL_StreamingAssets), UCL_StreamingAssets.ReflectKeyStreamingAssetsPath)]
         public string m_FolderPath;
 
         public List<string> GetAllFileNames()
@@ -84,12 +85,12 @@ namespace ATS
         /// <returns></returns>
         public byte[] ReadAllBytes()
         {
-            return ATS_StreamingAssets.ReadAllBytes(Path);
+            return UCL_StreamingAssets.ReadAllBytes(Path);
         }
 
         public string ReadAllText()
         {
-            return ATS_StreamingAssets.ReadAllText(Path);
+            return UCL_StreamingAssets.ReadAllText(Path);
         }
     }
 }

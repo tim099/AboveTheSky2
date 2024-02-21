@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ATS.Page
 {
-    public class ATS_EditCommonDataPage : ATS_EditorPage
+    public class ATS_EditCommonDataPage : UCL_CommonEditorPage
     {
         static public ATS_EditCommonDataPage Create() => UCL_EditorPage.Create<ATS_EditCommonDataPage>();
 
@@ -23,7 +23,8 @@ namespace ATS.Page
         protected override void ContentOnGUI()
         {
             //GUILayout.Label("Test", UCL_GUIStyle.LabelStyle);
-
+            var aLabelStyle = UCL_GUIStyle.GetLabelStyle(Color.white, 18);
+            var aButtonStyle = UCL_GUIStyle.GetButtonStyle(Color.white, 18);
             foreach (var aType in ATSI_CommonData.GetAllCommonDataTypes())
             {
                 try
@@ -34,13 +35,16 @@ namespace ATS.Page
                         ATSI_CommonData aUtil = ATSI_CommonData.GetUtilByType(aType);//Get Util
                         if (aUtil != null)
                         {
-                            if(GUILayout.Button($"Edit: {aType.Name}", UCL_GUIStyle.ButtonStyle))
+                            GUILayout.BeginHorizontal();
+                            GUILayout.Label(aType.Name, aLabelStyle, GUILayout.ExpandWidth(false));
+                            if(GUILayout.Button($"Edit", aButtonStyle, GUILayout.Width(100)))
                             {
                                 aUtil.CreateSelectPage();
                             }
                             //GUILayout.Label($"{aType.FullName}");
                             //aUtil.RefreshAllDatas();
                             //Debug.LogWarning($"Util:{aUtil.GetType().FullName}.RefreshAllDatas()");
+                            GUILayout.EndHorizontal();
                         }
                     }
                     catch (Exception iE)

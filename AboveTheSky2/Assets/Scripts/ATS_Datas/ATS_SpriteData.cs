@@ -130,7 +130,7 @@ namespace ATS
                     }
                 case DataLoadType.StreamingAssets:
                     {
-                        var aPath = ATS_StreamingAssets.GetFileSystemPath(FolderPath);
+                        var aPath = UCL.Core.UCL_StreamingAssets.GetFileSystemPath(FolderPath);
                         if (Directory.Exists(aPath))
                         {
                             if (GUILayout.Button(UCL_LocalizeManager.Get("OpenFolder"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
@@ -460,25 +460,7 @@ namespace ATS
                         case DataLoadType.StreamingAssets:
                             {
                                 byte[] aBytes = null;
-                                //bool aLoaded = false;
-                                //System.Threading.ThreadPool.QueueUserWorkItem(o =>
-                                //{
-                                //    try
-                                //    {
-                                //        aBytes = RCG_StreamingAssets.ReadAllBytes(aKey);
-                                //    }
-                                //    catch (System.Exception e)
-                                //    {
-                                //        Debug.LogException(e);
-                                //    }
-                                //    finally
-                                //    {
-                                //        aLoaded = true;
-                                //    }
-                                //});
-                                //await UniTask.WaitUntil(() => aLoaded, cancellationToken: iToken);
-                                //aBytes = await RCG_StreamingAssets.ReadAllBytesAsync(aKey, iToken);
-                                aBytes = await ATS_StreamingAssets.ReadAllBytesAsyncThreaded(aKey, iToken);
+                                aBytes = await UCL.Core.UCL_StreamingAssets.ReadAllBytesAsync(aKey, iToken);
                                 iToken.ThrowIfCancellationRequested();
                                 if (!aDic.ContainsKey(aKey) && aBytes != null)
                                 {

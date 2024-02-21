@@ -9,7 +9,7 @@ namespace ATS
         const string Header =
 @"
 // ATS_AutoHeader
-// to change the auto header please go to RCG_AutoHeader.cs";
+// to change the auto header please go to ATS_AutoHeader.cs";
         const string HeaderFormat =
     @"// {0} : {1}";
         /// <summary>

@@ -19,8 +19,8 @@ namespace ATS.Page
             return aPage;
         }
 
-        protected UCL.Core.UCL_ObjectDictionary m_EditTmpDatas = new UCL.Core.UCL_ObjectDictionary();
-        protected ATSI_Preview m_Preview = null;
+        protected UCL.Core.UCL_ObjectDictionary m_DataDic = new UCL.Core.UCL_ObjectDictionary();
+        protected UCLI_Preview m_Preview = null;
         protected string m_CreateDes = string.Empty;
         protected string m_TypeName = string.Empty;
         protected CommonDataMeta m_Meta = null;
@@ -72,7 +72,7 @@ namespace ATS.Page
         }
         protected override void ContentOnGUI()
         {
-            m_Meta.OnGUI(m_EditTmpDatas.GetSubDic("Meta"));
+            m_Meta.OnGUI(m_DataDic.GetSubDic("Meta"));
             DrawSelectTargets();
         }
         protected override void TopBarButtons()
@@ -121,7 +121,7 @@ namespace ATS.Page
         virtual protected void DrawSelectTargets()
         {
             GUILayout.BeginHorizontal();
-            ATS_StaticFunctions.DrawSelectTargetList(Util.GetEditableIDs(), m_EditTmpDatas.GetSubDic("SelectTarget"),
+            ATS_StaticFunctions.DrawSelectTargetList(Util.GetEditableIDs(), m_DataDic.GetSubDic("SelectTarget"),
                 (iID) => {
                     ATS_CommonEditPage.Create(Util.GetData(iID));
                 },
@@ -131,7 +131,7 @@ namespace ATS.Page
                 (iID) => {
                     Util.Delete(iID);
                 }, m_Meta);
-            m_Preview?.Preview(true);
+            m_Preview?.Preview(m_DataDic.GetSubDic("Preview"), true);
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
         }

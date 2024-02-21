@@ -20,7 +20,7 @@ namespace ATS.Page
     /// </summary>
     public class ATS_CommonEditPage : UCL_EditorPage
     {
-        static public ATS_CommonEditPage Create(ATSI_CommonEditable iData)
+        static public ATS_CommonEditPage Create(UCLI_CommonEditable iData)
         {
             if(iData == null)
             {
@@ -33,7 +33,7 @@ namespace ATS.Page
             return aPage;
         }
         public ATS_CommonEditPage() { }
-        public ATS_CommonEditPage(ATSI_CommonEditable iData)
+        public ATS_CommonEditPage(UCLI_CommonEditable iData)
         {
             m_Data = iData;
             m_WindowName = UCL_LocalizeManager.Get(iData.GetType().Name.Replace("RCG_", string.Empty).Replace("Data", string.Empty) + "Editor");
@@ -41,7 +41,7 @@ namespace ATS.Page
         }
         override public string WindowName => m_WindowName;
         protected override bool ShowCloseButton => false;
-        ATSI_CommonEditable m_Data = null;
+        UCLI_CommonEditable m_Data = null;
         string m_WindowName = string.Empty;
         /// <summary>
         /// 開始編輯時的資料轉為Json(存檔會刷新這個值)

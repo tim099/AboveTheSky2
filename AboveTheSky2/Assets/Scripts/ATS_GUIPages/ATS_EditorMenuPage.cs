@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UCL.Core;
+using UCL.Core.EditorLib.Page;
 using UCL.Core.LocalizeLib;
 using UCL.Core.UI;
 using UnityEngine;
 
 namespace ATS.Page
 {
-    public class ATS_EditorMenuPage : ATS_EditorPage
+    public class ATS_EditorMenuPage : UCL_CommonEditorPage
     {
         public override string WindowName => UCL_LocalizeManager.Get("EditorMenu");
         protected override bool ShowCloseButton => !UI.ATS_EditorMenu.IsInEditWindow;
@@ -20,6 +21,11 @@ namespace ATS.Page
         /// </summary>
         protected override void ContentOnGUI()
         {
+            if (!UCL_ModuleService.Initialized)
+            {
+                return;
+            }
+
             using (var aScope = new GUILayout.VerticalScope("box"))//, GUILayout.MaxWidth(320)
             {
 

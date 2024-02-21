@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace ATS.Page
 {
-    public class ATS_DeveloperPage : ATS_EditorPage
+    public class ATS_DeveloperPage : UCL_CommonEditorPage
     {
         [System.Serializable]
         public class RunTimeData : UCL.Core.JsonLib.UnityJsonSerializable

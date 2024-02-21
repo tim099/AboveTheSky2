@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace ATS
 {
-    public interface ATSI_CommonGenData : ATSI_ID
+    public interface ATSI_CommonGenData : UCLI_ID
     {
         /// <summary>
         /// 供編輯器使用 可以選取分組 但存成Json時不保存
@@ -35,7 +35,7 @@ namespace ATS
 
     [UCL.Core.ATTR.EnableUCLEditor]
     public class ATS_CommonGenData<T> : UCL.Core.JsonLib.UnityJsonSerializable, ATSI_CommonGenData, UCLI_ShortName, UCLI_NameOnGUI, UCLI_FieldOnGUI
-        , IEquatable<ATS_CommonGenData<T>> where T : class, ATSI_CommonData, ATSI_Preview, new()
+        , IEquatable<ATS_CommonGenData<T>> where T : class, ATSI_CommonData, UCLI_Preview, new()
     {
         protected const string FuncKeyGetAllIDs = "GetAllIDs";
 
@@ -181,7 +181,7 @@ namespace ATS
                 var aData = Util.GetCommonData(ID);
                 if (aData != null)
                 {
-                    aData.Preview(true);
+                    aData.Preview(iDic.GetSubDic("Preview"), true);
                 }
             }
         }
@@ -225,7 +225,7 @@ namespace ATS
     }
 
     [System.Serializable]
-    public class ATS_CommonGenDataDefault<T> : ATS_CommonGenData<T> where T : class, ATSI_CommonData, ATSI_Preview, new()
+    public class ATS_CommonGenDataDefault<T> : ATS_CommonGenData<T> where T : class, ATSI_CommonData, UCLI_Preview, new()
     {
         override public string ID { get => m_ID; set => m_ID = value; }
 

@@ -1,0 +1,34 @@
+{
+	"IgnoreMetaFiles":"True",
+	"TargetDirectory":".ModuleService\\BuiltinModules\\Core",
+	"FileExtension":"",
+	"FolderInformations":{
+		"Name":"Core",
+		"Path":".ModuleService\\BuiltinModules\\Core",
+		"FileInfos":
+		[
+			{
+				"FileName":"Config",
+				"Extension":"json"
+			},
+			{
+				"FileName":"FileInfos",
+				"Extension":"json"
+			}
+		],
+		"FolderInfos":
+		[
+			{
+				"Name":"ModResources",
+				"Path":".ModuleService\\BuiltinModules\\Core\\ModResources",
+				"FileInfos":
+				[
+					{
+						"FileName":"Readme",
+						"Extension":"txt"
+					}
+				]
+			}
+		]
+	}
+}

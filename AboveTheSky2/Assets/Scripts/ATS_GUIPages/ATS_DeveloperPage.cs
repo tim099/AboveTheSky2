@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using UCL.Core.EditorLib.Page;
 using UCL.Core.JsonLib;
+using UCL.Core.LocalizeLib;
 using UCL.Core.UI;
 using UnityEngine;
 
@@ -209,9 +210,6 @@ namespace ATS.Page
                         {
                             Debug.LogException(iE);
                         }
-
-
-
                     }
 
                     UCL.Core.EditorLib.EditorUtilityMapper.ClearProgressBar();
@@ -258,37 +256,37 @@ namespace ATS.Page
                 }
             }
 
-//            if (RCG_DataService.Ins != null)
-//            {
-//                UCL_GUILayout.DrawObjectData(RCG_DataService.Ins.CurPlayerData, m_Dic.GetSubDic("PlayerData"), "PlayerData");
-//                UCL_GUILayout.DrawObjectData(RCG_DataService.Ins.m_GameData, m_Dic.GetSubDic("GameData"), "GameData");
-//            }
-//            //List<RCG_SkillTagGenData> aList = new List<RCG_SkillTagGenData>();
-//            //RCG_SkillTagGenData aA = new RCG_SkillTagGenData("A");
-//            //RCG_SkillTagGenData aB = new RCG_SkillTagGenData("A");
-//            //RCG_SkillTagGenData aC = new RCG_SkillTagGenData("C");
-//            //aList.Add(aA);
-//            //GUILayout.Label($"Test aA == aB{(aA == aB).ToString()},EQ:{(aA.Equals(aB)).ToString()}" +
-//            //    $",aList.Contains(aA):{aList.Contains(aA)},aList.Contains(aB):{aList.Contains(aB)}" +
-//            //    $",aList.Contains(aC):{aList.Contains(aC)}");
-//            RegexTest();
+            //            if (RCG_DataService.Ins != null)
+            //            {
+            //                UCL_GUILayout.DrawObjectData(RCG_DataService.Ins.CurPlayerData, m_Dic.GetSubDic("PlayerData"), "PlayerData");
+            //                UCL_GUILayout.DrawObjectData(RCG_DataService.Ins.m_GameData, m_Dic.GetSubDic("GameData"), "GameData");
+            //            }
+            //            //List<RCG_SkillTagGenData> aList = new List<RCG_SkillTagGenData>();
+            //            //RCG_SkillTagGenData aA = new RCG_SkillTagGenData("A");
+            //            //RCG_SkillTagGenData aB = new RCG_SkillTagGenData("A");
+            //            //RCG_SkillTagGenData aC = new RCG_SkillTagGenData("C");
+            //            //aList.Add(aA);
+            //            //GUILayout.Label($"Test aA == aB{(aA == aB).ToString()},EQ:{(aA.Equals(aB)).ToString()}" +
+            //            //    $",aList.Contains(aA):{aList.Contains(aA)},aList.Contains(aB):{aList.Contains(aB)}" +
+            //            //    $",aList.Contains(aC):{aList.Contains(aC)}");
+            //            RegexTest();
 
-//            GUILayout.Space(30);
-//#if UNITY_EDITOR
-//            var aPath = System.IO.Path.Combine(Application.streamingAssetsPath, "Install", ".AudioClips");
-//            if (GUILayout.Button(UCL_LocalizeManager.Get($"RemoveMetas : {aPath}"), UCL_GUIStyle.ButtonStyle))
-//            {
+            //            GUILayout.Space(30);
+            //#if UNITY_EDITOR
+            //            var aPath = System.IO.Path.Combine(Application.streamingAssetsPath, "Install", ".AudioClips");
+            //            if (GUILayout.Button(UCL_LocalizeManager.Get($"RemoveMetas : {aPath}"), UCL_GUIStyle.ButtonStyle))
+            //            {
 
-//                RemoveMetaDatas(aPath);
-//            }
-//#endif
+            //                RemoveMetaDatas(aPath);
+            //            }
+            //#endif
 
-//#if UNITY_STANDALONE_WIN
-//            if (GUILayout.Button(UCL_LocalizeManager.Get($"Open GameFolder"), UCL_GUIStyle.ButtonStyle))
-//            {
-//                UCL.Core.FileLib.WindowsLib.OpenExplorer(RCG_GameManager.GameFolderPath);
-//            }
-//#endif
+#if UNITY_STANDALONE_WIN
+            if (GUILayout.Button(UCL_LocalizeManager.Get($"Open GameFolder"), UCL_GUIStyle.ButtonStyle))
+            {
+                UCL.Core.FileLib.WindowsLib.OpenExplorer(Application.persistentDataPath);
+            }
+#endif
         }
 
         private void RemoveMetaDatas(string iPath)

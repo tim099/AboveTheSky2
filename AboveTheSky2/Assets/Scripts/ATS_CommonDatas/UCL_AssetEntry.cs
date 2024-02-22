@@ -13,9 +13,9 @@ using UnityEngine;
 
 
 
-namespace ATS
+namespace UCL.Core
 {
-    public interface ATSI_CommonGenData : UCLI_ID
+    public interface UCLI_AssetEntry : UCLI_ID
     {
         /// <summary>
         /// 供編輯器使用 可以選取分組 但存成Json時不保存
@@ -29,13 +29,13 @@ namespace ATS
 
         #region static
 
-        public static System.Action<ATSI_CommonGenData> s_DeserializeAction = null;
+        public static System.Action<UCLI_AssetEntry> s_DeserializeAction = null;
         #endregion
     }
 
     [UCL.Core.ATTR.EnableUCLEditor]
-    public class ATS_CommonGenData<T> : UCL.Core.JsonLib.UnityJsonSerializable, ATSI_CommonGenData, UCLI_ShortName, UCLI_NameOnGUI, UCLI_FieldOnGUI
-        , IEquatable<ATS_CommonGenData<T>> where T : class, ATSI_CommonData, UCLI_Preview, new()
+    public class UCL_AssetEntry<T> : UCL.Core.JsonLib.UnityJsonSerializable, UCLI_AssetEntry, UCLI_ShortName, UCLI_NameOnGUI, UCLI_FieldOnGUI
+        , IEquatable<UCL_AssetEntry<T>> where T : class, UCLI_Asset, UCLI_Preview, new()
     {
         protected const string FuncKeyGetAllIDs = "GetAllIDs";
 
@@ -50,8 +50,8 @@ namespace ATS
         /// 供編輯器使用 可以選取分組 但存成Json時不保存
         /// </summary>
         public string GroupID { get; set ; } = string.Empty;
-        protected T Util => (ATS_Util<T>.Util);
-        protected ATS_CommonData<T> CommonDataUtil => Util as ATS_CommonData<T>;
+        protected T Util => (UCL_Util<T>.Util);
+        protected UCL_Asset<T> CommonDataUtil => Util as UCL_Asset<T>;
         /// <summary>
         /// 抓取道具資料(道具 裝備 卡牌等都算)
         /// </summary>
@@ -190,7 +190,7 @@ namespace ATS
         {
             base.DeserializeFromJson(iJson);
 
-            ATSI_CommonGenData.s_DeserializeAction?.Invoke(this);
+            UCLI_AssetEntry.s_DeserializeAction?.Invoke(this);
 
             //if(RCG_RenamePage.s_IsRenaming)//check rename
             //{
@@ -213,10 +213,10 @@ namespace ATS
         }
         public override bool Equals(object iObj)
         {
-            return Equals(iObj as ATS_CommonGenData<T>);
+            return Equals(iObj as UCL_AssetEntry<T>);
         }
 
-        public virtual bool Equals(ATS_CommonGenData<T> iObj)
+        public virtual bool Equals(UCL_AssetEntry<T> iObj)
         {
             if (iObj == null) return false;
             return iObj.ID == ID;
@@ -225,7 +225,7 @@ namespace ATS
     }
 
     [System.Serializable]
-    public class ATS_CommonGenDataDefault<T> : ATS_CommonGenData<T> where T : class, ATSI_CommonData, UCLI_Preview, new()
+    public class ATS_CommonGenDataDefault<T> : UCL_AssetEntry<T> where T : class, UCLI_Asset, UCLI_Preview, new()
     {
         override public string ID { get => m_ID; set => m_ID = value; }
 

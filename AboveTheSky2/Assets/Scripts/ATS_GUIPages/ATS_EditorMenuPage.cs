@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UCL.Core;
 using UCL.Core.EditorLib.Page;
 using UCL.Core.LocalizeLib;
+using UCL.Core.Page;
 using UCL.Core.UI;
 using UnityEngine;
 
@@ -36,7 +37,7 @@ namespace ATS.Page
 
                 if (GUILayout.Button(UCL_LocalizeManager.Get("Edit CommonData"), UCL_GUIStyle.GetButtonStyle(Color.yellow)))
                 {
-                    ATS_EditCommonDataPage.Create();
+                    UCL_EditCommonDataPage.Create();
                 }
                 //#region GameSetting
                 //{//Edit GameSetting

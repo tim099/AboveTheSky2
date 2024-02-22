@@ -14,6 +14,8 @@ using UCL.Core.LocalizeLib;
 using UnityEngine;
 using UCL.Core.UI;
 using TMPro;
+using UCL.Core;
+using UCL.Core.Page;
 
 
 namespace ATS
@@ -53,7 +55,7 @@ namespace ATS
     /// <summary>
     /// TMP專用圖示
     /// </summary>
-    public class ATS_IconSprite : ATS_CommonData<ATS_IconSprite>
+    public class ATS_IconSprite : UCL_Asset<ATS_IconSprite>
     {
         #region static
         private static TMP_SpriteAsset s_SpriteAsset = null;
@@ -100,7 +102,7 @@ namespace ATS
         public const string DefaultIconsPath = ATS_SpriteData.SpriteFolder + "/Icons";
 
         
-        public override ATS.Page.ATS_CommonSelectPage<ATS_IconSprite> CreateCommonSelectPage()
+        public override UCL_CommonSelectPage<ATS_IconSprite> CreateCommonSelectPage()
         {
             var aPage = new RCG_IconSpriteEditorPage();
             UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(aPage);
@@ -126,7 +128,7 @@ namespace ATS
                 {
                     if (GUILayout.Button(UCL_LocalizeManager.Get("Edit")))
                     {
-                        Page.ATS_CommonEditPage.Create(this);
+                        UCL_CommonEditPage.Create(this);
                     }
                 }
             }
@@ -162,7 +164,7 @@ namespace ATS
         public string TMPKey => $"<sprite name={ID}>";
     }
 
-    public class RCG_IconSpriteEditorPage : Page.ATS_CommonSelectPage<ATS_IconSprite>
+    public class RCG_IconSpriteEditorPage : UCL_CommonSelectPage<ATS_IconSprite>
     {
 
         protected override void ContentOnGUI()

@@ -20,6 +20,7 @@ namespace ATS
         {
             m_TextMeshPro.spriteAsset = ATS_IconSprite.SpriteAsset;
             m_TextMeshPro.text += ATS_IconSpriteGenData.Icon_Heal.TMPKey;
+            UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(new Page.ATS_EditorMenuPage());
             //Test().Forget();
         }
         async UniTask Test()

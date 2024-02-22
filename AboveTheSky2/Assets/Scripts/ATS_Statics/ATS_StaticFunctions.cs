@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using UCL.Core;
 using UCL.Core.LocalizeLib;
+using UCL.Core.Page;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -162,7 +164,7 @@ namespace ATS
 
                         if (UCL.Core.UI.UCL_GUILayout.ButtonAutoSize(UCL_LocalizeManager.Get("Delete"), FontSize, Color.red, Color.white))
                         {
-                            Page.ATS_OptionPage.ConfirmDelete(aID, () => iDeleteAct(aID));
+                            UCL_OptionPage.ConfirmDelete(aID, () => iDeleteAct(aID));
                         }
 
                         GUILayout.Box(aDisplayName, UCL.Core.UI.UCL_GUIStyle.BoxStyle, GUILayout.MinWidth(160), GUILayout.MaxWidth(250));
@@ -197,23 +199,6 @@ namespace ATS
         }
         #endregion
 
-        public static string CardEffectLocalizeFieldName(string iDisplayName)
-        {
-            if (iDisplayName[0] == 'm' && iDisplayName[1] == '_')
-            {
-                iDisplayName = iDisplayName.Substring(2, iDisplayName.Length - 2);
-            }
-            string aKey = "CardEffectMember_" + iDisplayName;
-            if (UCL_LocalizeManager.ContainsKey(aKey))
-            {
-                iDisplayName = UCL_LocalizeManager.Get(aKey);
-            }
-            else
-            {
-                iDisplayName = UCL_LocalizeManager.Get(iDisplayName);
-            }
-            return iDisplayName;
-        }
         public static string LocalizeFieldName(string iDisplayName)
         {
             if (iDisplayName[0] == 'm' && iDisplayName[1] == '_')

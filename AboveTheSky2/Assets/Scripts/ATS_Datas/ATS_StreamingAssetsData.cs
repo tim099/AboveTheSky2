@@ -29,7 +29,7 @@ namespace ATS
 
         public List<string> GetAllFileNames()
         {
-            var aFileDatas = ATS_FileData.GetFileData(m_FolderPath, "*");
+            var aFileDatas = UCL_StreamingAssetsFileData.GetFileData(m_FolderPath, "*");
             List<string> aIconPaths = new List<string>() { string.Empty };//可選空的
             aIconPaths.Append(aFileDatas.GetFileNames());
             return aIconPaths;

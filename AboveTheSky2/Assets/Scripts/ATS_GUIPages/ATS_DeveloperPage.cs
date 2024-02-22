@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using UCL.Core;
 using UCL.Core.EditorLib.Page;
 using UCL.Core.JsonLib;
 using UCL.Core.LocalizeLib;
@@ -14,6 +15,7 @@ namespace ATS.Page
 {
     public class ATS_DeveloperPage : UCL_CommonEditorPage
     {
+        public override string WindowName => UCL_LocalizeManager.Get("DeveloperPage");
         [System.Serializable]
         public class RunTimeData : UCL.Core.JsonLib.UnityJsonSerializable
         {
@@ -146,7 +148,7 @@ namespace ATS.Page
         {
             if (GUILayout.Button("RefreshAllDatas(With Reflection)", UCL_GUIStyle.ButtonStyle))
             {
-                ATSI_CommonData.RefreshAllCommonDatasWithReflection();
+                UCLI_Asset.RefreshAllAssetsWithReflection();
 
             }
 

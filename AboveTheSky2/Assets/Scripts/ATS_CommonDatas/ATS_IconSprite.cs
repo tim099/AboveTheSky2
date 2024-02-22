@@ -20,7 +20,7 @@ using UCL.Core.Page;
 
 namespace ATS
 {
-    public class ATS_IconSpriteGenData : ATS_CommonGenDataDefault<ATS_IconSprite>
+    public class ATS_IconSpriteGenData : UCL_AssetEntryDefault<ATS_IconSprite>
     {
         public const string HealID = "Icon_Heal";
         public const string DefaultID = HealID;

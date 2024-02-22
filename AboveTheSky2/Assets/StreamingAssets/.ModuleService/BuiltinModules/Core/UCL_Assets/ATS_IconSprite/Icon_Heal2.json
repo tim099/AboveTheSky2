@@ -1,0 +1,17 @@
+{
+	"Icon":{
+		"LoadType":"StreamingAssets",
+		"StreamingAssetsData":{
+			"FolderPath":".Install/Sprites/Icons",
+			"Name":"AttackTag_Heal.png"
+		},
+		"DetailSetting":{
+			"IsPreserveAspect":"False",
+			"UpdateMipMap":"True",
+			"FilterMode":"Bilinear"
+		}
+	},
+	"Scale":1,
+	"BearingX":0,
+	"BearingY":0.85000002384185791
+}

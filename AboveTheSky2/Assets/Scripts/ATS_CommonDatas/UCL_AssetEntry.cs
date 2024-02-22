@@ -109,7 +109,7 @@ namespace UCL.Core
             {
                 //GUILayout.Label(GroupID);
                 var aCommonDataMeta = CommonDataUtil.CommonDataMetaIns;
-                aIDs = aCommonDataMeta.GetAllShowData(aIDs, GroupID, CommonDataMeta.PlayerPrefsData.FilterType.Dropdown);
+                aIDs = aCommonDataMeta.GetAllShowData(aIDs, GroupID, UCL_AssetMeta.PlayerPrefsData.FilterType.Dropdown);
             }
             if (!aIDs.IsNullOrEmpty())
             {
@@ -225,7 +225,7 @@ namespace UCL.Core
     }
 
     [System.Serializable]
-    public class ATS_CommonGenDataDefault<T> : UCL_AssetEntry<T> where T : class, UCLI_Asset, UCLI_Preview, new()
+    public class UCL_AssetEntryDefault<T> : UCL_AssetEntry<T> where T : class, UCLI_Asset, UCLI_Preview, new()
     {
         override public string ID { get => m_ID; set => m_ID = value; }
 

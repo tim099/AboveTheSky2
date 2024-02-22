@@ -103,7 +103,7 @@ namespace ATS
         /// <param name="FontSize"></param>
         static public void DrawSelectTargetList(IList<string> iIDs, UCL.Core.UCL_ObjectDictionary iDic,
             System.Action<string> iEditAct, System.Action<string> iPreviewAct, System.Action<string> iDeleteAct,
-            CommonDataMeta iMeta = null,
+            UCL_AssetMeta iMeta = null,
             int FontSize = 20) {
             GUILayout.BeginVertical();
             Regex aRegex = null;

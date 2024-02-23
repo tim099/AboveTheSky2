@@ -30,6 +30,11 @@ namespace ATS.Page
             using (var aScope = new GUILayout.VerticalScope("box"))//, GUILayout.MaxWidth(320)
             {
 
+                if (GUILayout.Button("DebugLog", UCL_GUIStyle.ButtonStyle))
+                {
+                    UCL.Core.EditorLib.Page.UCL_DebugLogPage.Create();
+                    //UCL.Core.DebugLib.UCL_DebugLog.Instance.Toggle();
+                }
                 if (GUILayout.Button(UCL_LocalizeManager.Get("DeveloperEditor"), UCL_GUIStyle.GetButtonStyle(Color.yellow)))
                 {
                     ATS_DeveloperPage.Create();
@@ -37,7 +42,7 @@ namespace ATS.Page
 
                 if (GUILayout.Button(UCL_LocalizeManager.Get("Edit CommonData"), UCL_GUIStyle.GetButtonStyle(Color.yellow)))
                 {
-                    UCL_EditCommonDataPage.Create();
+                    UCL_ModuleServiceEditPage.Create();
                 }
                 //#region GameSetting
                 //{//Edit GameSetting

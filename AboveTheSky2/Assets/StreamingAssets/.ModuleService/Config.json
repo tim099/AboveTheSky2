@@ -1,8 +1,8 @@
 {
-	"CurrentEditModule":"Core",
+	"CurrentEditModule":"",
 	"BuiltinModules":
 	[
 		"Core"
 	],
-	"Version":"1.0.1"
+	"Version":"1.0.0"
 }

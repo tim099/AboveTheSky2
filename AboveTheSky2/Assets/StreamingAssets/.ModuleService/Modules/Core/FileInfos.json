@@ -1,10 +1,10 @@
 {
 	"IgnoreMetaFiles":"True",
-	"TargetDirectory":".ModuleService\\BuiltinModules\\Core",
+	"TargetDirectory":"D:/Unity/AboveTheSky2/AboveTheSky2/Assets/StreamingAssets\\.ModuleService\\Modules\\Core",
 	"FileExtension":"",
 	"FolderInformations":{
 		"Name":"Core",
-		"Path":".ModuleService\\BuiltinModules\\Core",
+		"Path":"D:/Unity/AboveTheSky2/AboveTheSky2/Assets/StreamingAssets\\.ModuleService\\Modules\\Core",
 		"FileInfos":
 		[
 			{
@@ -20,12 +20,38 @@
 		[
 			{
 				"Name":"ModResources",
-				"Path":".ModuleService\\BuiltinModules\\Core\\ModResources",
+				"Path":"D:/Unity/AboveTheSky2/AboveTheSky2/Assets/StreamingAssets\\.ModuleService\\Modules\\Core\\ModResources",
 				"FileInfos":
 				[
 					{
 						"FileName":"Readme",
 						"Extension":"txt"
+					}
+				]
+			},
+			{
+				"Name":"UCL_Assets",
+				"Path":"D:/Unity/AboveTheSky2/AboveTheSky2/Assets/StreamingAssets\\.ModuleService\\Modules\\Core\\UCL_Assets",
+				"FolderInfos":
+				[
+					{
+						"Name":"ATS_IconSprite",
+						"Path":"D:/Unity/AboveTheSky2/AboveTheSky2/Assets/StreamingAssets\\.ModuleService\\Modules\\Core\\UCL_Assets\\ATS_IconSprite",
+						"FileInfos":
+						[
+							{
+								"FileName":"",
+								"Extension":"CommonDataMeta"
+							},
+							{
+								"FileName":"Icon_Heal",
+								"Extension":"json"
+							},
+							{
+								"FileName":"Icon_Heal2",
+								"Extension":"json"
+							}
+						]
 					}
 				]
 			}

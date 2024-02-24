@@ -26,11 +26,15 @@ namespace ATS
         }
         async UniTask Init()
         {
+            //Debug.LogError("ATS_Boot.Init()");
             var aCancellationToken = gameObject.GetCancellationTokenOnDestroy();
+            
             await UniTask.WaitUntil(()=> UCL_ModuleService.Initialized, cancellationToken: aCancellationToken);
+            //Debug.LogError("UCL_ModuleService.Initialized");
             var aGameManager = await Addressables.LoadAssetAsync<GameObject>("Assets/Addressables/Prefabs/UCL_GameManager.prefab");
             m_GameManager = Instantiate(aGameManager, transform);
             await ATS_IconSprite.InitSpriteAsset(aCancellationToken);
+            //Debug.LogError("ATS_IconSprite.InitSpriteAsset");
             m_Test.gameObject.SetActive(true);
         }
         private void Start()

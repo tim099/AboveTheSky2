@@ -70,15 +70,15 @@ namespace ATS
                 }
                 try
                 {
-                    var aFormat = aTexture.format;
-                    switch (aFormat)
-                    {
-                        case TextureFormat.DXT5:
-                            {
-                                aFormat = TextureFormat.RGBA32;
-                                break;
-                            }
-                    }
+                    var aFormat = TextureFormat.RGBA32;//aTexture.format;
+                    //switch (aFormat)
+                    //{
+                    //    case TextureFormat.DXT5:
+                    //        {
+                    //            aFormat = TextureFormat.RGBA32;
+                    //            break;
+                    //        }
+                    //}
                     //if (aFormat == TextureFormat.DXT5)
                     //{
                     //    aFormat = TextureFormat.RGBA32;

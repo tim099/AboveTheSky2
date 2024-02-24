@@ -39,22 +39,22 @@ namespace ATS
         /// 檔案名稱
         /// </summary>
         [UCL.Core.PA.UCL_List("GetAllFileNames")]
-        public string m_Name = string.Empty;
+        public string m_FileName = string.Empty;
 
         public ATS_StreamingAssetsData() { }
         public ATS_StreamingAssetsData(string iFolderPath, string iName = "")
         {
             m_FolderPath = iFolderPath;
-            m_Name = iName;
+            m_FileName = iName;
         }
         //public override void DeserializeFromJson(JsonData iJson)
         //{
         //    base.DeserializeFromJson(iJson);
         //    m_FolderPath = m_FolderPath.Replace("Install/AudioClips", "Install/.AudioClips");
         //}
-        public virtual string Path => System.IO.Path.Combine(m_FolderPath, m_Name);
-        public bool IsEmpty => string.IsNullOrEmpty(m_Name);
-        public string Key => $"{m_FolderPath}_{m_Name}";
+        public virtual string Path => System.IO.Path.Combine(m_FolderPath, m_FileName);
+        public bool IsEmpty => string.IsNullOrEmpty(m_FileName);
+        public string Key => $"{m_FolderPath}_{m_FileName}";
 
 
         public async UniTask<byte[]> ReadAllBytesAsync(CancellationToken iToken)

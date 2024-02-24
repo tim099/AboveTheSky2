@@ -28,7 +28,7 @@ namespace ATS
         {
             get
             {
-                switch (m_LoadType)
+                switch (m_DataLoadType)
                 {
                     case DataLoadType.StreamingAssets:
                         {
@@ -55,7 +55,7 @@ namespace ATS
         }
         public const string SpriteFolder = ".Install/Sprites";
 
-        public DataLoadType m_LoadType = DataLoadType.StreamingAssets;
+        public DataLoadType m_DataLoadType = DataLoadType.StreamingAssets;
 
         [UCL.Core.ATTR.AlwaysExpendOnGUI]
         [UCL.Core.PA.Conditional("m_LoadType", false, DataLoadType.StreamingAssets)]
@@ -98,13 +98,13 @@ namespace ATS
         {
             //m_FolderPath = iFolderPath;
             //m_SpriteName = iSpriteName;
-            m_LoadType = iDataLoadType;
-            switch (m_LoadType)
+            m_DataLoadType = iDataLoadType;
+            switch (m_DataLoadType)
             {
                 case DataLoadType.StreamingAssets:
                     {
                         m_StreamingAssetsData.m_FolderPath = iPath;
-                        m_StreamingAssetsData.m_Name = iName;
+                        m_StreamingAssetsData.m_FileName = iName;
                         break;
                     }
                 case DataLoadType.Addressable:
@@ -123,7 +123,7 @@ namespace ATS
                 GUILayout.Label(iDisplayName, UCL.Core.UI.UCL_GUIStyle.LabelStyle);
             }
 #if UNITY_STANDALONE_WIN
-            switch (m_LoadType)
+            switch (m_DataLoadType)
             {
                 case DataLoadType.Addressable:
                     {
@@ -267,7 +267,7 @@ namespace ATS
 
                 if (!aDic.ContainsKey(aKey))
                 {
-                    switch (m_LoadType)
+                    switch (m_DataLoadType)
                     {
                         case DataLoadType.StreamingAssets:
                             {
@@ -312,7 +312,7 @@ namespace ATS
         {
             get
             {
-                switch (m_LoadType)
+                switch (m_DataLoadType)
                 {
                     case DataLoadType.Addressable:
                         {
@@ -330,7 +330,7 @@ namespace ATS
         {
             get
             {
-                switch(m_LoadType)
+                switch(m_DataLoadType)
                 {
                     case DataLoadType.Addressable:
                         {
@@ -436,7 +436,7 @@ namespace ATS
                 aLoadingDic.Add(aKey, true);
                 try
                 {
-                    switch (m_LoadType)
+                    switch (m_DataLoadType)
                     {
                         case DataLoadType.Addressable:
                             {

@@ -3,7 +3,7 @@
 		"LoadType":"Addressable",
 		"AddressableData":{
 			"AddressablePath":"Assets/Addressables/Sprites/Icons",
-			"AddressableKey":"Assets/Addressables/Sprites/Icons/swords.png"
+			"AddressableKey":"Assets/Addressables/Sprites/Icons/AttackTag_Heal.png"
 		},
 		"DetailSetting":{
 			"IsPreserveAspect":"False",

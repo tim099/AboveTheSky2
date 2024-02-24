@@ -36,7 +36,7 @@ namespace ATS
         virtual public void Init(string iFolderPath, string iFileName = "")
         {
             m_StreamingAssetsData.m_FolderPath = iFolderPath;
-            m_StreamingAssetsData.m_Name = iFileName;
+            m_StreamingAssetsData.m_FileName = iFileName;
         }
         virtual public string Key
         {

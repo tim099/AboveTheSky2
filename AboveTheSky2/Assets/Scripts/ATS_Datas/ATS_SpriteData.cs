@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using UCL.Core;
 using UCL.Core.JsonLib;
 using UCL.Core.LocalizeLib;
 using UCL.Core.TextureLib;
@@ -62,7 +63,7 @@ namespace ATS
 
         [UCL.Core.ATTR.AlwaysExpendOnGUI]
         [UCL.Core.PA.Conditional("m_LoadType", false, DataLoadType.Addressable)]
-        public ATS_AddressableData m_AddressableData = new ATS_AddressableData();
+        public UCL_AddressableData m_AddressableData = new UCL_AddressableData();
 
 
         public DetailSetting m_DetailSetting = new DetailSetting();

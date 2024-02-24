@@ -45,7 +45,7 @@ namespace ATS
         // Update is called once per frame
         void Update()
         {
-        
+            //m_TextMeshPro.spriteAsset = ATS_IconSprite.SpriteAsset;
         }
     }
 }

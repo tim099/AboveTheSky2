@@ -1,9 +1,9 @@
 {
 	"Icon":{
-		"LoadType":"StreamingAssets",
-		"StreamingAssetsData":{
-			"FolderPath":".Install/Sprites/Icons",
-			"Name":"AttackTag_Heal.png"
+		"LoadType":"Addressable",
+		"AddressableData":{
+			"AddressablePath":"Assets/Addressables/Sprites/Icons",
+			"AddressableKey":"Assets/Addressables/Sprites/Icons/HP.png"
 		},
 		"DetailSetting":{
 			"IsPreserveAspect":"False",
@@ -11,6 +11,7 @@
 			"FilterMode":"Bilinear"
 		}
 	},
+	"Disable":"True",
 	"Scale":1,
 	"BearingX":0,
 	"BearingY":0.85000002384185791

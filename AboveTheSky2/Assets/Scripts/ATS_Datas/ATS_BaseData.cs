@@ -27,7 +27,7 @@ namespace ATS
 
         [UCL.Core.ATTR.AlwaysExpendOnGUI]
         [UCL.Core.PA.Conditional("m_LoadType", false, DataLoadType.Addressable)]
-        public ATS_AddressableData m_AddressableData = new ATS_AddressableData();
+        public UCL_AddressableData m_AddressableData = new UCL_AddressableData();
 
         virtual public string GetShortName()
         {

@@ -16,6 +16,7 @@ using UCL.Core.UI;
 using TMPro;
 using UCL.Core;
 using UCL.Core.Page;
+using Cysharp.Threading.Tasks;
 
 
 namespace ATS
@@ -91,6 +92,10 @@ namespace ATS
             foreach (var aIconSpriteID in ATS_IconSprite.Util.GetAllIDs())
             {
                 var aSpriteData = ATS_IconSprite.Util.GetData(aIconSpriteID);
+                if (aSpriteData.m_Disable)
+                {
+                    continue;
+                }
                 aIconSprites.Add(aSpriteData);
                 aTextures.Add(aSpriteData.IconTexture);
                 aNames.Add(aIconSpriteID);
@@ -98,6 +103,31 @@ namespace ATS
             TMP_SpriteAsset aAsset = ATS_TMPTools.CreateSpriteAsset(aTextures, aNames, aIconSprites);
             return aAsset;
         }
+        //public static TMP_SpriteAsset GenerateSpriteAsset()
+        //{
+        //    TMP_SpriteAsset aAsset = ATS_TMPTools.CreateSpriteAssetTmp();
+        //    UpdateSpriteAssetAsync(aAsset).Forget();
+        //    return aAsset;
+        //}
+        //public static async UniTask UpdateSpriteAssetAsync(TMP_SpriteAsset iSpriteAsset)
+        //{
+        //    List<Texture2D> aTextures = new List<Texture2D>();
+        //    List<ATS_IconSprite> aIconSprites = new List<ATS_IconSprite>();
+        //    List<string> aNames = new List<string>();
+        //    foreach (var aIconSpriteID in ATS_IconSprite.Util.GetAllIDs())
+        //    {
+        //        var aSpriteData = ATS_IconSprite.Util.GetData(aIconSpriteID);
+        //        if (aSpriteData.m_Disable)
+        //        {
+        //            continue;
+        //        }
+        //        aIconSprites.Add(aSpriteData);
+        //        var aTexture = await aSpriteData.m_Icon.GetTextureAsync();
+        //        aTextures.Add(aTexture);//aSpriteData.IconTexture
+        //        aNames.Add(aIconSpriteID);
+        //    }
+        //    await ATS_TMPTools.UpdateSpriteAssetAsync(iSpriteAsset, aTextures, aNames, aIconSprites);
+        //}
         #endregion
         public const string DefaultIconsPath = ATS_SpriteData.SpriteFolder + "/Icons";
 
@@ -150,6 +180,8 @@ namespace ATS
         /// 圖示Icon
         /// </summary>
         public ATS_SpriteData m_Icon = new ATS_SpriteData(DefaultIconsPath);
+
+        public bool m_Disable = false;
         /// <summary>
         /// 縮放
         /// </summary>

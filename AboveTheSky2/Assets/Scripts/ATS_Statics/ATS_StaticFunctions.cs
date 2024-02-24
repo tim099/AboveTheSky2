@@ -10,69 +10,7 @@ using UnityEngine.AddressableAssets;
 
 namespace ATS
 {
-    public static class ATS_Addressable
-    {
 
-        #region Addressable
-        public static List<string> GetAddressablePath()
-        {
-            HashSet<string> aSet = new HashSet<string>();
-            aSet.Add(string.Empty);
-            foreach (var aKey in GetAllAddressableKeys())
-            {
-                if (aKey.Contains("/"))
-                {
-                    aSet.Add(UCL.Core.FileLib.Lib.RemoveFolderPath(aKey, 1));
-                }
-            }
-            var aList = aSet.ToList();
-            //Debug.LogError($"aList:{aList.ConcatString()}");
-            return aList;
-        }
-        public static List<string> GetAllAddressableKeys()
-        {
-            List<string> aList = new List<string>();
-            foreach (var aResourceLocator in Addressables.ResourceLocators)
-            {
-                int aIndex = 0;
-                foreach (var aKey in aResourceLocator.Keys)
-                {
-                    if (aKey is string aStr)
-                    {
-                        aList.Add(aStr);
-                        ++aIndex;
-                    }
-                }
-            }
-            return aList;
-        }
-        public static List<string> GetAllAddressableKeys(string iAddressablePath)
-        {
-            List<string> aList = new List<string>();
-            aList.Add(string.Empty);
-            foreach (var aResourceLocator in Addressables.ResourceLocators)
-            {
-                int aIndex = 0;
-                foreach (var aKey in aResourceLocator.Keys)
-                {
-                    if (aKey is string aStr)
-                    {
-                        if (string.IsNullOrEmpty(iAddressablePath))
-                        {
-                            aList.Add(aStr);
-                        }
-                        else if (aStr.Contains(iAddressablePath))
-                        {
-                            aList.Add(aStr);
-                        }
-                        ++aIndex;
-                    }
-                }
-            }
-            return aList;
-        }
-        #endregion
-    }
     public static class ATS_StaticEvents
     {
         static public System.Action s_OnRefreshGamedata = null;

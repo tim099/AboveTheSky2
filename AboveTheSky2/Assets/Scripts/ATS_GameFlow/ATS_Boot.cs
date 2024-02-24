@@ -28,7 +28,7 @@ namespace ATS
         {
             //Debug.LogError("ATS_Boot.Init()");
             var aCancellationToken = gameObject.GetCancellationTokenOnDestroy();
-            
+            await UnityEngine.AddressableAssets.Addressables.InitializeAsync();
             await UniTask.WaitUntil(()=> UCL_ModuleService.Initialized, cancellationToken: aCancellationToken);
             //Debug.LogError("UCL_ModuleService.Initialized");
             var aGameManager = await Addressables.LoadAssetAsync<GameObject>("Assets/Addressables/Prefabs/UCL_GameManager.prefab");

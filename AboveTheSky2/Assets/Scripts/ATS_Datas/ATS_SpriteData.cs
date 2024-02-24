@@ -58,11 +58,11 @@ namespace ATS
         public DataLoadType m_DataLoadType = DataLoadType.StreamingAssets;
 
         [UCL.Core.ATTR.AlwaysExpendOnGUI]
-        [UCL.Core.PA.Conditional("m_LoadType", false, DataLoadType.StreamingAssets)]
+        [UCL.Core.PA.Conditional("m_DataLoadType", false, DataLoadType.StreamingAssets)]
         public ATS_StreamingAssetsData m_StreamingAssetsData = new ATS_StreamingAssetsData(SpriteFolder);
 
         [UCL.Core.ATTR.AlwaysExpendOnGUI]
-        [UCL.Core.PA.Conditional("m_LoadType", false, DataLoadType.Addressable)]
+        [UCL.Core.PA.Conditional("m_DataLoadType", false, DataLoadType.Addressable)]
         public UCL_AddressableData m_AddressableData = new UCL_AddressableData();
 
 

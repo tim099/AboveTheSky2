@@ -1,9 +1,9 @@
 {
 	"Icon":{
-		"LoadType":"Addressable",
+		"DataLoadType":"Addressable",
 		"AddressableData":{
 			"AddressablePath":"Assets/Addressables/Sprites/Icons",
-			"AddressableKey":"Assets/Addressables/Sprites/Icons/AttackTag_Heal.png"
+			"AddressableKey":"Assets/Addressables/Sprites/Icons/hourglass.png"
 		},
 		"DetailSetting":{
 			"IsPreserveAspect":"False",

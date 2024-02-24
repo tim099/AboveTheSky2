@@ -3,10 +3,6 @@
 // to change the auto header please go to RCG_AutoHeader.cs
 // Create time : 02/20 2024 19:16
 
-// ATS_AutoHeader
-// to change the auto header please go to RCG_AutoHeader.cs
-// Create time : 02/20 2024 19:10
-/* AutoHeader Test */
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;

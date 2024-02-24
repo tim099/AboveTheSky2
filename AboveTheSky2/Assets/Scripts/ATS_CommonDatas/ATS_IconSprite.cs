@@ -17,6 +17,7 @@ using TMPro;
 using UCL.Core;
 using UCL.Core.Page;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 
 
 namespace ATS
@@ -24,10 +25,11 @@ namespace ATS
     public class ATS_IconSpriteGenData : UCL_AssetEntryDefault<ATS_IconSprite>
     {
         public const string HealID = "Icon_Heal";
+        public const string HealID2 = "Icon_Heal2";
         public const string DefaultID = HealID;
 
         static public ATS_IconSpriteGenData Icon_Heal => new ATS_IconSpriteGenData(HealID);
-
+        static public ATS_IconSpriteGenData Icon_Heal2 => new ATS_IconSpriteGenData(HealID2);
 
         public ATS_IconSpriteGenData() { m_ID = DefaultID; }
         public ATS_IconSpriteGenData(string iID) { m_ID = iID; }
@@ -60,22 +62,25 @@ namespace ATS
     {
         #region static
         private static TMP_SpriteAsset s_SpriteAsset = null;
+        /// <summary>
+        /// Please InitSpriteAsset before access ATS_IconSprite.SpriteAsset
+        /// </summary>
         public static TMP_SpriteAsset SpriteAsset 
         {
             get 
             { 
-                if(s_SpriteAsset == null)
-                {
-                    s_SpriteAsset = GenerateSpriteAsset();
-                }
+                //if(s_SpriteAsset == null)
+                //{
+                //    s_SpriteAsset = GenerateSpriteAsset();
+                //}
                 return s_SpriteAsset;
             }
         }
-        public static void CheckSpriteAsset()
+        public static async UniTask InitSpriteAsset(CancellationToken iToken)
         {
             if (s_SpriteAsset == null)
             {
-                s_SpriteAsset = GenerateSpriteAsset();
+                s_SpriteAsset = await GenerateSpriteAsset(iToken);
             }
         }
         public static void ClearSpriteAsset()
@@ -84,7 +89,7 @@ namespace ATS
             ATS_TMPTools.ClearSpriteAsset(s_SpriteAsset);
             s_SpriteAsset = null;
         }
-        public static TMP_SpriteAsset GenerateSpriteAsset()
+        public static async UniTask<TMP_SpriteAsset> GenerateSpriteAsset(CancellationToken iToken)
         {
             List<Texture2D> aTextures = new List<Texture2D>();
             List<ATS_IconSprite> aIconSprites = new List<ATS_IconSprite>();
@@ -97,7 +102,8 @@ namespace ATS
                     continue;
                 }
                 aIconSprites.Add(aSpriteData);
-                aTextures.Add(aSpriteData.IconTexture);
+                var aTexture = await aSpriteData.m_Icon.GetTextureAsync(iToken);
+                aTextures.Add(aTexture);//aSpriteData.IconTexture
                 aNames.Add(aIconSpriteID);
             }
             TMP_SpriteAsset aAsset = ATS_TMPTools.CreateSpriteAsset(aTextures, aNames, aIconSprites);
@@ -105,12 +111,19 @@ namespace ATS
         }
         //public static TMP_SpriteAsset GenerateSpriteAsset()
         //{
+        //    Debug.LogError("GenerateSpriteAsset()");
         //    TMP_SpriteAsset aAsset = ATS_TMPTools.CreateSpriteAssetTmp();
-        //    UpdateSpriteAssetAsync(aAsset).Forget();
+        //    s_SpriteAsset = aAsset;
+        //    UpdateSpriteAssetAsync().Forget();
         //    return aAsset;
         //}
-        //public static async UniTask UpdateSpriteAssetAsync(TMP_SpriteAsset iSpriteAsset)
+        //public static async UniTask UpdateSpriteAssetAsync()
         //{
+        //    if(s_SpriteAsset == null)
+        //    {
+        //        s_SpriteAsset = ATS_TMPTools.CreateSpriteAssetTmp();
+        //    }
+        //    Debug.LogError($"UpdateSpriteAssetAsync(),spriteCharacterTable:{s_SpriteAsset.spriteCharacterTable.Count}");
         //    List<Texture2D> aTextures = new List<Texture2D>();
         //    List<ATS_IconSprite> aIconSprites = new List<ATS_IconSprite>();
         //    List<string> aNames = new List<string>();
@@ -126,7 +139,9 @@ namespace ATS
         //        aTextures.Add(aTexture);//aSpriteData.IconTexture
         //        aNames.Add(aIconSpriteID);
         //    }
-        //    await ATS_TMPTools.UpdateSpriteAssetAsync(iSpriteAsset, aTextures, aNames, aIconSprites);
+        //    ATS_TMPTools.UpdateSpriteAssetAsync(s_SpriteAsset, aTextures, aNames, aIconSprites);
+        //    Debug.LogError($"UpdateSpriteAssetAsync() End,spriteCharacterTable:{s_SpriteAsset.spriteCharacterTable.Count}");
+
         //}
         #endregion
         public const string DefaultIconsPath = ATS_SpriteData.SpriteFolder + "/Icons";

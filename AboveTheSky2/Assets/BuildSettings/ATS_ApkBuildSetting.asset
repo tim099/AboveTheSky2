@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8426d920d4e6d4ab622ad70ba5f108, type: 3}
+  m_Name: ATS_ApkBuildSetting
+  m_EditorClassIdentifier: 
+  m_OutputBuildLog: 0
+  m_DefaultSetting: {fileID: 0}
+  m_ProductName: Above The Sky II
+  m_ApplicationIdentifier: com.ATS.AboveTheSkyII
+  m_BuildTargetGroup: 7
+  m_BuildTarget: 13
+  m_BuildOption: 0
+  m_Icons: []
+  m_DefaultIcon: {fileID: 2800000, guid: ea90a7a742627304e8d36b90030a6b77, type: 3}
+  m_BuildAppBundle: 0
+  m_OutputPath: Build/Apk/
+  m_OutputName: AboveTheSkyII.apk
+  m_ScenesInBuild: []
+  m_KeyStoreSetting:
+    m_KeystoreName: 
+    m_KeystorePass: 
+    m_KeyaliasName: 
+    m_KeyaliasPass: 
+  m_VersionSetting:
+    m_BundleVersion: 1.0.0
+    m_BundleVersionCode: 1
+    m_BuildNumber: 1
+  m_ScriptingDefineSymbols: 
+  m_PreBuildProcess: []

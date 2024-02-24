@@ -68,10 +68,33 @@ namespace ATS
                     Debug.LogError($"CreateSpriteAsset iTextures[{i}] == null");
                     continue;
                 }
-                var aCols = UCL.Core.TextureLib.Lib.GetPixels(iTextures[i], iSpriteSize, iSpriteSize);
-                var newTexture = new Texture2D(iSpriteSize, iSpriteSize, iTextures[i].format, true);
-                newTexture.SetPixels(aCols);
-                aTextures[i] = newTexture;
+                try
+                {
+                    var aFormat = aTexture.format;
+                    switch (aFormat)
+                    {
+                        case TextureFormat.DXT5:
+                            {
+                                aFormat = TextureFormat.RGBA32;
+                                break;
+                            }
+                    }
+                    //if (aFormat == TextureFormat.DXT5)
+                    //{
+                    //    aFormat = TextureFormat.RGBA32;
+                    //}
+                    var aCols = UCL.Core.TextureLib.Lib.GetPixels(aTexture, iSpriteSize, iSpriteSize);
+                    var aNewTexture = new Texture2D(iSpriteSize, iSpriteSize, aFormat, true);
+                    aNewTexture.SetPixels(aCols);
+                    aTextures[i] = aNewTexture;
+                }
+                catch(System.Exception e)
+                {
+                    Debug.LogException(e);
+                    Debug.LogError($"aTexture:{aTexture.name},aFormat:{aTexture.format},Exception:{e}");
+                }
+
+                
             }
 
             var aSpriteSheet = new Texture2D(0, 0, TextureFormat.ARGB32, true, false);
@@ -159,140 +182,12 @@ namespace ATS
                 if (spriteCharacter.unicode == 0) spriteCharacter.unicode = 0xFFFE;
                 spriteCharacterTable.Add(spriteCharacter);
             }
-
+            //Debug.LogError($"1 spriteCharacterTable:{aSpriteAsset.spriteCharacterTable.Count}");
             aSpriteAsset.UpdateLookupTables();
-
+            //Debug.LogError($"2 spriteCharacterTable:{aSpriteAsset.spriteCharacterTable.Count}");
             return aSpriteAsset;
         }
 
-        public static TMP_SpriteAsset CreateSpriteAssetTmp()
-        {
-            // Create new Sprite Asset
-            var aSpriteAsset = ScriptableObject.CreateInstance<TMP_SpriteAsset>();
-            // Compute the hash code for the sprite asset.
-            aSpriteAsset.hashCode = TMP_TextUtilities.GetSimpleHashCode(aSpriteAsset.name);
-            aSpriteAsset.spriteInfoList = new List<TMP_Sprite>();
-            if (s_SpriteAssetMaterial == null)
-            {
-                Shader shader = Shader.Find("TextMeshPro/Sprite");
-
-                s_SpriteAssetMaterial = new Material(shader);
-            }
-            return aSpriteAsset;
-        }
-        public static async UniTask UpdateSpriteAssetAsync(TMP_SpriteAsset iSpriteAsset, List<Texture2D> iTextures,
-            List<string> iTextureNames = null, List<ATS_IconSprite> iIconSprites = null,
-            int iSpriteSize = 64, int iMaxAtlasSize = 4096)
-        {
-            if (iTextureNames == null)
-            {
-                iTextureNames = new List<string>();
-                for (int i = 0; i < iTextures.Count; i++)
-                {
-                    iTextureNames.Add(iTextures[i].name);
-                }
-            }
-            //pack the textures into the atlas
-            var aTextures = new Texture2D[iTextures.Count];
-            for (int i = 0; i < iTextures.Count; i++)
-            {
-                // aTextures[i] = iTextures[i].CreateResizeTexture(iSpriteSize, iSpriteSize);
-                var aTexture = iTextures[i];
-                if (aTexture == null)
-                {
-                    Debug.LogError($"CreateSpriteAsset iTextures[{i}] == null");
-                    continue;
-                }
-                try
-                {
-                    var aCols = UCL.Core.TextureLib.Lib.GetPixels(aTexture, iSpriteSize, iSpriteSize);
-                    var newTexture = new Texture2D(iSpriteSize, iSpriteSize, TextureFormat.RGBA32, true);//aTexture.format
-                    newTexture.SetPixels(aCols);
-                    aTextures[i] = newTexture;
-                }
-                catch(System.Exception e)
-                {
-                    Debug.LogException(e);
-                    Debug.LogError($"aTexture:{aTexture.name},format:{aTexture.format},Exception:{e}");
-                }
-            }
-
-            var aSpriteSheet = new Texture2D(0, 0, TextureFormat.ARGB32, true, false);
-            aSpriteSheet.filterMode = FilterMode.Bilinear;
-            var rects = aSpriteSheet.PackTextures(aTextures, 20, iMaxAtlasSize, false);
-            //cleanup textures
-            foreach (var texture in aTextures)
-            {
-                Object.DestroyImmediate(texture);
-            }
-
-            float scaleW = (float)aSpriteSheet.width;
-            float scaleH = (float)aSpriteSheet.height;
-
-            for (int i = 0; i < rects.Length; i++)
-            {
-                var rect = rects[i];
-                rects[i] = new Rect(rect.x * scaleW, rect.y * scaleH, rect.width * scaleW, rect.height * scaleH);
-            }
-            aSpriteSheet.Apply(true, false);
-
-
-
-            // Assign new Sprite Sheet texture to the Sprite Asset.
-            iSpriteAsset.spriteSheet = aSpriteSheet;
-
-            // Add new default material for sprite asset.
-
-            s_SpriteAssetMaterial.SetTexture(ShaderUtilities.ID_MainTex, iSpriteAsset.spriteSheet);
-
-            iSpriteAsset.material = s_SpriteAssetMaterial;
-            s_SpriteAssetMaterial.hideFlags = HideFlags.HideInHierarchy;
-
-            iSpriteAsset.spriteCharacterTable.Clear();
-            iSpriteAsset.spriteGlyphTable.Clear();
-
-            List<TMP_SpriteGlyph> spriteGlyphTable = iSpriteAsset.spriteGlyphTable;
-            List<TMP_SpriteCharacter> spriteCharacterTable = iSpriteAsset.spriteCharacterTable;
-            for (int i = 0; i < iTextures.Count; i++)
-            {
-                TMP_SpriteGlyph spriteGlyph = new TMP_SpriteGlyph();
-                ATS_IconSprite aIconSprite = null;
-                if (iIconSprites != null && i < iIconSprites.Count)
-                {
-                    aIconSprite = iIconSprites[i];
-                }
-                float aBearingY = BearingY;
-                float aBearingX = 0f;
-                if (aIconSprite != null)
-                {
-                    aBearingX = aIconSprite.m_BearingX;
-                    aBearingY = aIconSprite.m_BearingY;
-                }
-                spriteGlyph.index = (uint)i;
-                spriteGlyph.metrics = new UnityEngine.TextCore.GlyphMetrics(iSpriteSize, iSpriteSize,
-                    aBearingX * iSpriteSize, aBearingY * iSpriteSize, iSpriteSize);
-                spriteGlyph.glyphRect = new UnityEngine.TextCore.GlyphRect(rects[i]);//sprite.rect
-                spriteGlyph.scale = 1.0f;
-
-                spriteGlyphTable.Add(spriteGlyph);
-
-                TMP_SpriteCharacter spriteCharacter = new TMP_SpriteCharacter(0, spriteGlyph);
-                spriteCharacter.name = iTextureNames[i];
-
-                if (aIconSprite != null)
-                {
-                    spriteCharacter.scale = aIconSprite.m_Scale;
-                }
-                else
-                {
-                    spriteCharacter.scale = 1.0f;
-                }
-                if (spriteCharacter.unicode == 0) spriteCharacter.unicode = 0xFFFE;
-                spriteCharacterTable.Add(spriteCharacter);
-            }
-
-            iSpriteAsset.UpdateLookupTables();
-        }
 
         //        public static void CreateIconSpriteSheetEditor(string iOuputAtlasPath = "Assets/Resources/Sprites/TMPIconSprites")
         //        {

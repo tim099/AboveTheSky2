@@ -30,7 +30,7 @@ namespace ATS
             await UniTask.WaitUntil(()=> UCL_ModuleService.Initialized, cancellationToken: aCancellationToken);
             var aGameManager = await Addressables.LoadAssetAsync<GameObject>("Assets/Addressables/Prefabs/UCL_GameManager.prefab");
             m_GameManager = Instantiate(aGameManager, transform);
-
+            await ATS_IconSprite.InitSpriteAsset(aCancellationToken);
             m_Test.gameObject.SetActive(true);
         }
         private void Start()

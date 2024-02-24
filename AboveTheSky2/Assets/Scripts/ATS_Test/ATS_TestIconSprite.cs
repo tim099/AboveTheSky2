@@ -20,20 +20,28 @@ namespace ATS
         // Start is called before the first frame update
         void Start()
         {
-            var aIcon = ATS_IconSpriteGenData.Icon_Heal;
             m_TextMeshPro.spriteAsset = ATS_IconSprite.SpriteAsset;
-            var aIconData = aIcon.GetData();
-            if(aIconData != null )
             {
-                m_TextMeshPro.text += aIcon.TMPKey;
-                m_Image.sprite = aIconData.IconSprite;
-
+                var aIcon = ATS_IconSpriteGenData.Icon_Heal;
+                var aIconData = aIcon.GetData();
+                if (aIconData != null)
+                {
+                    m_TextMeshPro.text += aIcon.TMPKey;
+                    m_Image.sprite = aIconData.IconSprite;
+                }
+                else
+                {
+                    Debug.LogError("ATS_TestIconSprite aIconData == null");
+                }
             }
-            else
             {
-                Debug.LogError("ATS_TestIconSprite aIconData == null");
+                var aIcon = ATS_IconSpriteGenData.Icon_Heal2;
+                var aIconData = aIcon.GetData();
+                if (aIconData != null)
+                {
+                    m_TextMeshPro.text += aIcon.TMPKey;
+                }
             }
-
             UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(new Page.ATS_EditorMenuPage());
             //Test().Forget();
         }

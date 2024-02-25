@@ -178,7 +178,7 @@ namespace ATS
 
         public ATS_IconSprite()
         {
-            ID = "New Skill";
+            ID = "New IconSprite";
         }
         public ATS_IconSprite(string iID)
         {

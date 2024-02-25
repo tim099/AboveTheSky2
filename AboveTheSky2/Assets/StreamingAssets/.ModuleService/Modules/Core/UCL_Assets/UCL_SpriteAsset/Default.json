@@ -3,6 +3,6 @@
 	"ModResourcesData":{
 		"ModuleID":"Core",
 		"FolderPath":"Sprites/Icons",
-		"Name":"explosion.png"
+		"FileName":"explosion.png"
 	}
 }

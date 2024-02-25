@@ -5,6 +5,7 @@ using UCL.Core.EditorLib.Page;
 using UCL.Core.LocalizeLib;
 using UCL.Core.Page;
 using UCL.Core.UI;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ATS.Page
@@ -29,7 +30,8 @@ namespace ATS.Page
 
             using (var aScope = new GUILayout.VerticalScope("box"))//, GUILayout.MaxWidth(320)
             {
-
+                var aStyleData = UCL_GUIStyle.CurStyleData;
+                aStyleData.SetScale(UCL_GUILayout.Slider("GUISize", aStyleData.Scale, 1f, 5f, m_Dic.GetSubDic("GUISize")));
                 if (GUILayout.Button("DebugLog", UCL_GUIStyle.ButtonStyle))
                 {
                     UCL.Core.EditorLib.Page.UCL_DebugLogPage.Create();

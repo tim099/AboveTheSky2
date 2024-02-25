@@ -105,40 +105,7 @@ namespace ATS
             TMP_SpriteAsset aAsset = ATS_TMPTools.CreateSpriteAsset(aTextures, aNames, aIconSprites);
             return aAsset;
         }
-        //public static TMP_SpriteAsset GenerateSpriteAsset()
-        //{
-        //    Debug.LogError("GenerateSpriteAsset()");
-        //    TMP_SpriteAsset aAsset = ATS_TMPTools.CreateSpriteAssetTmp();
-        //    s_SpriteAsset = aAsset;
-        //    UpdateSpriteAssetAsync().Forget();
-        //    return aAsset;
-        //}
-        //public static async UniTask UpdateSpriteAssetAsync()
-        //{
-        //    if(s_SpriteAsset == null)
-        //    {
-        //        s_SpriteAsset = ATS_TMPTools.CreateSpriteAssetTmp();
-        //    }
-        //    Debug.LogError($"UpdateSpriteAssetAsync(),spriteCharacterTable:{s_SpriteAsset.spriteCharacterTable.Count}");
-        //    List<Texture2D> aTextures = new List<Texture2D>();
-        //    List<ATS_IconSprite> aIconSprites = new List<ATS_IconSprite>();
-        //    List<string> aNames = new List<string>();
-        //    foreach (var aIconSpriteID in ATS_IconSprite.Util.GetAllIDs())
-        //    {
-        //        var aSpriteData = ATS_IconSprite.Util.GetData(aIconSpriteID);
-        //        if (aSpriteData.m_Disable)
-        //        {
-        //            continue;
-        //        }
-        //        aIconSprites.Add(aSpriteData);
-        //        var aTexture = await aSpriteData.m_Icon.GetTextureAsync();
-        //        aTextures.Add(aTexture);//aSpriteData.IconTexture
-        //        aNames.Add(aIconSpriteID);
-        //    }
-        //    ATS_TMPTools.UpdateSpriteAssetAsync(s_SpriteAsset, aTextures, aNames, aIconSprites);
-        //    Debug.LogError($"UpdateSpriteAssetAsync() End,spriteCharacterTable:{s_SpriteAsset.spriteCharacterTable.Count}");
 
-        //}
         #endregion
         public const string DefaultIconsPath = ATS_SpriteData.SpriteFolder + "/Icons";
 

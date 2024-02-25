@@ -1,8 +1,7 @@
 {
-	"DataLoadType":"ModResources",
-	"ModResourcesData":{
-		"ModuleID":"Core",
-		"FolderPath":"Sprites/Icons",
-		"FileName":"explosion.png"
+	"DataLoadType":"Addressable",
+	"AddressableData":{
+		"AddressablePath":"Assets/Addressables/Sprites/Icons",
+		"AddressableKey":"Assets/Addressables/Sprites/Icons/target2.png"
 	}
 }

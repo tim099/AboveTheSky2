@@ -11,6 +11,9 @@
 			"FilterMode":"Bilinear"
 		}
 	},
+	"Sprite":{
+		"ID":"Icon_Explosion"
+	},
 	"Disable":"False",
 	"Scale":1,
 	"BearingX":0,

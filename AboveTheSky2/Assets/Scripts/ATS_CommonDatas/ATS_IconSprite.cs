@@ -92,15 +92,23 @@ namespace ATS
             List<string> aNames = new List<string>();
             foreach (var aIconSpriteID in ATS_IconSprite.Util.GetAllIDs())
             {
-                var aSpriteData = ATS_IconSprite.Util.GetData(aIconSpriteID);
-                if (aSpriteData.m_Disable)
+                try
                 {
-                    continue;
+                    var aSpriteData = ATS_IconSprite.Util.GetData(aIconSpriteID);
+                    if (aSpriteData.m_Disable)
+                    {
+                        continue;
+                    }
+                    aIconSprites.Add(aSpriteData);
+                    var aTexture = await aSpriteData.m_Sprite.GetData().GetTextureAsync(iToken);
+                    aTextures.Add(aTexture);//aSpriteData.IconTexture
+                    aNames.Add(aIconSpriteID);
                 }
-                aIconSprites.Add(aSpriteData);
-                var aTexture = await aSpriteData.m_Icon.GetTextureAsync(iToken);
-                aTextures.Add(aTexture);//aSpriteData.IconTexture
-                aNames.Add(aIconSpriteID);
+                catch(System.Exception e)
+                {
+                    Debug.LogException(e);
+                }
+
             }
             TMP_SpriteAsset aAsset = ATS_TMPTools.CreateSpriteAsset(aTextures, aNames, aIconSprites);
             return aAsset;
@@ -112,7 +120,7 @@ namespace ATS
         
         public override UCL_CommonSelectPage<ATS_IconSprite> CreateCommonSelectPage()
         {
-            var aPage = new RCG_IconSpriteEditorPage();
+            var aPage = new ATS_IconSpriteEditorPage();
             UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(aPage);
             return aPage;
         }
@@ -157,8 +165,7 @@ namespace ATS
         /// <summary>
         /// 圖示Icon
         /// </summary>
-        public ATS_SpriteData m_Icon = new ATS_SpriteData(DefaultIconsPath);
-
+        public UCL_SpriteAssetEntry m_Sprite = new UCL_SpriteAssetEntry();
         public bool m_Disable = false;
         /// <summary>
         /// 縮放
@@ -168,13 +175,12 @@ namespace ATS
         public float m_BearingY = 0.85f;
         public string LocalizeName => UCL_LocalizeManager.Get(ID);
 
-        public ATS_SpriteData Icon => m_Icon;
-        virtual public Sprite IconSprite => m_Icon == null ? null : m_Icon.Sprite;
-        virtual public Texture2D IconTexture => m_Icon == null ? null : m_Icon.Texture;
+        virtual public Sprite IconSprite => m_Sprite.Sprite;
+        virtual public Texture2D IconTexture => m_Sprite.Texture;
         public string TMPKey => $"<sprite name={ID}>";
     }
 
-    public class RCG_IconSpriteEditorPage : UCL_CommonSelectPage<ATS_IconSprite>
+    public class ATS_IconSpriteEditorPage : UCL_CommonSelectPage<ATS_IconSprite>
     {
 
         protected override void ContentOnGUI()

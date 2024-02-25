@@ -1,10 +1,10 @@
 {
 	"IgnoreMetaFiles":"True",
-	"TargetDirectory":"D:/Unity/AboveTheSky2/AboveTheSky2/Assets/StreamingAssets\\.ModuleService\\Modules\\Core",
+	"TargetDirectory":".ModuleService\\Modules\\Core",
 	"FileExtension":"",
 	"FolderInformations":{
 		"Name":"Core",
-		"Path":"D:/Unity/AboveTheSky2/AboveTheSky2/Assets/StreamingAssets\\.ModuleService\\Modules\\Core",
+		"Path":".ModuleService\\Modules\\Core",
 		"FileInfos":
 		[
 			{
@@ -20,23 +20,112 @@
 		[
 			{
 				"Name":"ModResources",
-				"Path":"D:/Unity/AboveTheSky2/AboveTheSky2/Assets/StreamingAssets\\.ModuleService\\Modules\\Core\\ModResources",
+				"Path":".ModuleService\\Modules\\Core\\ModResources",
 				"FileInfos":
 				[
 					{
 						"FileName":"Readme",
 						"Extension":"txt"
 					}
+				],
+				"FolderInfos":
+				[
+					{
+						"Name":"Sprites",
+						"Path":".ModuleService\\Modules\\Core\\ModResources\\Sprites",
+						"FolderInfos":
+						[
+							{
+								"Name":"Icons",
+								"Path":".ModuleService\\Modules\\Core\\ModResources\\Sprites\\Icons",
+								"FileInfos":
+								[
+									{
+										"FileName":"AttackTag_Heal",
+										"Extension":"png"
+									},
+									{
+										"FileName":"card",
+										"Extension":"png"
+									},
+									{
+										"FileName":"card2",
+										"Extension":"png"
+									},
+									{
+										"FileName":"close_icon",
+										"Extension":"png"
+									},
+									{
+										"FileName":"explosion",
+										"Extension":"png"
+									},
+									{
+										"FileName":"gem_new",
+										"Extension":"png"
+									},
+									{
+										"FileName":"HealthReduce",
+										"Extension":"png"
+									},
+									{
+										"FileName":"HealthReduce2",
+										"Extension":"png"
+									},
+									{
+										"FileName":"HealthReduce3",
+										"Extension":"png"
+									},
+									{
+										"FileName":"hourglass",
+										"Extension":"png"
+									},
+									{
+										"FileName":"HP",
+										"Extension":"png"
+									},
+									{
+										"FileName":"magic_icon",
+										"Extension":"png"
+									},
+									{
+										"FileName":"melee_icon",
+										"Extension":"png"
+									},
+									{
+										"FileName":"range_icon",
+										"Extension":"png"
+									},
+									{
+										"FileName":"Shield",
+										"Extension":"png"
+									},
+									{
+										"FileName":"swords",
+										"Extension":"png"
+									},
+									{
+										"FileName":"target",
+										"Extension":"png"
+									},
+									{
+										"FileName":"target2",
+										"Extension":"png"
+									}
+								]
+							}
+						]
+					}
 				]
 			},
 			{
 				"Name":"UCL_Assets",
-				"Path":"D:/Unity/AboveTheSky2/AboveTheSky2/Assets/StreamingAssets\\.ModuleService\\Modules\\Core\\UCL_Assets",
+				"Path":".ModuleService\\Modules\\Core\\UCL_Assets",
 				"FolderInfos":
 				[
 					{
 						"Name":"ATS_IconSprite",
-						"Path":"D:/Unity/AboveTheSky2/AboveTheSky2/Assets/StreamingAssets\\.ModuleService\\Modules\\Core\\UCL_Assets\\ATS_IconSprite",
+						"Path":".ModuleService\\Modules\\Core\\UCL_Assets\\ATS_IconSprite",
 						"FileInfos":
 						[
 							{
@@ -55,12 +144,24 @@
 					},
 					{
 						"Name":"UCL_SpriteAsset",
-						"Path":"D:/Unity/AboveTheSky2/AboveTheSky2/Assets/StreamingAssets\\.ModuleService\\Modules\\Core\\UCL_Assets\\UCL_SpriteAsset",
+						"Path":".ModuleService\\Modules\\Core\\UCL_Assets\\UCL_SpriteAsset",
 						"FileInfos":
 						[
 							{
 								"FileName":"",
 								"Extension":"CommonDataMeta"
+							},
+							{
+								"FileName":"Default",
+								"Extension":"json"
+							},
+							{
+								"FileName":"Icon_Explosion",
+								"Extension":"json"
+							},
+							{
+								"FileName":"Icon_HP",
+								"Extension":"json"
 							}
 						]
 					}

@@ -137,12 +137,12 @@ namespace ATS
             {
 
                 GUILayout.Label($"{UCL_LocalizeManager.Get("Preview")}({ID})", UCL.Core.UI.UCL_GUIStyle.LabelStyle);
-                if (IconTexture != null) GUILayout.Box(IconTexture, GUILayout.Width(64), GUILayout.Height(64));
+                if (IconTexture != null) GUILayout.Box(IconTexture, GUILayout.Width(UCL_GUIStyle.GetScaledSize(64)), GUILayout.Height(UCL_GUIStyle.GetScaledSize(64)));
                 //UCL.Core.UI.UCL_GUILayout.LabelAutoSize(LocalizeName);
 
                 if (iIsShowEditButton)
                 {
-                    if (GUILayout.Button(UCL_LocalizeManager.Get("Edit")))
+                    if (GUILayout.Button(UCL_LocalizeManager.Get("Edit"), UCL_GUIStyle.ButtonStyle))
                     {
                         UCL_CommonEditPage.Create(this);
                     }

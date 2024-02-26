@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UCL.Core;
 using UCL.Core.EditorLib.Page;
+using UCL.Core.JsonLib;
 using UCL.Core.LocalizeLib;
 using UCL.Core.Page;
 using UCL.Core.UI;
@@ -12,12 +14,59 @@ namespace ATS.Page
 {
     public class ATS_EditorMenuPage : UCL_CommonEditorPage
     {
+        [System.Serializable]
+        public class RunTimeData : UCL.Core.JsonLib.UnityJsonSerializable
+        {
+
+            public float m_Scale = 1f;
+
+
+            public override JsonData SerializeToJson()
+            {
+                return base.SerializeToJson();
+            }
+        }
+
         public override string WindowName => UCL_LocalizeManager.Get("EditorMenu");
         protected override bool ShowCloseButton => !UI.ATS_EditorMenu.IsInEditWindow;
         protected override bool ShowBackButton => UI.ATS_EditorMenu.IsInEditWindow ? false : base.ShowBackButton;
 
         UCL_ObjectDictionary m_Dic = new UCL_ObjectDictionary();
 
+        #region
+        const string RunTimeDataKey = "s_RunTimeData";
+        static RunTimeData s_RunTimeData = null;
+        static RunTimeData LoadRunTimeData()
+        {
+            if (PlayerPrefs.HasKey(RunTimeDataKey))
+            {
+                try
+                {
+                    string aJsonStr = PlayerPrefs.GetString(RunTimeDataKey);
+                    JsonData aJson = JsonData.ParseJson(aJsonStr);
+                    var aRunTimeData = JsonConvert.LoadDataFromJsonUnityVer<RunTimeData>(aJson);
+                    if (aRunTimeData != null) return aRunTimeData;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
+            return new RunTimeData();
+        }
+        static void SaveRunTimeData()
+        {
+            PlayerPrefs.SetString(RunTimeDataKey, UCL.Core.JsonLib.JsonConvert.SaveDataToJsonUnityVer(s_RunTimeData).ToJson());
+        }
+        #endregion
+
+        public override void Init(UCL_GUIPageController iGUIPageController)
+        {
+            base.Init(iGUIPageController);
+            s_RunTimeData = LoadRunTimeData();
+            var aStyleData = UCL_GUIStyle.CurStyleData;
+            aStyleData.SetScale(s_RunTimeData.m_Scale);
+        }
         /// <summary>
         /// 繪製選單 開啟其他編輯器
         /// </summary>
@@ -30,11 +79,55 @@ namespace ATS.Page
 
             using (var aScope = new GUILayout.VerticalScope("box"))//, GUILayout.MaxWidth(320)
             {
-                var aStyleData = UCL_GUIStyle.CurStyleData;
-                aStyleData.SetScale(UCL_GUILayout.Slider("GUISize", aStyleData.Scale, 1f, 5f, m_Dic.GetSubDic("GUISize")));
+                using (var aScope2 = new GUILayout.HorizontalScope("box"))
+                {
+                    var aStyleData = UCL_GUIStyle.CurStyleData;
+                    float aScale = aStyleData.Scale;
+                    if(aScale < 0.1f)
+                    {
+                        aScale = 0.1f;
+                    }
+                    int aSize = Mathf.RoundToInt(30f / aScale);
+                    var aButtonStyle = UCL_GUIStyle.GetButtonStyle(Color.white, aSize);
+                    if (GUILayout.Button("Small", aButtonStyle))
+                    {
+                        aStyleData.SetScale(1f);
+                        s_RunTimeData.m_Scale = aStyleData.Scale;
+                        SaveRunTimeData();
+                    }
+                    GUILayout.Space(30);
+                    if (GUILayout.Button("Medium", aButtonStyle))
+                    {
+                        aStyleData.SetScale(1.5f);
+                        s_RunTimeData.m_Scale = aStyleData.Scale;
+                        SaveRunTimeData();
+                    }
+                    GUILayout.Space(30);
+                    if (GUILayout.Button("Big", aButtonStyle))
+                    {
+                        aStyleData.SetScale(2.5f);
+                        s_RunTimeData.m_Scale = aStyleData.Scale;
+                        SaveRunTimeData();
+                    }
+                    GUILayout.Space(30);
+                    if (GUILayout.Button("XL", aButtonStyle))
+                    {
+                        aStyleData.SetScale(4f);
+                        s_RunTimeData.m_Scale = aStyleData.Scale;
+                        SaveRunTimeData();
+                    }
+                    //aStyleData.SetScale(UCL_GUILayout.Slider("GUISize", aStyleData.Scale, 1f, 5f, m_Dic.GetSubDic("GUISize")));
+                    //if (aStyleData.Scale != s_RunTimeData.m_Scale)
+                    //{
+                    //    s_RunTimeData.m_Scale = aStyleData.Scale;
+                    //    SaveRunTimeData();
+                    //}
+                }
+
+                
                 if (GUILayout.Button("DebugLog", UCL_GUIStyle.ButtonStyle))
                 {
-                    UCL.Core.EditorLib.Page.UCL_DebugLogPage.Create();
+                    UCL_DebugLogPage.Create();
                     //UCL.Core.DebugLib.UCL_DebugLog.Instance.Toggle();
                 }
                 if (GUILayout.Button(UCL_LocalizeManager.Get("DeveloperEditor"), UCL_GUIStyle.GetButtonStyle(Color.yellow)))

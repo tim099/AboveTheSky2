@@ -87,7 +87,7 @@ namespace ATS.Page
         {
             base.TopBarButtons();
             GUILayout.Space(30);
-            if (GUILayout.Button(UCL.Core.LocalizeLib.UCL_LocalizeManager.Get("Save"), GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button(UCL.Core.LocalizeLib.UCL_LocalizeManager.Get("Save"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
             {
                 SaveConfig();
             }
@@ -182,7 +182,7 @@ namespace ATS.Page
             using (new GUILayout.VerticalScope("box"))
             {
                 m_ScriptsRoot = UCL.Core.UI.UCL_GUILayout.FolderExplorer(m_Dic.GetSubDic("ScriptsRoot"), m_ScriptsRoot, Application.dataPath, "ScriptsRoot");
-                if (GUILayout.Button("Refresh scripts encoding"))
+                if (GUILayout.Button("Refresh scripts encoding", UCL_GUIStyle.ButtonStyle))
                 {
                     bool aCancel = UCL.Core.EditorLib.EditorUtilityMapper.DisplayCancelableProgressBar("Refresh scripts encoding", "Init", 0.1f);
                     var aRoot = Application.dataPath + "/" + m_ScriptsRoot;

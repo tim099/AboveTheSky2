@@ -197,7 +197,7 @@ namespace ATS
 //                ATS_TMPTools.CreateIconSpriteSheetEditor();
 //            }
 //#endif
-            if (GUILayout.Button("Refresh SpriteAsset", GUILayout.ExpandWidth(false)))
+            if (GUILayout.Button("Refresh SpriteAsset", UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
             {
                 ATS_IconSprite.ClearSpriteAsset();
                 //CreateSpriteAsset

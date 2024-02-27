@@ -139,6 +139,25 @@
 							{
 								"FileName":"Icon_Heal2",
 								"Extension":"json"
+							},
+							{
+								"FileName":"Icon_Heal3",
+								"Extension":"json"
+							}
+						]
+					},
+					{
+						"Name":"UCL_GameObjectAsset",
+						"Path":".ModuleService\\Modules\\Core\\UCL_Assets\\UCL_GameObjectAsset",
+						"FileInfos":
+						[
+							{
+								"FileName":"",
+								"Extension":"CommonDataMeta"
+							},
+							{
+								"FileName":"GameManager",
+								"Extension":"json"
 							}
 						]
 					},

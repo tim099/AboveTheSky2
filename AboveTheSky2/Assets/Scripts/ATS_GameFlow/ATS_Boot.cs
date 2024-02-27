@@ -35,10 +35,14 @@ namespace ATS
             //Debug.LogError("ATS_Boot.Init()");
             var aCancellationToken = gameObject.GetCancellationTokenOnDestroy();
             await UnityEngine.AddressableAssets.Addressables.InitializeAsync();
+
+            //UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(new Page.ATS_EditorMenuPage());
+
             await UniTask.WaitUntil(()=> UCL_ModuleService.Initialized, cancellationToken: aCancellationToken);
             //Debug.LogError("UCL_ModuleService.Initialized");
             var aGameManager = await m_GameManagerAssetEntry.GetData().LoadAsync(aToken);
-                //Addressables.LoadAssetAsync<GameObject>("Assets/Addressables/Prefabs/UCL_GameManager.prefab");
+
+            //var aGameManager = await Addressables.LoadAssetAsync<GameObject>("Assets/Addressables/Prefabs/ATS_GameManager.prefab");
             m_GameManager = Instantiate(aGameManager, null);
             await ATS_IconSprite.InitSpriteAsset(aCancellationToken);
             await UI.ATS_MainMenu.CreateAsync();

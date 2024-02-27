@@ -42,7 +42,7 @@ namespace ATS
                     m_TextMeshPro.text += aIcon.TMPKey;
                 }
             }
-            UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(new Page.ATS_EditorMenuPage());
+            //UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(new Page.ATS_EditorMenuPage());
             //Test().Forget();
         }
         async UniTask Test()

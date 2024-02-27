@@ -16,26 +16,33 @@ namespace ATS
 {
     public class ATS_Boot : MonoBehaviour
     {
-        public GameObject m_Test;
+        public static ATS_Boot Ins { get; private set; } = null;
+
+        public UCL_GameObjectAssetEntry m_GameManagerAssetEntry = new UCL_GameObjectAssetEntry("GameManager");
         GameObject m_GameManager;
         
         private void Awake()
         {
-            UCL_DebugLogService.Init();
+            Ins = this;
+
+            
             Init().Forget();
         }
         async UniTask Init()
         {
+            UCL_DebugLogService.Init();
+            var aToken = gameObject.GetCancellationTokenOnDestroy();
             //Debug.LogError("ATS_Boot.Init()");
             var aCancellationToken = gameObject.GetCancellationTokenOnDestroy();
             await UnityEngine.AddressableAssets.Addressables.InitializeAsync();
             await UniTask.WaitUntil(()=> UCL_ModuleService.Initialized, cancellationToken: aCancellationToken);
             //Debug.LogError("UCL_ModuleService.Initialized");
-            var aGameManager = await Addressables.LoadAssetAsync<GameObject>("Assets/Addressables/Prefabs/UCL_GameManager.prefab");
-            m_GameManager = Instantiate(aGameManager, transform);
+            var aGameManager = await m_GameManagerAssetEntry.GetData().LoadAsync(aToken);
+                //Addressables.LoadAssetAsync<GameObject>("Assets/Addressables/Prefabs/UCL_GameManager.prefab");
+            m_GameManager = Instantiate(aGameManager, null);
             await ATS_IconSprite.InitSpriteAsset(aCancellationToken);
+            await UI.ATS_MainMenu.CreateAsync();
             //Debug.LogError("ATS_IconSprite.InitSpriteAsset");
-            m_Test.gameObject.SetActive(true);
         }
         private void Start()
         {

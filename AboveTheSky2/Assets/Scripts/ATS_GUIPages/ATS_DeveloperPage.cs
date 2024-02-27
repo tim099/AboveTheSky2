@@ -218,7 +218,7 @@ namespace ATS.Page
                     //File.WriteAllText(path, string.Empty, new UTF8Encoding(false));
                 }
                 m_TargetScriptsRoot = UCL.Core.UI.UCL_GUILayout.TextField("TargetScriptsRoot", m_TargetScriptsRoot);
-                if (GUILayout.Button("Refresh targets encoding"))
+                if (GUILayout.Button("Refresh targets encoding", UCL_GUIStyle.ButtonStyle))
                 {
                     bool aCancel = UCL.Core.EditorLib.EditorUtilityMapper.DisplayCancelableProgressBar("Refresh scripts encoding", "Init", 0.1f);
                     var aRoot = m_TargetScriptsRoot;

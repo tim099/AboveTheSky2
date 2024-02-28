@@ -82,17 +82,17 @@ namespace ATS.UI
 
         private void Update()
         {
-            var aBlitToRenderTexture = new BlitToRenderTexture();
-            aBlitToRenderTexture.Material = m_BlitMat;
-            aBlitToRenderTexture.RemoveAfterBlit = true;
-            aBlitToRenderTexture.RenderPassEvent = UnityEngine.Rendering.Universal.RenderPassEvent.BeforeRenderingPostProcessing;
-            URP_BlitRendererFeature.AddBlitRequest(aBlitToRenderTexture);
+            //var aBlitToRenderTexture = new BlitToRenderTexture();
+            //aBlitToRenderTexture.Material = m_BlitMat;
+            //aBlitToRenderTexture.RemoveAfterBlit = true;
+            //aBlitToRenderTexture.RenderPassEvent = UnityEngine.Rendering.Universal.RenderPassEvent.BeforeRenderingPostProcessing;
+            //URP_BlitRendererFeature.AddBlitRequest(aBlitToRenderTexture);
 
-            aBlitToRenderTexture.CompleteCallback = (iBlitRendererFeature) =>
-            {
-                Debug.LogError("CompleteCallback");
-                m_RawImage.texture = iBlitRendererFeature.RTHandle.rt;
-            };
+            //aBlitToRenderTexture.CompleteCallback = (iBlitRendererFeature) =>
+            //{
+            //    Debug.LogError("CompleteCallback");
+            //    m_RawImage.texture = iBlitRendererFeature.RTHandle.rt;
+            //};
         }
     }
 }

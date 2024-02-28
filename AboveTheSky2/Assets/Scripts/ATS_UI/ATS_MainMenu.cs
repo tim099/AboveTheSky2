@@ -10,6 +10,7 @@ using UCL.Core.LocalizeLib;
 using UnityEngine;
 using UnityEngine.UI;
 using UCL.Core;
+using URP;
 namespace ATS.UI
 {
     public class ATS_MainMenu : UCL.Core.Game.UCL_GameUI
@@ -28,6 +29,9 @@ namespace ATS.UI
         [SerializeField] private Button m_OpenEditorMenuPageButton;
 
         [SerializeField] private GameObject m_Test;
+
+        public RawImage m_RawImage;
+        public Material m_BlitMat;
         //[SerializeField] Button m_LoadAutoSaveButton = null;
         private bool m_LoadingUI = false;
         private bool m_Inited = false;
@@ -78,7 +82,16 @@ namespace ATS.UI
 
         private void Update()
         {
+            //var aBlitToRenderTexture = new BlitToRenderTexture();
+            //aBlitToRenderTexture.Material = m_BlitMat;
+            //aBlitToRenderTexture.RemoveAfterBlit = true;
+            //URP_BlitRendererFeature.AddBlitRequest(aBlitToRenderTexture);
 
+            //aBlitToRenderTexture.CompleteCallback = (iBlitRendererFeature) =>
+            //{
+            //    Debug.LogError("CompleteCallback");
+            //    m_RawImage.texture = iBlitRendererFeature.RTHandle.rt;
+            //};
         }
     }
 }

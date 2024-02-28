@@ -52,5 +52,12 @@ namespace ATS
         {
             
         }
+        private void Update()
+        {
+            if(Input.GetKeyDown(KeyCode.C))
+            {
+                UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(new Page.ATS_EditorMenuPage());
+            }
+        }
     }
 }

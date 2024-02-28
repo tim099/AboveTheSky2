@@ -10,15 +10,17 @@ namespace UCL
 {
     public class UCL_BlitPass : ScriptableRenderPass
     {
+        public static RenderTexture s_RenderTexture = null;
+        public static RTHandle s_RTHandle = null;
         ProfilingSampler m_ProfilingSampler = new ProfilingSampler("ColorBlit");
         Material m_Material;
         RTHandle m_CameraColorTarget;
 
-        public UCL_BlitPass(Material material)
+        public UCL_BlitPass(Material material, RenderPassEvent iRenderPassEvent)
         {
             //Debug.LogError($"ColorBlitPass");
             m_Material = material;
-            renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
+            renderPassEvent = iRenderPassEvent;
         }
 
         public void SetTarget(RTHandle colorHandle)
@@ -46,7 +48,31 @@ namespace UCL
             CommandBuffer cmd = CommandBufferPool.Get();
             using (new ProfilingScope(cmd, m_ProfilingSampler))
             {
+                if(s_RenderTexture == null)
+                {
+                    s_RenderTexture = RenderTexture.GetTemporary(renderingData.cameraData.cameraTargetDescriptor);
+                }
+                //if (s_RTHandle == null)
+                //{
+                //    s_RTHandle = RTHandles.Alloc(Vector2.one, depthBufferBits: DepthBits.Depth32, dimension: TextureDimension.Tex2D, name: "CameraDepth");
+                //    cmd.GetTemporaryRT(Shader.PropertyToID(s_RTHandle.name), renderingData.cameraData.cameraTargetDescriptor, FilterMode.Point);
+                //}
+
+
+
+                
+                var aRenderTexture = RenderTexture.GetTemporary(renderingData.cameraData.cameraTargetDescriptor);
+                cmd.Blit(m_CameraColorTarget, aRenderTexture);
+                //Blitter.BlitCameraTexture(cmd, m_CameraColorTarget, s_RTHandle);//, m_Material, 0
+                //cmd.Blit(m_CameraColorTarget, s_RenderTexture, m_Material, 0);
                 Blitter.BlitCameraTexture(cmd, m_CameraColorTarget, m_CameraColorTarget, m_Material, 0);
+                cmd.Blit(m_CameraColorTarget, s_RenderTexture);
+                cmd.Blit(aRenderTexture, m_CameraColorTarget);//restore camera content
+
+
+                RenderTexture.ReleaseTemporary(aRenderTexture);
+                //, m_Material, 0
+                //Blitter.BlitCameraTexture(cmd, m_CameraColorTarget, s_RenderTexture, m_Material, 0);
             }
             context.ExecuteCommandBuffer(cmd);
             cmd.Clear();

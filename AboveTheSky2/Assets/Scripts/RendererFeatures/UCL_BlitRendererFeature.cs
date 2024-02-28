@@ -15,7 +15,7 @@ namespace UCL
         Material m_Material;
 
         UCL_BlitPass m_RenderPass = null;
-
+        RenderPassEvent m_RenderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
         public override void AddRenderPasses(ScriptableRenderer renderer,
                                         ref RenderingData renderingData)
         {
@@ -41,7 +41,7 @@ namespace UCL
         {
 
             m_Material = CoreUtils.CreateEngineMaterial(m_Shader);
-            m_RenderPass = new UCL_BlitPass(m_Material);
+            m_RenderPass = new UCL_BlitPass(m_Material, m_RenderPassEvent);
             //Debug.LogError($"ColorBlitRendererFeature.Create() isActive:{isActive}");
         }
 

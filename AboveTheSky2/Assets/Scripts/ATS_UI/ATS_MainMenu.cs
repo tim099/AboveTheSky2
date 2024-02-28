@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UCL.Core;
 using URP;
+using UCL;
 namespace ATS.UI
 {
     public class ATS_MainMenu : UCL.Core.Game.UCL_GameUI
@@ -82,6 +83,11 @@ namespace ATS.UI
 
         private void Update()
         {
+            m_RawImage.texture = UCL_BlitPass.s_RenderTexture;
+            //if(UCL_BlitPass.s_RTHandle !=  null)
+            //{
+            //    m_RawImage.texture = UCL_BlitPass.s_RTHandle.rt;
+            //}
             //var aBlitToRenderTexture = new BlitToRenderTexture();
             //aBlitToRenderTexture.Material = m_BlitMat;
             //aBlitToRenderTexture.RemoveAfterBlit = true;

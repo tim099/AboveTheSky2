@@ -152,10 +152,11 @@ namespace URP
             {
                 //m_Material.SetFloat("_Intensity", m_Intensity);
                 //Blitter.BlitCameraTexture(cmd, m_CameraColorTarget, m_CameraColorTarget, m_Material, 0);
-                var aCameraColorTarget = m_Renderer.cameraColorTargetHandle;
+                
                 for (int i = 0; i < m_BlitRequests.Count; i++)
                 {
                     BlitRequest blitRequest = m_BlitRequests[i];
+                    Debug.LogError($"Blit,blitRequest.Material:{blitRequest.Material.name}");
                     //BlitData blitData = new BlitData()
                     //{
                     //    ID = i,
@@ -169,7 +170,7 @@ namespace URP
                     //    Renderer = this.m_Renderer,
                     //    RenderingData = renderingData,
                     //};
-                    Blitter.BlitCameraTexture(cmd, aCameraColorTarget, aCameraColorTarget, blitRequest.Material, 0);
+                    Blitter.BlitCameraTexture(cmd, m_CameraColorTarget, m_CameraColorTarget, blitRequest.Material, 0);
                     //blitRequest.Blit(blitData);
                 }
             }

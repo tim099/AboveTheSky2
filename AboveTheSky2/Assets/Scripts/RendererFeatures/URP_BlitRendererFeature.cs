@@ -157,8 +157,13 @@ namespace URP
 
             if (!m_BlitPassDic.ContainsKey(renderPassEvent))
             {
-                m_BlitPassDic.Add(renderPassEvent, new URP_BlitPass(renderPassEvent, m_Settings.m_BlitMaterial,
-                    m_Settings.m_BlitMaterialPassIndex, $"{name}_{renderPassEvent}"));
+                var aNewPass = new URP_BlitPass(renderPassEvent, m_Settings.m_BlitMaterial,
+                    m_Settings.m_BlitMaterialPassIndex, $"{name}_{renderPassEvent}");
+
+                aNewPass.ConfigureInput(ScriptableRenderPassInput.Color);
+                m_BlitPassDic.Add(renderPassEvent, aNewPass);
+
+                
             }
             var aPass = m_BlitPassDic[renderPassEvent];
             aPass.m_CameraColorTarget = m_CameraColorTarget;
@@ -189,7 +194,9 @@ namespace URP
                 BlitRequest blitRequest = s_BlitRequests[i];
                 if (blitRequest.Camera == null || blitRequest.Camera == targetCamera)
                 {
-                    GetBlitPass(blitRequest.RenderPassEvent).AddBlitRequest(blitRequest);
+                    var aPass = GetBlitPass(blitRequest.RenderPassEvent);
+                    
+                    aPass.AddBlitRequest(blitRequest);
                     if (blitRequest.RemoveAfterBlit) s_BlitRequests.RemoveAt(i);
                 }
             }

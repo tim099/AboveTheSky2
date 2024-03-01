@@ -2,7 +2,8 @@
 	"CurrentEditModule":"Core",
 	"BuiltinModules":
 	[
-		"Core"
+		"Core",
+		"TestModule"
 	],
 	"Version":"1.0.1"
 }

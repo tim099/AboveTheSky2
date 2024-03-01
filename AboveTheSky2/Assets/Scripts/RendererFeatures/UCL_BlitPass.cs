@@ -2,6 +2,7 @@
 // ATS_AutoHeader
 // to change the auto header please go to ATS_AutoHeader.cs
 // Create time : 02/28 2024 19:39
+using UCL.Core;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -44,40 +45,65 @@ namespace UCL
 
             if (m_Material == null)
                 return;
+            var aRenderTexture = RenderTexture.GetTemporary(renderingData.cameraData.cameraTargetDescriptor);
+            CommandBuffer aCmd = CommandBufferPool.Get();
 
-            CommandBuffer cmd = CommandBufferPool.Get();
-            using (new ProfilingScope(cmd, m_ProfilingSampler))
+            using (new ProfilingScope(aCmd, m_ProfilingSampler))
             {
-                if(s_RenderTexture == null)
+                var aCamera = renderingData.cameraData.camera;
+                RenderTextureDescriptor aRenderTextureDescriptor = renderingData.cameraData.cameraTargetDescriptor;
+                if (s_RenderTexture == null)
                 {
-                    s_RenderTexture = RenderTexture.GetTemporary(renderingData.cameraData.cameraTargetDescriptor);
+                    s_RenderTexture = RenderTexture.GetTemporary(aRenderTextureDescriptor);
                 }
-                //if (s_RTHandle == null)
-                //{
-                //    s_RTHandle = RTHandles.Alloc(Vector2.one, depthBufferBits: DepthBits.Depth32, dimension: TextureDimension.Tex2D, name: "CameraDepth");
-                //    cmd.GetTemporaryRT(Shader.PropertyToID(s_RTHandle.name), renderingData.cameraData.cameraTargetDescriptor, FilterMode.Point);
-                //}
+                if (s_RTHandle == null)
+                {
+                    s_RTHandle = UCL_RTHandleService.Ins.Alloc("CameraDepthTest", aRenderTextureDescriptor);
+                        //RTHandles.Alloc(Vector2.one, depthBufferBits: DepthBits.Depth32, dimension: TextureDimension.Tex2D, name: "CameraDepth");
+                    aCmd.GetTemporaryRT(Shader.PropertyToID(s_RTHandle.name), renderingData.cameraData.cameraTargetDescriptor, FilterMode.Point);
+                }
 
+                RenderingUtils.ReAllocateIfNeeded(ref s_RTHandle, renderingData.cameraData.cameraTargetDescriptor, FilterMode.Point,
+                    TextureWrapMode.Clamp, name: "CameraDepthTest");
+                RTHandles.SetReferenceSize(aCamera.pixelWidth, aCamera.pixelHeight);
 
+                //aCmd.Blit(m_CameraColorTarget, s_RTHandle);
+                Blitter.BlitCameraTexture(aCmd, m_CameraColorTarget, s_RTHandle);
+
+                aCmd.Blit(m_CameraColorTarget, aRenderTexture);
+                
+                
+                
+                //Blitter.BlitCameraTexture(aCmd, m_CameraColorTarget, s_RTHandle);//, m_Material, 0
+
+                //cmd.Blit(m_CameraColorTarget, s_RenderTexture, m_Material, 0);
+                Blitter.BlitCameraTexture(aCmd, m_CameraColorTarget, m_CameraColorTarget, m_Material, 0);
+
+                aCmd.Blit(m_CameraColorTarget, s_RenderTexture);
+                aCmd.Blit(aRenderTexture, m_CameraColorTarget);//restore camera content
 
                 
-                var aRenderTexture = RenderTexture.GetTemporary(renderingData.cameraData.cameraTargetDescriptor);
-                cmd.Blit(m_CameraColorTarget, aRenderTexture);
-                //Blitter.BlitCameraTexture(cmd, m_CameraColorTarget, s_RTHandle);//, m_Material, 0
-                //cmd.Blit(m_CameraColorTarget, s_RenderTexture, m_Material, 0);
-                Blitter.BlitCameraTexture(cmd, m_CameraColorTarget, m_CameraColorTarget, m_Material, 0);
-                cmd.Blit(m_CameraColorTarget, s_RenderTexture);
-                cmd.Blit(aRenderTexture, m_CameraColorTarget);//restore camera content
-
-
-                RenderTexture.ReleaseTemporary(aRenderTexture);
                 //, m_Material, 0
                 //Blitter.BlitCameraTexture(cmd, m_CameraColorTarget, s_RenderTexture, m_Material, 0);
             }
-            context.ExecuteCommandBuffer(cmd);
-            cmd.Clear();
+            context.ExecuteCommandBuffer(aCmd);
+            aCmd.Clear();
+            CommandBufferPool.Release(aCmd);
 
-            CommandBufferPool.Release(cmd);
+            RenderTexture.ReleaseTemporary(aRenderTexture);
+        }
+
+        public void Dispose(bool disposing)
+        {
+            if(s_RTHandle != null)
+            {
+                UCL_RTHandleService.Ins.Release(s_RTHandle);
+                s_RTHandle = null;
+            }
+            if(s_RenderTexture != null)
+            {
+                RenderTexture.ReleaseTemporary(s_RenderTexture);
+            }
         }
     }
 }

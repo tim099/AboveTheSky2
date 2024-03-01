@@ -1,0 +1,30 @@
+{
+	"IgnoreMetaFiles":"True",
+	"TargetDirectory":".ModuleService\\Modules\\TestModule",
+	"FileExtension":"",
+	"FolderInformations":{
+		"Name":"TestModule",
+		"Path":".ModuleService\\Modules\\TestModule",
+		"FileInfos":
+		[
+			{
+				"FileName":"Config",
+				"Extension":"json"
+			}
+		],
+		"FolderInfos":
+		[
+			{
+				"Name":"ModResources",
+				"Path":".ModuleService\\Modules\\TestModule\\ModResources",
+				"FileInfos":
+				[
+					{
+						"FileName":"Readme",
+						"Extension":"txt"
+					}
+				]
+			}
+		]
+	}
+}

@@ -32,6 +32,7 @@ namespace ATS.UI
         [SerializeField] private GameObject m_Test;
 
         public RawImage m_RawImage;
+        public RawImage m_RawImage2;
         public Material m_BlitMat;
         //[SerializeField] Button m_LoadAutoSaveButton = null;
         private bool m_LoadingUI = false;
@@ -84,10 +85,10 @@ namespace ATS.UI
         private void Update()
         {
             m_RawImage.texture = UCL_BlitPass.s_RenderTexture;
-            //if(UCL_BlitPass.s_RTHandle !=  null)
-            //{
-            //    m_RawImage.texture = UCL_BlitPass.s_RTHandle.rt;
-            //}
+            //if (UCL_BlitPass.s_RTHandle != null)
+            {
+                m_RawImage2.texture = UCL_BlitPass.s_RTHandle;
+            }
             //var aBlitToRenderTexture = new BlitToRenderTexture();
             //aBlitToRenderTexture.Material = m_BlitMat;
             //aBlitToRenderTexture.RemoveAfterBlit = true;

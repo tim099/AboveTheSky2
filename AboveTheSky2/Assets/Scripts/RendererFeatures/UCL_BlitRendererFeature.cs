@@ -47,6 +47,7 @@ namespace UCL
 
         protected override void Dispose(bool disposing)
         {
+            m_RenderPass.Dispose(disposing);
             CoreUtils.Destroy(m_Material);
         }
     }

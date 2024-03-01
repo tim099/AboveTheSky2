@@ -31,6 +31,7 @@ namespace ATS
         async UniTask Init()
         {
             UCL_DebugLogService.Init();
+            UCL_RTHandleService.Init();
             var aToken = gameObject.GetCancellationTokenOnDestroy();
             //Debug.LogError("ATS_Boot.Init()");
             var aCancellationToken = gameObject.GetCancellationTokenOnDestroy();

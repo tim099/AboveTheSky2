@@ -41,6 +41,7 @@ namespace ATS
 
             await UniTask.WaitUntil(()=> UCL_ModuleService.Initialized, cancellationToken: aCancellationToken);
             //Debug.LogError("UCL_ModuleService.Initialized");
+            Debug.LogError($"UCL_ModuleService.Modules:{UCL_ModuleService.Ins.Modules.ConcatString(iModule => iModule.ID)}");
             var aGameManager = await m_GameManagerAssetEntry.GetData().LoadAsync(aToken);
 
             //var aGameManager = await Addressables.LoadAssetAsync<GameObject>("Assets/Addressables/Prefabs/ATS_GameManager.prefab");

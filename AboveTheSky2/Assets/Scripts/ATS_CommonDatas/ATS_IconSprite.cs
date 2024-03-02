@@ -155,10 +155,6 @@ namespace ATS
         {
             ID = "New IconSprite";
         }
-        public ATS_IconSprite(string iID)
-        {
-            Init(iID);
-        }
         #endregion
 
 

@@ -1,8 +1,7 @@
 {
-	"DataLoadType":"ModResources",
-	"ModResourcesData":{
-		"ModuleID":"TestModule",
-		"FolderPath":"Sprites/Icons",
-		"FileName":"HealthReduce3.png"
+	"DataLoadType":"Addressable",
+	"AddressableData":{
+		"AddressablePath":"Assets/Addressables/Sprites/Icons",
+		"AddressableKey":"Assets/Addressables/Sprites/Icons/swords.png"
 	}
 }

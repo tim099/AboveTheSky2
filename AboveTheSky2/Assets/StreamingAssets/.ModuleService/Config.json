@@ -2,6 +2,7 @@
 	"CurrentEditModule":"Core",
 	"BuiltinModules":
 	[
+		"BBBModule",
 		"Core",
 		"TestModule"
 	],

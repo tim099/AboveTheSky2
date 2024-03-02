@@ -1,4 +1,10 @@
 {
 	"Version":"1.0.0",
-	"ID":"TestModule"
+	"ID":"TestModule",
+	"DependenciesModules":
+	[
+		{
+			"ID":"Core"
+		}
+	]
 }

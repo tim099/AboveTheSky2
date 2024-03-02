@@ -2,9 +2,8 @@
 	"CurrentEditModule":"Core",
 	"BuiltinModules":
 	[
-		"BBBModule",
 		"Core",
 		"TestModule"
 	],
-	"Version":"1.0.1"
+	"Version":"1.0.2"
 }

@@ -1,0 +1,8 @@
+{
+	"DataLoadType":"ModResources",
+	"ModResourcesData":{
+		"ModuleID":"TestModule",
+		"FolderPath":"Sprites/Icons",
+		"FileName":"HP.png"
+	}
+}

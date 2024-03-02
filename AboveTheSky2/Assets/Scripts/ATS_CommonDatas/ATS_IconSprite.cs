@@ -118,7 +118,7 @@ namespace ATS
         public const string DefaultIconsPath = ATS_SpriteData.SpriteFolder + "/Icons";
 
         
-        public override UCL_CommonSelectPage<ATS_IconSprite> CreateCommonSelectPage()
+        public override UCL_SelectAssetPage<ATS_IconSprite> CreateCommonSelectPage()
         {
             var aPage = new ATS_IconSpriteEditorPage();
             UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(aPage);
@@ -180,7 +180,7 @@ namespace ATS
         public string TMPKey => $"<sprite name={ID}>";
     }
 
-    public class ATS_IconSpriteEditorPage : UCL_CommonSelectPage<ATS_IconSprite>
+    public class ATS_IconSpriteEditorPage : UCL_SelectAssetPage<ATS_IconSprite>
     {
 
         protected override void ContentOnGUI()

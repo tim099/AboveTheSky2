@@ -26,22 +26,39 @@ namespace ATS
                 var aIconData = aIcon.GetData();
                 if (aIconData != null)
                 {
-                    m_TextMeshPro.text += aIcon.TMPKey;
+                    //m_TextMeshPro.text += aIcon.TMPKey;
                     m_Image.sprite = aIconData.IconSprite;
                 }
                 else
                 {
                     Debug.LogError("ATS_TestIconSprite aIconData == null");
                 }
-            }
-            {
-                var aIcon = ATS_IconSpriteGenData.Icon_Heal2;
-                var aIconData = aIcon.GetData();
-                if (aIconData != null)
+                var aIDs = ATS_IconSprite.Util.GetAllIDs();
+                foreach (var aID in aIDs)
                 {
-                    m_TextMeshPro.text += aIcon.TMPKey;
+                    try
+                    {
+                        var aIconSprite = ATS_IconSprite.Util.GetData(aID);
+                        if (aIconSprite != null && !aIconSprite.m_Disable)
+                        {
+                            m_TextMeshPro.text += aIconSprite.TMPKey;
+                        }
+                    }
+                    catch(System.Exception e)
+                    {
+                        Debug.LogException(e);
+                    }
+
                 }
             }
+            //{
+            //    var aIcon = ATS_IconSpriteGenData.Icon_Heal2;
+            //    var aIconData = aIcon.GetData();
+            //    if (aIconData != null)
+            //    {
+            //        m_TextMeshPro.text += aIcon.TMPKey;
+            //    }
+            //}
             //UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(new Page.ATS_EditorMenuPage());
             //Test().Forget();
         }

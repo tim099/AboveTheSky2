@@ -90,7 +90,9 @@ namespace ATS
             List<Texture2D> aTextures = new List<Texture2D>();
             List<ATS_IconSprite> aIconSprites = new List<ATS_IconSprite>();
             List<string> aNames = new List<string>();
-            foreach (var aIconSpriteID in ATS_IconSprite.Util.GetAllIDs())
+            var aIDs = ATS_IconSprite.Util.GetAllIDs();
+            //Debug.LogError($"aIDs:{aIDs.ConcatString()}");
+            foreach (var aIconSpriteID in aIDs)
             {
                 try
                 {
@@ -100,7 +102,9 @@ namespace ATS
                         continue;
                     }
                     aIconSprites.Add(aSpriteData);
-                    var aTexture = await aSpriteData.m_Sprite.GetData().GetTextureAsync(iToken);
+                    var aSpriteEntry = aSpriteData.m_Sprite;
+                    //Debug.LogError($"aSpriteData:{aSpriteData.ID},aSpriteEntry:{aSpriteEntry.ID}");
+                    var aTexture = await aSpriteEntry.GetData().GetTextureAsync(iToken);
                     aTextures.Add(aTexture);//aSpriteData.IconTexture
                     aNames.Add(aIconSpriteID);
                 }

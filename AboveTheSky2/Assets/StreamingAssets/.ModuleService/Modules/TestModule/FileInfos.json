@@ -99,6 +99,14 @@
 							{
 								"FileName":"",
 								"Extension":"CommonDataMeta"
+							},
+							{
+								"FileName":"Default",
+								"Extension":"json"
+							},
+							{
+								"FileName":"Icon_Heal",
+								"Extension":"json"
 							}
 						]
 					},
@@ -124,6 +132,10 @@
 							},
 							{
 								"FileName":"Default",
+								"Extension":"json"
+							},
+							{
+								"FileName":"Default2",
 								"Extension":"json"
 							}
 						]

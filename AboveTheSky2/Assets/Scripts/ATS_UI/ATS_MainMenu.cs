@@ -86,9 +86,9 @@ namespace ATS.UI
         {
             m_RawImage.texture = UCL_BlitPass.s_RenderTexture;
             //if (UCL_BlitPass.s_RTHandle != null)
-            {
-                m_RawImage2.texture = UCL_BlitPass.s_RTHandle;
-            }
+            //{
+            //    m_RawImage2.texture = UCL_BlitPass.s_RTHandle;
+            //}
             //var aBlitToRenderTexture = new BlitToRenderTexture();
             //aBlitToRenderTexture.Material = m_BlitMat;
             //aBlitToRenderTexture.RemoveAfterBlit = true;

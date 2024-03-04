@@ -1,5 +1,5 @@
 {
-	"CurrentEditModule":"TestModule",
+	"CurrentEditModule":"Core",
 	"BuiltinModules":
 	[
 		"Core",
@@ -14,5 +14,5 @@
 			"ID":"TestModule"
 		}
 	],
-	"Version":"1.0.2"
+	"Version":"1.0.3"
 }

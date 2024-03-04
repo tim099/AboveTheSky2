@@ -116,7 +116,7 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
-    - _Cutoff: 0.551
+    - _Cutoff: 0.389
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DirectLightMultiplier: 1
@@ -134,14 +134,14 @@ Material:
     - _Glossiness: 0
     - _GlossinessSource: 0
     - _GlossyReflections: 0
-    - _IndirectLightMultiplier: 1
+    - _IndirectLightMultiplier: 0.89
     - _IsFace: 0
     - _MainLightIgnoreCelShade: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionRemapEnd: 1
     - _OcclusionRemapStart: 0
-    - _OcclusionStrength: 1
+    - _OcclusionStrength: 0.302
     - _OutlineWidth: 1.67
     - _OutlineZOffset: 0.111
     - _OutlineZOffsetMaskRemapEnd: 1

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e017eb375c1a5d46aa01cc1f3ed0462, type: 3}
+  m_Name: ATS_SceneSwitcher
+  m_EditorClassIdentifier: 
+  m_SceneDatas:
+  - m_Scene: {fileID: 102900000, guid: 1b1e43047cdc35b4aae4b082080fbbe6, type: 3}
+  - m_Scene: {fileID: 102900000, guid: 9a18cc5d35536fd428eb6e90b3402589, type: 3}
+  m_LoadSceneName: Boot

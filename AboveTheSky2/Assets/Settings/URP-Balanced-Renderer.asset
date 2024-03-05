@@ -130,5 +130,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1d076ab44f5dc4dba49a66630383bb, type: 3}
   m_Name: UCLBlitRendererFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   m_Shader: {fileID: 4800000, guid: d31bb76e4f4eb0e4f8b0644059ef2729, type: 3}

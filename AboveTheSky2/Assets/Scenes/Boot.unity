@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 71232972}
   - component: {fileID: 71232971}
   - component: {fileID: 71232970}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 50
+  far clip plane: 1000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -425,7 +425,7 @@ GameObject:
   - component: {fileID: 728958788}
   - component: {fileID: 728958787}
   - component: {fileID: 728958786}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -512,7 +512,7 @@ Transform:
   m_GameObject: {fileID: 728958785}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.48, y: 0.94, z: -6.4}
+  m_LocalPosition: {x: -1.48, y: 0.66, z: -3.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -530,7 +530,7 @@ GameObject:
   - component: {fileID: 765980727}
   - component: {fileID: 765980726}
   - component: {fileID: 765980725}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -633,7 +633,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 820593503}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Objects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -908,7 +908,7 @@ GameObject:
   - component: {fileID: 1084506361}
   - component: {fileID: 1084506360}
   - component: {fileID: 1084506359}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -994,13 +994,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1084506358}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.16855416, y: 0.3477831, z: -0.39749825, w: 0.83224493}
-  m_LocalPosition: {x: -4.39, y: 0.91, z: -7.57}
+  m_LocalRotation: {x: 0.21653914, y: -0.31999022, z: -0.48601273, w: 0.7839061}
+  m_LocalPosition: {x: -3.32, y: 0.91, z: -7.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 820593503}
-  m_LocalEulerAnglesHint: {x: -0.233, y: 45.47, z: -51.158}
+  m_LocalEulerAnglesHint: {x: 1.631, y: -45.435, z: -64.28}
 --- !u!1 &1582522849
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,7 +1012,6 @@ GameObject:
   - component: {fileID: 1582522853}
   - component: {fileID: 1582522852}
   - component: {fileID: 1582522851}
-  - component: {fileID: 1582522850}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1020,23 +1019,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1582522850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1582522849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &1582522851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1049,7 +1031,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
@@ -1072,7 +1054,7 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -1081,7 +1063,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1000
   m_TargetDisplay: 0
 --- !u!224 &1582522853
 RectTransform:
@@ -1353,7 +1335,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: ac096151ec69b9a4a9e78b26e56ecfed, type: 2}
   m_TargetDisplay: 0
@@ -1392,7 +1374,7 @@ GameObject:
   - component: {fileID: 2105907715}
   - component: {fileID: 2105907714}
   - component: {fileID: 2105907713}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1481,7 +1463,7 @@ Transform:
   m_GameObject: {fileID: 2105907712}
   serializedVersion: 2
   m_LocalRotation: {x: 0.23189944, y: 0.6994654, z: -0.21213008, w: -0.64185023}
-  m_LocalPosition: {x: 0, y: 0, z: -6.05}
+  m_LocalPosition: {x: -0.08, y: -0.52, z: -6.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

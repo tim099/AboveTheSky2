@@ -116,6 +116,7 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _NormalThreshold: 0.6
+    - _NormalThreshold_1: 0.001
     - _OVERLAY: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.005

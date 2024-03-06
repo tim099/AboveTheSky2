@@ -23,6 +23,9 @@ void ToonBlit_float(float4 Input, float _RGap, float _GGap, float _BGap, out flo
     HSV.g = round(HSV.g * _GGap) / _GGap;
     HSV.b = round(HSV.b * _BGap) / _BGap;
 
+    if (HSV.r > 1) HSV.r = 1;
+    if (HSV.g > 1) HSV.g = 1;    
+    if (HSV.b > 1) HSV.b = 1;
 
     float3 RGB = ColorspaceConversion_HSV_To_RGB(HSV);
     Result = float4(RGB.r,RGB.g,RGB.b, Input.a);

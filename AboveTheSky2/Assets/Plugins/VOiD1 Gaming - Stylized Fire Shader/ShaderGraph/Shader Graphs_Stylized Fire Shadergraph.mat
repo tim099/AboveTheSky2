@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8407309458544045072
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs_Stylized Fire Shadergraph
+  m_Shader: {fileID: -6465566751694194690, guid: 76937c0dcb299b44d83f07dd11d635b4,
+    type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - Vector1_142CA3C0: -0.53
+    - Vector1_15D36554: 0.78
+    - Vector1_67E09C3A: 1.45
+    - Vector1_9AFF28C7: 0.77
+    - Vector1_BA9C64B0: 1
+    - Vector1_C845FE93: 1.25
+    - Vector1_C9B433C6: 0.65
+    - Vector1_D2CD320E: 0.45
+    - Vector1_DF88888C: 3.13
+    - Vector1_F6B38E2A: 0.895
+    - Vector1_F946386A: 8
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    m_Colors:
+    - Color_BE49A3B1: {r: 0.7490196, g: 0.3607843, b: 0.1490196, a: 1}
+    - Color_F265AB4B: {r: 1, g: 0.7686275, b: 0.6, a: 1}
+    - Vector2_1C8A25A: {r: 1, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []

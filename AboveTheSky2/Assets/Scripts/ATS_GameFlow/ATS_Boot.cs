@@ -58,11 +58,9 @@ namespace ATS
 
             await ATS_IconSprite.InitSpriteAsset(aCancellationToken);
             await UI.ATS_MainMenu.CreateAsync();
+
+            //UCL.Core.MathLib.UCL_Noise.GeneratePerm();
             //Debug.LogError("ATS_IconSprite.InitSpriteAsset");
-        }
-        private void Start()
-        {
-            
         }
         private void Update()
         {

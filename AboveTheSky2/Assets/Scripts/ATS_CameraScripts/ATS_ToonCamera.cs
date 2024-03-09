@@ -28,7 +28,23 @@ namespace ATS
         // Update is called once per frame
         void Update()
         {
-        
+            //const float Speed = 0.05f;
+            //if (Input.GetKey(KeyCode.W))
+            //{
+            //    transform.position += new Vector3(Speed, 0, Speed);
+            //}
+            //if (Input.GetKey(KeyCode.S))
+            //{
+            //    transform.position -= new Vector3(Speed, 0, Speed);
+            //}
+            //if (Input.GetKey(KeyCode.A))
+            //{
+            //    transform.position += new Vector3(-Speed, 0, Speed);
+            //}
+            //if (Input.GetKey(KeyCode.D))
+            //{
+            //    transform.position += new Vector3(Speed, 0, -Speed);
+            //}
         }
     }
 }

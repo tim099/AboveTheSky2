@@ -1,0 +1,5 @@
+You may use, edit and do almost everything you need to adjust the textures for your projects!
+Those normal maps are not ideal, but if you want to use them, feel free to use as you wish, but it is recomended to do your own maps!
+Some of unity standard shaders also make those textures a bit "greyish", so it is another 
+thing i will work on!
+Thanks for purchasing the package! doing that you help me to get motivated do do more and more!

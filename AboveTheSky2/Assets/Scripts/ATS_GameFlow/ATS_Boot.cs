@@ -46,6 +46,16 @@ namespace ATS
 
             //var aGameManager = await Addressables.LoadAssetAsync<GameObject>("Assets/Addressables/Prefabs/ATS_GameManager.prefab");
             m_GameManager = Instantiate(aGameManager, null);
+            var aGM = m_GameManager.GetComponent<UCL_GameManager>();
+            if (aGM != null)
+            {
+                await aGM.InitAsync();
+            }
+            else
+            {
+                Debug.LogError("ATS_Boot.Init() GM == null");
+            }
+
             await ATS_IconSprite.InitSpriteAsset(aCancellationToken);
             await UI.ATS_MainMenu.CreateAsync();
             //Debug.LogError("ATS_IconSprite.InitSpriteAsset");

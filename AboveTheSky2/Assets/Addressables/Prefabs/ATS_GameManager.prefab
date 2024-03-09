@@ -421,3 +421,4 @@ MonoBehaviour:
   m_GameServices:
   - {fileID: 2682330341483604552}
   - {fileID: 5356076982108104386}
+  m_InitOnAwake: 0

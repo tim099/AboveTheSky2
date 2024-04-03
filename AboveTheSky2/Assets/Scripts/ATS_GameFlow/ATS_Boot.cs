@@ -36,7 +36,7 @@ namespace ATS
             //Debug.LogError("ATS_Boot.Init()");
             var aCancellationToken = gameObject.GetCancellationTokenOnDestroy();
             await UnityEngine.AddressableAssets.Addressables.InitializeAsync();
-
+            var aCatalogUpdates = await Addressables.CheckForCatalogUpdates(false);
             //UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(new Page.ATS_EditorMenuPage());
 
             await UniTask.WaitUntil(()=> UCL_ModuleService.Initialized, cancellationToken: aCancellationToken);

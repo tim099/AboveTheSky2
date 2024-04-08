@@ -36,7 +36,7 @@ namespace ATS
                     aSB.AppendLine(string.Format(HeaderFormat, "Create time", System.DateTime.Now.ToString("MM/dd yyyy HH:mm")));// HH:mm
                                                                                                                                  //aSB.AppendLine(string.Format(HeaderFormat, "Author", System.Security.Principal.WindowsIdentity.GetCurrent().Name));
                     aSB.Append(aStr);
-                    System.IO.File.WriteAllText(aFilePath, aSB.ToString());
+                    System.IO.File.WriteAllText(aFilePath, aSB.ToString(), System.Text.Encoding.UTF8);
                 }
             }
             catch (System.Exception e)

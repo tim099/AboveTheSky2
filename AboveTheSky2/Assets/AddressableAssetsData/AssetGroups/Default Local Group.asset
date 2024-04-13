@@ -137,6 +137,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e7f8b3684aaeed48a9bf00b88ab7abc
+    m_Address: Assets/Addressables/Materials/WatertileMat.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 6a8426e1f97a9cc4bb1463d945b5461d, type: 2}
   m_SchemaSet:

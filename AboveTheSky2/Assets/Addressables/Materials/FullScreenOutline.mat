@@ -106,16 +106,18 @@ Material:
     - _ColorThreshold: 0.5
     - _Cull: 2
     - _Cutoff: 0.5
+    - _DepthWeight: 15
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _EnableTestDot: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _NormalThreshold: 0.999
+    - _NormalThreshold: 0.9
     - _NormalThreshold_1: 0.001
     - _OVERLAY: 1
     - _OcclusionStrength: 1

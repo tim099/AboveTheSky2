@@ -1,0 +1,15 @@
+{
+	"CurrentEditModule":"",
+	"BuiltinModules":
+	[
+		"Core",
+		"TestModule"
+	],
+	"ModulePlayList":
+	[
+		{
+			"ID":"Core"
+		}
+	],
+	"Version":"1.0.0"
+}

@@ -1,7 +1,0 @@
-{
-	"DataLoadType":"Addressable",
-	"AddressableData":{
-		"AddressablePath":"Assets/Addressables/Sprites/Icons",
-		"AddressableKey":"Assets/Addressables/Sprites/Icons/swords.png"
-	}
-}

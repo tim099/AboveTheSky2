@@ -19,6 +19,7 @@ namespace ATS
         public static ATS_Boot Ins { get; private set; } = null;
 
         public UCL_GameObjectAssetEntry m_GameManagerAssetEntry = new UCL_GameObjectAssetEntry("GameManager");
+
         GameObject m_GameManager;
         
         private void Awake()
@@ -32,21 +33,12 @@ namespace ATS
         {
             UCL_DebugLogService.Init();
             UCL_RTHandleService.Init();
+
             var aToken = gameObject.GetCancellationTokenOnDestroy();
             //Debug.LogError("ATS_Boot.Init()");
             var aCancellationToken = gameObject.GetCancellationTokenOnDestroy();
-            await UnityEngine.AddressableAssets.Addressables.InitializeAsync();
-            var aCatalogUpdates = await Addressables.CheckForCatalogUpdates(false);
-            //UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(new Page.ATS_EditorMenuPage());
 
-            await UniTask.WaitUntil(()=> UCL_ModuleService.Initialized, cancellationToken: aCancellationToken);
-            //Debug.LogError("UCL_ModuleService.Initialized");
-            Debug.LogError($"UCL_ModuleService.Modules:{UCL_ModuleService.Ins.Modules.ConcatString(iModule => iModule.ID)}");
-            var aGameManager = await m_GameManagerAssetEntry.GetData().LoadAsync(aToken);
-
-            //var aGameManager = await Addressables.LoadAssetAsync<GameObject>("Assets/Addressables/Prefabs/ATS_GameManager.prefab");
-            m_GameManager = Instantiate(aGameManager, null);
-            var aGM = m_GameManager.GetComponent<UCL_GameManager>();
+            var aGM = FindObjectOfType<UCL_GameManager>();
             if (aGM != null)
             {
                 await aGM.InitAsync();
@@ -56,7 +48,31 @@ namespace ATS
                 Debug.LogError("ATS_Boot.Init() GM == null");
             }
 
+            await UnityEngine.AddressableAssets.Addressables.InitializeAsync();
+
+            var aCatalogUpdates = await Addressables.CheckForCatalogUpdates(false);
+            //UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(new Page.ATS_EditorMenuPage());
+
+
+            await UniTask.WaitUntil(()=> UCL_ModuleService.Initialized, cancellationToken: aCancellationToken);
+            //Debug.LogError("UCL_ModuleService.Initialized");
+            Debug.LogError($"UCL_ModuleService.Modules:{UCL_ModuleService.Ins.Modules.ConcatString(iModule => iModule.ID)}");
+
+
+            //var aGameManager = await m_GameManagerAssetEntry.GetData().LoadAsync(aToken);
+            //m_GameManager = Instantiate(aGameManager, null);
+            //var aGM = m_GameManager.GetComponent<UCL_GameManager>();
+            //if (aGM != null)
+            //{
+            //    await aGM.InitAsync();
+            //}
+            //else
+            //{
+            //    Debug.LogError("ATS_Boot.Init() GM == null");
+            //}
+
             await ATS_IconSprite.InitSpriteAsset(aCancellationToken);
+
             await UI.ATS_MainMenu.CreateAsync();
 
             //UCL.Core.MathLib.UCL_Noise.GeneratePerm();

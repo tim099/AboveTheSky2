@@ -1,0 +1,10 @@
+{
+	"Version":"1.0.1",
+	"ID":"TestModule",
+	"DependenciesModules":
+	[
+		{
+			"ID":"Core"
+		}
+	]
+}

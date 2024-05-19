@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 namespace ATS
@@ -28,6 +29,11 @@ namespace ATS
                 string aFilePath = iNewFileMeta.Replace(".meta", "");
                 if (aFilePath.EndsWith(".cs"))
                 {
+                    if (!File.Exists(aFilePath))
+                    {
+                        Debug.Log($"OnWillCreateAsset !File.Exists(),aFilePath:{aFilePath}");
+                        return;
+                    }
                     Debug.LogWarning("Create New File:" + aFilePath);
                     string aStr = System.IO.File.ReadAllText(aFilePath);
                     System.Text.StringBuilder aSB = new System.Text.StringBuilder();

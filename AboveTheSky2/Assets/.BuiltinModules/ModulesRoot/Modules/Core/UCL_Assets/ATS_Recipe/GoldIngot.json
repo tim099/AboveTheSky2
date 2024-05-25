@@ -1,0 +1,26 @@
+{
+	"Consume":
+	[
+		{
+			"Resource":{
+				"ID":"GoldOre"
+			},
+			"Amount":3
+		},
+		{
+			"Resource":{
+				"ID":"Coal"
+			},
+			"Amount":10
+		}
+	],
+	"Product":
+	[
+		{
+			"Resource":{
+				"ID":"GoldIngot"
+			},
+			"Amount":1
+		}
+	]
+}

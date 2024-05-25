@@ -1,0 +1,21 @@
+{
+	"Work":100,
+	"Recipes":
+	[
+		{
+			"ID":"GoldIngot"
+		}
+	],
+	"GridData":{
+		"GridIndexs":
+		[
+			1,
+			1,
+			1,
+			1
+		],
+		"Width":2,
+		"Height":2,
+		"MaxIndex":2
+	}
+}

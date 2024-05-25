@@ -18,17 +18,17 @@ using System.Threading;
 
 namespace ATS
 {
-    public class ATS_IconSpriteGenData : UCL_AssetEntryDefault<ATS_IconSprite>
+    public class ATS_IconSpriteEntry : UCL_AssetEntryDefault<ATS_IconSprite>
     {
         public const string HealID = "Icon_Heal";
         public const string HealID2 = "Icon_Heal2";
         public const string DefaultID = HealID;
 
-        static public ATS_IconSpriteGenData Icon_Heal => new ATS_IconSpriteGenData(HealID);
-        static public ATS_IconSpriteGenData Icon_Heal2 => new ATS_IconSpriteGenData(HealID2);
+        static public ATS_IconSpriteEntry Icon_Heal => new ATS_IconSpriteEntry(HealID);
+        static public ATS_IconSpriteEntry Icon_Heal2 => new ATS_IconSpriteEntry(HealID2);
 
-        public ATS_IconSpriteGenData() { m_ID = DefaultID; }
-        public ATS_IconSpriteGenData(string iID) { m_ID = iID; }
+        public ATS_IconSpriteEntry() { m_ID = DefaultID; }
+        public ATS_IconSpriteEntry(string iID) { m_ID = iID; }
 
 
         //public override bool IsEmpty => string.IsNullOrEmpty(m_ID);
@@ -166,6 +166,10 @@ namespace ATS
         /// 圖示Icon
         /// </summary>
         public UCL_SpriteAssetEntry m_Sprite = new UCL_SpriteAssetEntry();
+
+        /// <summary>
+        /// 是否要包含在TMP圖集中
+        /// </summary>
         public bool m_Disable = false;
         /// <summary>
         /// 縮放

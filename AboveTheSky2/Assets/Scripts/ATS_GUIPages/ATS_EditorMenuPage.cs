@@ -139,6 +139,11 @@ namespace ATS.Page
                 {
                     UCL_ModuleServiceEditPage.Create();
                 }
+                if (GUILayout.Button(UCL_LocalizeManager.Get("Sandbox"), UCL_GUIStyle.GetButtonStyle(Color.yellow)))
+                {
+                    ATS_SandboxPage.Create();
+                }
+
                 //#region GameSetting
                 //{//Edit GameSetting
                 //    using (var aTagScope = new GUILayout.HorizontalScope())

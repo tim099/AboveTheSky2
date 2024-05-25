@@ -22,7 +22,7 @@ namespace ATS
         {
             m_TextMeshPro.spriteAsset = ATS_IconSprite.SpriteAsset;
             {
-                var aIcon = ATS_IconSpriteGenData.Icon_Heal;
+                var aIcon = ATS_IconSpriteEntry.Icon_Heal;
                 var aIconData = aIcon.GetData();
                 if (aIconData != null)
                 {

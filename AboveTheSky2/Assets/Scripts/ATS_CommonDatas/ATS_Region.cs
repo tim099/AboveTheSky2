@@ -170,14 +170,10 @@ namespace ATS
             }
 
             DrawGrid(iDataDic);
-            if (Event.current.type == EventType.Repaint)//只在Repaint時判斷
-            {
-                MousePos = UCL_GUILayout.GetMousePosInGrid(GridRect, m_Width, m_Height);
-            }
+
 
             if (MousePos != NullPos)
             {
-                var aRect = GetCellRect(MousePos.x, MousePos.y, 1f, 1f);//new Rect(aMousePos, aSize * Vector2.one)
                 switch (EditMode)
                 {
                     case GridEditMode.DrawTile:
@@ -185,6 +181,7 @@ namespace ATS
 
                             if (aTileTexture != null)
                             {
+                                var aRect = GetCellRect(MousePos.x, MousePos.y, 1f, 1f);//new Rect(aMousePos, aSize * Vector2.one)
                                 UCL_GUIStyle.PushGUIColor(new Color(1, 1, 1, 0.7f));
                                 GUI.DrawTexture(aRect, aTileTexture);
                                 UCL_GUIStyle.PopGUIColor();
@@ -199,6 +196,14 @@ namespace ATS
                         }
                 }
 
+                DrawMouseFrame();
+            }
+        }
+        public void DrawMouseFrame()
+        {
+            if (MousePos != NullPos)
+            {
+                var aRect = GetCellRect(MousePos.x, MousePos.y, 1f, 1f);
                 GUI.DrawTexture(aRect, ATS_StaticTextures.TileFrame);
             }
         }
@@ -206,6 +211,10 @@ namespace ATS
         {
             GridIDs = ATS_TileData.Util.GetAllIDs();
             base.DrawGrid(iDataDic);
+            if (Event.current.type == EventType.Repaint)//只在Repaint時判斷
+            {
+                MousePos = UCL_GUILayout.GetMousePosInGrid(GridRect, m_Width, m_Height);
+            }
         }
     }
 }

@@ -190,7 +190,7 @@ namespace ATS
                     {
                         var aBuildingData = m_BuildData.m_BuildingData;
                         //Debug.LogError($"MousePos:{m_Region.m_GridData.MousePos},Event.current.type:{Event.current.type}");
-
+                        //bool aClicked = false;
                         if (aBuildingData != null)
                         {
                             var aPosition = m_BuildData.m_Pos;
@@ -210,6 +210,7 @@ namespace ATS
                                     var aRect = m_Region.m_GridData.GetCellRect(aX, aY, 1, 1);
                                     if (GUI.Button(aRect, name))
                                     {
+                                        Debug.LogError($"Move Pos:{m_BuildData.m_Pos},dir:{dir}");
                                         m_BuildData.m_Pos += dir;
                                     }
                                 }
@@ -250,12 +251,14 @@ namespace ATS
 
                             }
                         }
-                        
+                        aGrid.DrawMouseFrame();
+
                         var aCurrentEvent = Event.current;
+
                         //Debug.LogError($"m_BuildData.m_PrevClickCount:{m_BuildData.m_PrevClickCount},aCurrentEvent.clickCount:{aCurrentEvent.clickCount}");
-                        if (m_BuildData.m_PrevClickCount > 0 && aCurrentEvent.clickCount == 0)//點擊後
+                        //https://forum.unity.com/threads/check-if-any-button-is-pressed.271010/
+                        if (aCurrentEvent.type == EventType.MouseDown)//m_BuildData.m_PrevClickCount > 0 &&  點擊後
                         {
-                            
                             var aPos = m_Region.m_GridData.MousePos;
                             //Debug.LogError($"Click!! aPos:{aPos}");
                             if (aPos != ATS_RegionGrid.NullPos)

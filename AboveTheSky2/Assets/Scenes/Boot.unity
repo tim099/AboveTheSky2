@@ -154,6 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GameManagerAssetEntry:
     m_ID: GameManager
+  m_GameManagerKey: Assets/Addressables/Prefabs/ATS_GameManager.prefab
+  m_TestMode: 0
 --- !u!4 &27336115
 Transform:
   m_ObjectHideFlags: 0
@@ -1640,6 +1642,7 @@ GameObject:
   - component: {fileID: 670373432}
   - component: {fileID: 670373431}
   - component: {fileID: 670373433}
+  - component: {fileID: 670373434}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1757,6 +1760,14 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!81 &670373434
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670373429}
+  m_Enabled: 1
 --- !u!43 &710190740
 Mesh:
   m_ObjectHideFlags: 0

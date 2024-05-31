@@ -5,14 +5,17 @@
 		"Core",
 		"TestModule"
 	],
-	"ModulePlayList":
-	[
-		{
-			"ID":"Core"
-		},
-		{
-			"ID":"TestModule"
-		}
-	],
-	"Version":"1.0.3"
+	"Playlist":{
+		"Playlist":
+		[
+			{
+				"ID":"Core"
+			},
+			{
+				"ID":"TestModule"
+			}
+		]
+	},
+	"ForceInstallInEditor":"False",
+	"Version":"1.0.4"
 }

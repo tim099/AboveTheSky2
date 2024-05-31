@@ -1,0 +1,19 @@
+{
+	"Work":100,
+	"Sprite":{
+		"DataLoadType":"ModResources",
+		"ModResourcesData":{
+			"ModuleID":"Core",
+			"FolderPath":"Sprites/Buildings",
+			"FileName":"Entrance.png"
+		}
+	},
+	"GridData":{
+		"Width":1,
+		"Height":1,
+		"GridIndexs":
+		[
+			1
+		]
+	}
+}

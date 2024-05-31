@@ -62,11 +62,11 @@ namespace ATS
             //UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(new Page.ATS_EditorMenuPage());
             //Test().Forget();
         }
-        async UniTask Test()
-        {
-            //string aStr = await UCL_StreamingAssets.LoadString(".Install/CommonData/ATS_IconSprite/Icon_Heal.json");
-            //Debug.Log(aStr);
-        }
+        //async UniTask Test()
+        //{
+        //    //string aStr = await UCL_StreamingAssets.LoadString(".Install/CommonData/ATS_IconSprite/Icon_Heal.json");
+        //    //Debug.Log(aStr);
+        //}
         // Update is called once per frame
         void Update()
         {

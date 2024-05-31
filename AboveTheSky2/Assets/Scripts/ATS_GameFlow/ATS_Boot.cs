@@ -20,6 +20,12 @@ namespace ATS
 
         public UCL_GameObjectAssetEntry m_GameManagerAssetEntry = new UCL_GameObjectAssetEntry("GameManager");
 
+
+        [SerializeField] private string m_GameManagerKey = "Assets/Addressables/Prefabs/ATS_GameManager.prefab";
+        /// <summary>
+        /// TestMode會直接使用m_GameManagerKey讀取GameManager
+        /// </summary>
+        [SerializeField] private bool m_TestMode = false;
         GameObject m_GameManager;
         
         private void Awake()
@@ -37,16 +43,20 @@ namespace ATS
             var aToken = gameObject.GetCancellationTokenOnDestroy();
             //Debug.LogError("ATS_Boot.Init()");
             var aCancellationToken = gameObject.GetCancellationTokenOnDestroy();
-
-            //var aGM = FindObjectOfType<UCL_GameManager>();
-            //if (aGM != null)
-            //{
-            //    await aGM.InitAsync();
-            //}
-            //else
-            //{
-            //    Debug.LogError("ATS_Boot.Init() GM == null");
-            //}
+            if (m_TestMode)
+            {
+                var aGameManager = await Addressables.LoadAssetAsync<GameObject>(m_GameManagerKey);
+                m_GameManager = Instantiate(aGameManager, null);
+                var aGM = m_GameManager.GetComponent<UCL_GameManager>();
+                if (aGM != null)
+                {
+                    await aGM.InitAsync();
+                }
+                else
+                {
+                    Debug.LogError("ATS_Boot.Init() GM == null");
+                }
+            }
 
             await UnityEngine.AddressableAssets.Addressables.InitializeAsync();
 
@@ -57,19 +67,22 @@ namespace ATS
             await UniTask.WaitUntil(()=> UCL_ModuleService.Initialized, cancellationToken: aCancellationToken);
             //Debug.LogError("UCL_ModuleService.Initialized");
             Debug.LogError($"UCL_ModuleService.Modules:{UCL_ModuleService.Ins.LoadedModules.ConcatString(iModule => iModule.ID)}");
+            if (!m_TestMode)
+            {
+                var aGameManager = await m_GameManagerAssetEntry.GetData().LoadAsync(aToken);
+                m_GameManager = Instantiate(aGameManager, null);
+                var aGM = m_GameManager.GetComponent<UCL_GameManager>();
+                if (aGM != null)
+                {
+                    await aGM.InitAsync();
+                }
+                else
+                {
+                    Debug.LogError("ATS_Boot.Init() GM == null");
+                }
+            }
 
 
-            var aGameManager = await m_GameManagerAssetEntry.GetData().LoadAsync(aToken);
-            m_GameManager = Instantiate(aGameManager, null);
-            var aGM = m_GameManager.GetComponent<UCL_GameManager>();
-            if (aGM != null)
-            {
-                await aGM.InitAsync();
-            }
-            else
-            {
-                Debug.LogError("ATS_Boot.Init() GM == null");
-            }
 
             await ATS_IconSprite.InitSpriteAsset(aCancellationToken);
 

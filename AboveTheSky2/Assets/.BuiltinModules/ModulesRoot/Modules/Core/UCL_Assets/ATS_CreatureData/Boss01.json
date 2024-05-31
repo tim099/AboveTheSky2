@@ -1,0 +1,10 @@
+{
+	"Sprite":{
+		"DataLoadType":"ModResources",
+		"ModResourcesData":{
+			"ModuleID":"Core",
+			"FolderPath":"Sprites/Creatures",
+			"FileName":"Boss01.png"
+		}
+	}
+}

@@ -1,0 +1,36 @@
+{
+	"Region":{
+		"ID":"AirShip_01"
+	},
+	"Buildings":
+	[
+		{
+			"BuildingDataEntry":{
+				"ID":"Entrance"
+			},
+			"X":4,
+			"Y":5
+		},
+		{
+			"BuildingDataEntry":{
+				"ID":"Stair"
+			},
+			"X":5,
+			"Y":5
+		},
+		{
+			"BuildingDataEntry":{
+				"ID":"Stair"
+			},
+			"X":5,
+			"Y":6
+		},
+		{
+			"BuildingDataEntry":{
+				"ID":"Warehouse"
+			},
+			"X":5,
+			"Y":2
+		}
+	]
+}

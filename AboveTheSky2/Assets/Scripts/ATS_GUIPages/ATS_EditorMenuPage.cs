@@ -143,7 +143,10 @@ namespace ATS.Page
                 {
                     ATS_SandboxPage.Create();
                 }
-
+                if (GUILayout.Button(UCL_LocalizeManager.Get("ModResourcesService"), UCL_GUIStyle.GetButtonStyle(Color.yellow)))
+                {
+                    UCL_ModResourcesServicePage.Create();
+                }
                 //#region GameSetting
                 //{//Edit GameSetting
                 //    using (var aTagScope = new GUILayout.HorizontalScope())

@@ -79,7 +79,7 @@ namespace ATS.Page
                 return;
             }
             GUILayout.Label("ATS_SandboxPage");
-            m_SandBox.ContentOnGUI();
+            m_SandBox.ContentOnGUI(m_Dic.GetSubDic("SandBox"));
         }
 
     }

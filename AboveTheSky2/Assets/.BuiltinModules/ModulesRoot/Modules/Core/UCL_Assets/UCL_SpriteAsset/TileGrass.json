@@ -1,0 +1,8 @@
+{
+	"DataLoadType":"ModResources",
+	"ModResourcesData":{
+		"ModuleID":"Core",
+		"FolderPath":"Sprites/Tiles",
+		"FileName":"Grass.jpg"
+	}
+}

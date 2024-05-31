@@ -205,6 +205,10 @@ namespace ATS
             {
                 var aRect = GetCellRect(MousePos.x, MousePos.y, 1f, 1f);
                 GUI.DrawTexture(aRect, ATS_StaticTextures.TileFrame);
+                //https://stackoverflow.com/questions/62224353/how-to-show-an-outlined-gui-box-in-unity
+                string aText = $"{MousePos.x},{MousePos.y}";
+                GUI.Label(aRect, aText, UCL_GUIStyle.GetLabelStyle(Color.green, 14));
+                //GUI.Label(aRect, aText, UCL_GUIStyle.GetLabelStyle(Color.white, 15));
             }
         }
         public override void DrawGrid(UCL_ObjectDictionary iDataDic)

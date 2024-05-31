@@ -210,7 +210,7 @@ namespace ATS
                                     var aRect = m_Region.m_GridData.GetCellRect(aX, aY, 1, 1);
                                     if (GUI.Button(aRect, name))
                                     {
-                                        Debug.LogError($"Move Pos:{m_BuildData.m_Pos},dir:{dir}");
+                                        //Debug.LogError($"Move Pos:{m_BuildData.m_Pos},dir:{dir}");
                                         m_BuildData.m_Pos += dir;
                                     }
                                 }

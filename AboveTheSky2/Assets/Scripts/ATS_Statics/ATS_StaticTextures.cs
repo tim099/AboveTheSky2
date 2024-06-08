@@ -11,5 +11,6 @@ namespace ATS
     public static class ATS_StaticTextures
     {
         public static Texture2D TileFrame => UCL_SpriteAsset.Util.GetData("TileFrame").Texture;
+        public static Texture2D White => UCL_SpriteAsset.Util.GetData("White").Texture;
     }
 }

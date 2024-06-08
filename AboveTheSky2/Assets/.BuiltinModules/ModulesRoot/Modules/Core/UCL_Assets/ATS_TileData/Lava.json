@@ -1,5 +1,8 @@
 {
 	"Sprite":{
 		"ID":"TileLava"
-	}
+	},
+	"TileType":"None",
+	"Show":"True",
+	"Passable":"True"
 }

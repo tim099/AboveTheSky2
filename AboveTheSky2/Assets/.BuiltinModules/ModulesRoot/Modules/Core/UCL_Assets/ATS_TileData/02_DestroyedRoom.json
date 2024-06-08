@@ -1,0 +1,10 @@
+{
+	"Sprite":{
+		"ID":"DestroyedRoom"
+	},
+	"TileType":"None",
+	"Show":"True",
+	"TilePathState":{
+		"PathState":16
+	}
+}

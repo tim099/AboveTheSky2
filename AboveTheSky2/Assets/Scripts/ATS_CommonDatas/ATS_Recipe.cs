@@ -26,11 +26,11 @@ namespace ATS
         /// <summary>
         /// 原料
         /// </summary>
-        public List<ATS_ResourceData> m_Consume = new List<ATS_ResourceData>();
+        public List<ResourceAmount> m_Consume = new List<ResourceAmount>();
         /// <summary>
         /// 產品
         /// </summary>
-        public List<ATS_ResourceData> m_Product = new List<ATS_ResourceData>();
+        public List<ResourceAmount> m_Product = new List<ResourceAmount>();
         /// <summary>
         /// 工作量
         /// </summary>

@@ -11,7 +11,10 @@ using UnityEngine;
 
 namespace ATS
 {
-    public class ATS_ResourceData : UCLI_ShortName
+    /// <summary>
+    /// 指定資源的數量
+    /// </summary>
+    public class ResourceAmount : UCLI_ShortName
     {
         public ATS_ResourceEntry m_Resource = new ATS_ResourceEntry();
         public int m_Amount = 1;
@@ -39,7 +42,7 @@ namespace ATS
             }
         }
     }
-    public class ATS_ResourceEntry : UCL_AssetEntryDefault<ATS_Resource>
+    public class ATS_ResourceEntry : UCL_AssetEntryDefault<ATS_ResourceData>
     {
         public const string DefaultID = "Clay";
 
@@ -49,7 +52,7 @@ namespace ATS
 
 
     }
-    public class ATS_Resource : UCL_Asset<ATS_Resource>
+    public class ATS_ResourceData : UCL_Asset<ATS_ResourceData>
     {
         public ATS_IconSpriteEntry m_Icon = new ATS_IconSpriteEntry();
         /// <summary>
@@ -92,7 +95,7 @@ namespace ATS
         }
 
         
-        public ATS_Resource()
+        public ATS_ResourceData()
         {
             ID = "New Resource";
         }

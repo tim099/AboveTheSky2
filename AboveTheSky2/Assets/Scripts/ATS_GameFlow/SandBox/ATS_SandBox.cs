@@ -14,22 +14,66 @@ namespace ATS
 {
     public interface ISandBox
     {
-        void Init(ATS_SandBox iSandBox);
+        void Init(ATS_SandBox iSandBox, ISandBox iParent);
         /// <summary>
         /// Logic base update
         /// </summary>
         void GameUpdate();
 
         void ContentOnGUI(UCL_ObjectDictionary iDic);
+
+        ATS_Region Region { get; }
+
+        /// <summary>
+        /// 當前所在地區
+        /// </summary>
+        ATS_RegionGrid RegionGrid { get; }
+
+        ATS_PathFinder PathFinder { get; }
     }
-    public class SandBoxBase : UCL.Core.JsonLib.UnityJsonSerializable, ISandBox
+    public class SandBoxBase : UCL.Core.JsonLib.UnityJsonSerializable, ISandBox, UCLI_FieldOnGUI
     {
         public ATS_SandBox p_SandBox { get; private set; } = null;
+        public ISandBox Parent { get; private set; } = null;
+
+        virtual public ATS_RegionGrid RegionGrid
+        {
+            get
+            {
+                if(Parent != null)
+                {
+                    return Parent.RegionGrid;
+                }
+                return p_SandBox.GetAirShipRegionGrid();
+            }
+        }
+        virtual public ATS_Region Region
+        {
+            get
+            {
+                if (Parent == null)
+                {
+                    return null;
+                }
+                return Parent.Region;
+            }
+        }
+        virtual public ATS_PathFinder PathFinder
+        {
+            get
+            {
+                if (Parent == null)
+                {
+                    return null;
+                }
+                return Parent.PathFinder;
+            }
+        }
+        virtual public GameState CurGameState => p_SandBox.CurGameState;
 
 
 
-
-        protected List<ISandBox> m_Components = new List<ISandBox>();
+        protected List<ISandBox> m_Components = new List<ISandBox>();//[UCL.Core.PA.UCL_FieldOnGUI]
         protected bool m_Inited = false;
 
         #region Getter
@@ -37,7 +81,7 @@ namespace ATS
 
         #endregion
 
-        virtual public void Init(ATS_SandBox iSandBox)
+        virtual public void Init(ATS_SandBox iSandBox, ISandBox iParent)
         {
             if (m_Inited)
             {
@@ -45,6 +89,7 @@ namespace ATS
             }
             m_Inited = true;
             p_SandBox = iSandBox;
+            Parent = iParent;
             //foreach (var aComponent in m_Components)
             //{
             //    aComponent.Init(iSandBox);
@@ -55,11 +100,13 @@ namespace ATS
             try
             {
                 m_Components.Add(iComponent);
-                iComponent.Init(p_SandBox);
+                iComponent.Init(p_SandBox, this);
             }
             catch (System.Exception ex)
             {
                 Debug.LogException(ex);
+                Debug.LogError($"SandBoxBase.AddComponent({GetType().FullName}), Exception:{ex}");
+                //throw new System.Exception($"SandBoxBase.AddComponent({GetType().FullName}), Exception:{ex}", ex);
             }
 
         }
@@ -92,7 +139,18 @@ namespace ATS
                 aComponent.ContentOnGUI(iDic.GetSubDic("Component", aIndex++));
             }
         }
-
+        virtual public object OnGUI(string iFieldName, UCL_ObjectDictionary iDataDic)
+        {
+            var aDrawObjExSetting = new UCL_GUILayout.DrawObjExSetting();
+            void ShowComponents()
+            {
+                UCL_GUILayout.DrawObjectData(m_Components, iDataDic.GetSubDic("Components"), "Components");
+            }
+            aDrawObjExSetting.OnShowField = ShowComponents;
+            UCL_GUILayout.DrawField(this, iDataDic.GetSubDic("Data"), iFieldName, iDrawObjExSetting: aDrawObjExSetting);
+            
+            return this;
+        }
         public override JsonData SerializeToJson()
         {
             JsonData aJson = base.SerializeToJson();
@@ -120,7 +178,7 @@ namespace ATS
     /// </summary>
     public class ATS_SandBox : SandBoxBase
     {
-        const int LogicIntervalMS = 200;
+        const int LogicIntervalMS = 30;
 
         public ATS_AirShip m_AirShip = new ATS_AirShip();
 
@@ -135,14 +193,14 @@ namespace ATS
 
 
 
-        public GameState CurGameState { get; private set; } = GameState.Boot;
-
+        override public GameState CurGameState => m_GameState;
+        public GameState m_GameState = GameState.Boot;
 
         public void Init()
         {
-            Init(this);
+            Init(this, null);
         }
-        override public void Init(ATS_SandBox iSandBox)
+        override public void Init(ATS_SandBox iSandBox, ISandBox iParent)
         {
             if (m_Inited)
             {
@@ -150,7 +208,7 @@ namespace ATS
             }
             SetGameState(GameState.Boot);
             //m_Components.Add(m_AirShip);
-            base.Init(iSandBox);
+            base.Init(iSandBox, iParent);
             AddComponent(m_AirShip);
 
 
@@ -170,7 +228,7 @@ namespace ATS
         }
         public void SetGameState(GameState gameState)
         {
-            CurGameState = gameState;
+            m_GameState = gameState;
         }
         public void End()
         {
@@ -238,13 +296,14 @@ namespace ATS
             GUILayout.Label($"SandBox Time:{(System.DateTime.Now - m_StartTime).TotalSeconds}", UCL_GUIStyle.LabelStyle);
             GUILayout.BeginHorizontal();
             GUILayout.Label("CurGameState", UCL_GUIStyle.LabelStyle, GUILayout.ExpandWidth(false));
-            CurGameState = UCL_GUILayout.PopupAuto(CurGameState, iDic, "CurGameState");
+            m_GameState = UCL_GUILayout.PopupAuto(CurGameState, iDic, "GameState");
             GUILayout.EndHorizontal();
             int aIndex = 0;
             foreach (var aComponent in m_Components)
             {
                 aComponent.ContentOnGUI(iDic.GetSubDic("Component", aIndex++));
             }
+            UCL_GUILayout.DrawObjectData(this, iDic.GetSubDic("Data"));
         }
         
     }

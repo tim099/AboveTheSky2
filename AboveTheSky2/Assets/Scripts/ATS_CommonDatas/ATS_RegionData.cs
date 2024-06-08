@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ATS
 {
-    public class ATS_RegionEntry : UCL_AssetEntryDefault<ATS_Region>
+    public class ATS_RegionEntry : UCL_AssetEntryDefault<ATS_RegionData>
     {
         public const string DefaultID = "AirShip_01";
 
@@ -15,18 +15,13 @@ namespace ATS
         public ATS_RegionEntry() { m_ID = DefaultID; }
         public ATS_RegionEntry(string iID) { m_ID = iID; }
     }
-    public class ATS_Region : UCL_Asset<ATS_Region>, ISandBox
+    public class ATS_RegionData : UCL_Asset<ATS_RegionData>//, ISandBox
     {
         public ATS_RegionGrid m_GridData = new ATS_RegionGrid();
 
         public int Width => m_GridData.m_Width;
         public int Height => m_GridData.m_Height;
 
-
-        public Cell[,] CreateCells()
-        {
-            return m_GridData.CreateCells();
-        }
 
         public override void Preview(UCL_ObjectDictionary iDataDic, bool iIsShowEditButton = false)
         {
@@ -37,27 +32,28 @@ namespace ATS
             GUILayout.EndVertical();
         }
 
-        #region SandBox
-        public void Init(ATS_SandBox iSandBox)
-        {
-            m_GridData.Init(iSandBox);
-        }
+        //#region SandBox
+        //public void Init(ATS_SandBox iSandBox, ISandBox iParent)
+        //{
 
-        /// <summary>
-        /// Logic base update
-        /// </summary>
-        public void GameUpdate()
-        {
-            m_GridData.GameUpdate();
-        }
-        /// <summary>
-        /// 用在ATS_SandboxPage
-        /// </summary>
-        public void ContentOnGUI(UCL_ObjectDictionary iDic)
-        {
-            m_GridData.ContentOnGUI(iDic.GetSubDic("GridData"));
-        }
-        #endregion
+        //    m_GridData.Init(iSandBox);
+        //}
+
+        ///// <summary>
+        ///// Logic base update
+        ///// </summary>
+        //public void GameUpdate()
+        //{
+        //    m_GridData.GameUpdate();
+        //}
+        ///// <summary>
+        ///// 用在ATS_SandboxPage
+        ///// </summary>
+        //public void ContentOnGUI(UCL_ObjectDictionary iDic)
+        //{
+        //    m_GridData.ContentOnGUI(iDic.GetSubDic("GridData"));
+        //}
+        //#endregion
     }
 
     /// <summary>
@@ -219,6 +215,11 @@ namespace ATS
             {
                 MousePos = UCL_GUILayout.GetMousePosInGrid(GridRect, m_Width, m_Height);
             }
+        }
+
+        public override void Init(ATS_SandBox iSandBox, ISandBox iParent)
+        {
+            base.Init(iSandBox, iParent);
         }
     }
 }

@@ -8,12 +8,16 @@
 			"FileName":"Entrance.png"
 		}
 	},
+	"BuildingTypes":
+	[
+		"Entrance"
+	],
 	"GridData":{
 		"Width":1,
 		"Height":1,
 		"GridIndexs":
 		[
-			1
+			256
 		]
 	}
 }

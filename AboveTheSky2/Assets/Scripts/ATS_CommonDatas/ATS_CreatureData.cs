@@ -22,6 +22,15 @@ namespace ATS
         /// 圖示Icon
         /// </summary>
         public UCL_SpriteAsset m_Sprite = new UCL_SpriteAsset();
+        /// <summary>
+        /// 寬度(基於房間尺寸)
+        /// </summary>
+        public float m_Width = 0.2f;
+        /// <summary>
+        /// 高度(基於房間尺寸)
+        /// </summary>
+        public float m_Height = 0.5f;
+
 
         public Texture2D Texture => m_Sprite.Texture;
 
@@ -31,13 +40,14 @@ namespace ATS
             var aTexture = m_Sprite.Texture;
             if (aTexture != null)
             {
-                GUILayout.Box(aTexture, GUILayout.Width(64), GUILayout.Height(64));
+                float aScaleFactor = UCL_GUIStyle.GetScaledSize(128f);
+                GUILayout.Box(aTexture, GUILayout.Width(m_Width * aScaleFactor), GUILayout.Height(m_Height * aScaleFactor));
             }
         }
     }
     public class ATS_CreatureDataEntry : UCL_AssetEntryDefault<ATS_CreatureData>
     {
-        public const string DefaultID = "DefaultID";
+        public const string DefaultID = "Default";
 
 
         public ATS_CreatureDataEntry() { m_ID = DefaultID; }

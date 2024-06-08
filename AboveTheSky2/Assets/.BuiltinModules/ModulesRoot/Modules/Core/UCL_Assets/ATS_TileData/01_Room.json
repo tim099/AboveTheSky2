@@ -2,5 +2,10 @@
 	"Sprite":{
 		"ID":"Room"
 	},
-	"TileType":"BuildingSlot"
+	"TileType":"BuildingSlot",
+	"Show":"True",
+	"Passable":"True",
+	"TilePathState":{
+		"PathState":526
+	}
 }

@@ -61,7 +61,19 @@ namespace ATS.Page
             PlayerPrefs.SetString(RunTimeDataKey, UCL.Core.JsonLib.JsonConvert.SaveDataToJsonUnityVer(s_RunTimeData).ToJson());
         }
         #endregion
-
+        public override void OnClose()
+        {
+            if(m_SandBox != null)
+            {
+                m_SandBox.End();
+            }
+            base.OnClose();
+        }
+        public override void OnPause()
+        {
+            
+            base.OnPause();
+        }
         public override void Init(UCL_GUIPageController iGUIPageController)
         {
             base.Init(iGUIPageController);

@@ -1,5 +1,8 @@
 {
 	"Sprite":{
 		"ID":"TileGrass"
-	}
+	},
+	"TileType":"None",
+	"Show":"True",
+	"Passable":"True"
 }

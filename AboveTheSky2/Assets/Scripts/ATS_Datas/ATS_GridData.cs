@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace ATS
 {
-    public class ATS_GridData : UCL.Core.JsonLib.UnityJsonSerializable, UCLI_FieldOnGUI, ISandBox
+    public class ATS_GridData : SandBoxBase, UCLI_FieldOnGUI
     {
         public const float CellSize = 32f;
         public class RuntimeData
@@ -86,7 +86,7 @@ namespace ATS
         /// <param name="iFieldName"></param>
         /// <param name="iDataDic"></param>
         /// <returns></returns>
-        virtual public object OnGUI(string iFieldName, UCL_ObjectDictionary iDataDic)
+        override public object OnGUI(string iFieldName, UCL_ObjectDictionary iDataDic)
         {
             UCL_GUILayout.DrawObjExSetting aDrawObjExSetting = new UCL_GUILayout.DrawObjExSetting();
             aDrawObjExSetting.OnShowField = () =>
@@ -102,7 +102,7 @@ namespace ATS
 
             return this;
         }
-        virtual public Rect GetCellRect(int x, int y, float width, float height)
+        virtual public Rect GetCellRect(float x, float y, float width, float height)
         {
             float aCellWidth = GridRect.width / m_Width;//單位寬度
             float aCellHeight = GridRect.height / m_Height;//單位高度
@@ -156,21 +156,22 @@ namespace ATS
             }
         }
         #region SandBox
-        public void Init(ATS_SandBox iSandBox)
+        override public void Init(ATS_SandBox iSandBox, ISandBox iParent)
         {
+            base.Init(iSandBox, iParent);
             RTData = new RuntimeData();
         }
         /// <summary>
         /// Logic base update
         /// </summary>
-        public void GameUpdate()
+        override public void GameUpdate()
         {
             ++RTData.m_CurIndex;
         }
         /// <summary>
         /// 用在ATS_SandboxPage
         /// </summary>
-        public void ContentOnGUI(UCL_ObjectDictionary iDic)
+        override public void ContentOnGUI(UCL_ObjectDictionary iDic)
         {
             //if (RTData == null)
             //{

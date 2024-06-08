@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; transform-origin: center; width: 60%; height: 80%; align-self: flex-start;">
+        <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ButtonTest" style="font-size: 16px; transform-origin: left top; background-image: url(&quot;project://database/Assets/Addressables/Sprites/UI/buttons/button_256_2.png?fileID=21300000&amp;guid=ae6eb9d3c93f5c742a1f23371a6a2e99&amp;type=3#button_256_2&quot;); -unity-background-scale-mode: stretch-to-fill; visibility: visible; opacity: 1; width: 80%; height: 10%; border-top-width: 1px;" />
+        <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+    </ui:VisualElement>
+</ui:UXML>

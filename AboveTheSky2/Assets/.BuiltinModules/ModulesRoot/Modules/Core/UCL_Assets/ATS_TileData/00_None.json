@@ -3,5 +3,9 @@
 		"ID":"None"
 	},
 	"TileType":"None",
-	"Show":"False"
+	"Show":"False",
+	"Passable":"False",
+	"TilePathState":{
+		"PathState":16
+	}
 }

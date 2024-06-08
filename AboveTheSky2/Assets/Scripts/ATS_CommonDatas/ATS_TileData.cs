@@ -31,10 +31,17 @@ namespace ATS
         /// 是否要顯示(false則此地塊隱藏)
         /// </summary>
         public bool m_Show = true;
+
+        /// <summary>
+        /// 地塊的通行狀態
+        /// </summary>
+        public TilePathState m_TilePathState = new TilePathState();
+
+
         /// <summary>
         /// 是否能建造
         /// </summary>
-        public bool CanBuild => m_TileType == TileType.BuildingSlot;
+        public bool CanBuild => m_TilePathState.GetPathState(PathState.CanBuild);//m_TileType == TileType.BuildingSlot;
 
         public Texture2D Texture => m_Sprite.Texture;
     }

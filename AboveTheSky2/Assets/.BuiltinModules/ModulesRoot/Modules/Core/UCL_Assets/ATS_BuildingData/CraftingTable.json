@@ -1,5 +1,17 @@
 {
-	"Work":100,
+	"RequireConstruct":"True",
+	"ConstructCost":{
+		"Consume":
+		[
+			{
+				"Resource":{
+					"ID":"Clay"
+				},
+				"Amount":2
+			}
+		],
+		"Work":100
+	},
 	"Sprite":{
 		"DataLoadType":"ModResources",
 		"ModResourcesData":{
@@ -19,7 +31,7 @@
 		"Height":1,
 		"GridIndexs":
 		[
-			1
+			256
 		]
 	}
 }

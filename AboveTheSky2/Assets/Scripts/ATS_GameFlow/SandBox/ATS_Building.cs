@@ -5,6 +5,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UCL.Core;
+using UCL.Core.JsonLib;
+using UCL.Core.UI;
 using UnityEngine;
 
 namespace ATS
@@ -55,42 +57,86 @@ namespace ATS
             }
         }
     }
+
+    public enum BuildingState
+    {
+        /// <summary>
+        /// 藍圖
+        /// </summary>
+        Blueprint,
+        /// <summary>
+        /// 建設完成
+        /// </summary>
+        Constructed,
+        /// <summary>
+        /// 被摧毀狀態
+        /// </summary>
+        Destroyed,
+    }
+
     /// <summary>
-    /// 實際的建築
+    /// Sandbox中使用的建築
     /// </summary>
     public class ATS_Building : SandBoxBase
     {
+        /// <summary>
+        /// 建築類型
+        /// </summary>
         public ATS_BuildingDataEntry m_BuildingDataEntry = new ATS_BuildingDataEntry();
-        public int m_X;
-        public int m_Y;
-
 
         /// <summary>
         /// 建築位置
         /// </summary>
-        public Vector2Int Pos => new Vector2Int(m_X,m_Y);
+        public ATS_Vector2Int m_Pos = new ATS_Vector2Int();
+        public BuildingState m_BuildingState = BuildingState.Constructed;
+        #region Getter
 
         public ATS_BuildingData BuildingData => m_BuildingDataEntry.GetData();
 
-        public IList<Vector2Int> BuildingCells => BuildingData.GetBuildingCells(Pos);
-
+        public IList<Vector2Int> BuildingCells => BuildingData.GetBuildingCells(m_Pos.ToVector2Int);
+        #endregion
 
         public ATS_Building() { }
-        public ATS_Building(string iID, Vector2Int iPos)
+        public ATS_Building(string iID, Vector2Int iPos, BuildingState iBuildingState = BuildingState.Blueprint)
         {
             m_BuildingDataEntry.ID = iID;
-            m_X = iPos.x;
-            m_Y = iPos.y;
+            m_Pos.Set(iPos);
+            //m_X = iPos.x;
+            //m_Y = iPos.y;
+            m_BuildingState = iBuildingState;
+        }
+        public override void DeserializeFromJson(JsonData iJson)
+        {
+            base.DeserializeFromJson(iJson);
+            //m_Pos.m_X = m_X;
+            //m_Pos.m_Y = m_Y;
         }
 
+        /// <summary>
+        /// 根據ATS_RegionGrid繪製在GUI上
+        /// </summary>
+        /// <param name="iGrid"></param>
         public void DrawOnGrid(ATS_RegionGrid iGrid)
         {
-            BuildingData.DrawOnGrid(iGrid, m_X, m_Y);
+            Color? aGUIColor = null;
+            switch (m_BuildingState)
+            {
+                case BuildingState.Blueprint:
+                    {
+                        aGUIColor = UCL_Color.Half.White;
+                        break;
+                    }
+            }
+            if (aGUIColor.HasValue) UCL_GUIStyle.PushGUIColor(aGUIColor.Value);
+
+            BuildingData.DrawOnGrid(iGrid, m_Pos.m_X, m_Pos.m_Y);
+
+            if (aGUIColor.HasValue) UCL_GUIStyle.PopGUIColor();
         }
 
-        public override void Init(ATS_SandBox iSandBox)
+        public override void Init(ATS_SandBox iSandBox, ISandBox iParent)
         {
-            base.Init(iSandBox);
+            base.Init(iSandBox, iParent);
         }
         /// <summary>
         /// 用在ATS_SandboxPage
@@ -98,7 +144,7 @@ namespace ATS
         override public void ContentOnGUI(UCL_ObjectDictionary iDic)
         {
             ATS_RegionGrid aGrid = p_SandBox.GetAirShipRegionGrid();
-            BuildingData.DrawOnGrid(aGrid, Pos.x, Pos.y);
+            DrawOnGrid(aGrid);
         }
     }
 }

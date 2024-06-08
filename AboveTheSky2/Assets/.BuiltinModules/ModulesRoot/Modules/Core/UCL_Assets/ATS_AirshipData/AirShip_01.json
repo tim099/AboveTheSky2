@@ -8,29 +8,41 @@
 			"BuildingDataEntry":{
 				"ID":"Entrance"
 			},
-			"X":4,
-			"Y":5
+			"Pos":{
+				"X":4,
+				"Y":5
+			},
+			"BuildingState":"Constructed"
 		},
 		{
 			"BuildingDataEntry":{
 				"ID":"Stair"
 			},
-			"X":5,
-			"Y":5
+			"Pos":{
+				"X":5,
+				"Y":5
+			},
+			"BuildingState":"Constructed"
 		},
 		{
 			"BuildingDataEntry":{
 				"ID":"Stair"
 			},
-			"X":5,
-			"Y":6
+			"Pos":{
+				"X":5,
+				"Y":6
+			},
+			"BuildingState":"Constructed"
 		},
 		{
 			"BuildingDataEntry":{
 				"ID":"Warehouse"
 			},
-			"X":5,
-			"Y":2
+			"Pos":{
+				"X":5,
+				"Y":2
+			},
+			"BuildingState":"Blueprint"
 		}
 	]
 }

@@ -4,32 +4,147 @@
 using System.Collections;
 using System.Collections.Generic;
 using UCL.Core;
+using UCL.Core.JsonLib;
 using UCL.Core.UI;
 using UnityEngine;
 
 namespace ATS
 {
     [System.Serializable]
-    public class ATS_Vector2Int : UCL.Core.JsonLib.UnityJsonSerializable
+    public class ATS_Vector3 : UCL.Core.JsonLib.UnityJsonSerializable, UCLI_ShortName
     {
-        public int m_X;
-        public int m_Y;
+        public float x;
+        public float y;
+        public float z;
+
+
+
+        public ATS_Vector3() { }
+        public ATS_Vector3(float iX, float iY, float iZ)
+        {
+            x = iX;
+            y = iY;
+            z = iZ;
+        }
+        public ATS_Vector3(ATS_Vector3 iPos)
+        {
+            x = iPos.x; y = iPos.y; z = iPos.z;
+        }
+        public void Set(Vector3 iPos)
+        {
+            x = iPos.x;
+            y = iPos.y;
+            z = iPos.z;
+        }
+        public void Reset()
+        {
+            x = y = z = 0f;
+        }
+
+        public Vector3 ToVector3 => new Vector3(x, y, z);
+        public ATS_Vector2Int ToVector2Int => new ATS_Vector2Int(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
+        public string GetShortName() => $"({x},{y},{z})";
+        public override string ToString() => GetShortName();
+        /// <summary>
+        /// https://stackoverflow.com/questions/371328/why-is-it-important-to-override-gethashcode-when-equals-method-is-overridden
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode() => (x, y, z).GetHashCode();
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as ATS_Vector3);
+        }
+        public bool Equals(ATS_Vector3 obj)
+        {
+            if(obj == null) return false;
+            return x == obj.x && y == obj.y && z == obj.z;
+        }
+        
+        public static ATS_Vector3 operator +(ATS_Vector3 a, ATS_Vector3 b) => new ATS_Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
+        public static ATS_Vector3 operator -(ATS_Vector3 a, ATS_Vector3 b) => new ATS_Vector3(a.x - b.x, a.y - b.y, a.z - b.z);
+        /// <summary>
+        /// Dot
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static ATS_Vector3 operator *(ATS_Vector3 a, ATS_Vector3 b) => new ATS_Vector3(a.x * b.x, a.y * b.y, a.z * b.z);
+
+        public static ATS_Vector3 operator *(ATS_Vector3 a, float b) => new ATS_Vector3(a.x * b, a.y * b, a.z * b);
+
+
+        public static ATS_Vector3 operator /(ATS_Vector3 a, ATS_Vector3 b) => new ATS_Vector3(a.x / b.x, a.y / b.y, a.z / b.z);
+    }
+
+
+    [System.Serializable]
+    public class ATS_Vector2Int : UCL.Core.JsonLib.UnityJsonSerializable, UCLI_ShortName
+    {
+        public int x;
+        public int y;
+
+
+        public int CellLen => x + y;
         public ATS_Vector2Int() { }
         public ATS_Vector2Int(int iX ,int iY)
         {
-            m_X = iX; m_Y = iY;
+            x = iX; y = iY;
         }
         public ATS_Vector2Int(Vector2Int iPos)
         {
-            m_X = iPos.x; m_Y = iPos.y;
+            x = iPos.x; y = iPos.y;
         }
-        public Vector2Int ToVector2Int => new Vector2Int(m_X, m_Y);
+        public Vector2Int ToVector2Int => new Vector2Int(x, y);
         public void Set(Vector2Int iPos)
         {
-            m_X = iPos.x;
-            m_Y = iPos.y;
+            x = iPos.x;
+            y = iPos.y;
         }
+        public string GetShortName() => $"({x},{y})";
+        public override string ToString() => GetShortName();
+        /// <summary>
+        /// https://stackoverflow.com/questions/371328/why-is-it-important-to-override-gethashcode-when-equals-method-is-overridden
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode() => (x, y).GetHashCode();
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as ATS_Vector2Int);
+        }
+        public bool Equals(ATS_Vector2Int obj)
+        {
+            if (obj == null) return false;
+            return x == obj.x && y == obj.y;
+        }
+        public static ATS_Vector2Int operator +(ATS_Vector2Int a, ATS_Vector2Int b) => new ATS_Vector2Int(a.x + b.x, a.y + b.y);
+        public static ATS_Vector2Int operator -(ATS_Vector2Int a, ATS_Vector2Int b) => new ATS_Vector2Int(a.x - b.x, a.y - b.y);
+        /// <summary>
+        /// Dot
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static ATS_Vector2Int operator *(ATS_Vector2Int a, ATS_Vector2Int b) => new ATS_Vector2Int(a.x * b.x, a.y * b.y);
+        public static ATS_Vector2Int operator /(ATS_Vector2Int a, ATS_Vector2Int b) => new ATS_Vector2Int(a.x / b.x, a.y / b.y);
+        public static bool operator == (ATS_Vector2Int a, ATS_Vector2Int b)
+        {
+            if (a is null) return b is null;
+            if (b is null) return false;
+            return a.Equals(b);
+        }
+        public static bool operator !=(ATS_Vector2Int a, ATS_Vector2Int b) => !(a == b);
+        //public override void DeserializeFromJson(JsonData iJson)
+        //{
+        //    base.DeserializeFromJson(iJson);
+        //    if (iJson.Contains("X"))
+        //    {
+        //        x = iJson.GetInt("X");
+        //        y = iJson.GetInt("Y");
+        //    }
+        //}
     }
+
+
     public class ATS_Path : UCL.Core.JsonLib.UnityJsonSerializable
     {
         public List<ATS_Vector2Int> m_Path = new List<ATS_Vector2Int>();
@@ -205,40 +320,43 @@ namespace ATS
             return new ATS_Path();
         }
         /// <summary>
-        /// TODO
+        /// SearchPath(BFS)
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="targetX"></param>
         /// <param name="targetY"></param>
         /// <returns></returns>
-        public ATS_Path SearchPath(float x, float y, System.Func<Cell, PathNode, bool> iCheckFunc, int iMaxDistance = 999)
+        public ATS_Path SearchPath(float x, float y, System.Func<Cell, PathNode, int> iCheckFunc, int iMaxDistance = 999, int iMaxSearchTimes = 9999)
         {
-            const int MaxSearchTimes = 9999;
             HashSet<Vector2Int> aVisited = new HashSet<Vector2Int>();
             Queue<PathNode> aNodes = new Queue<PathNode>();
 
             var aStartPos = new Vector2Int(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
             PathNode aStart = new PathNode(aStartPos, null, 0);
             PathNode aTargetNode = null;
+            int aTargetValue = int.MaxValue;
             aVisited.Add(aStartPos);
             aNodes.Enqueue(aStart);
             var aCells = Cells;
             int aSearchTimes = 0;
-            while (aNodes.Count > 0 && aSearchTimes++ < MaxSearchTimes)
+            while (aNodes.Count > 0 && aSearchTimes++ < iMaxSearchTimes)
             {
                 var aCurNode = aNodes.Dequeue();
                 var aPos = aCurNode.m_Pos;
                 var aCell = aCells[aPos.x, aPos.y];
                 //Debug.LogError($"SearchPath aPos:{aPos}");
-                bool aFindTarget = iCheckFunc(aCell, aCurNode);
-                if (aFindTarget)
+                int aValue = iCheckFunc(aCell, aCurNode);
+                if(aValue < aTargetValue)//找值最小的點
                 {
+                    aTargetValue = aValue;
                     aTargetNode = aCurNode;
-                    //Debug.LogError($"SearchPath aFindTarget aPos:{aPos}");
-                    break;
+                    if (aValue < 0)//值小於0時表示是最佳解 不需要繼續尋找更好的位置
+                    {
+                        break;
+                    }
                 }
-                if(aCurNode.m_Distance < iMaxDistance)//仍在搜尋範圍內 繼續找下一個節點
+                if(aCurNode.m_Distance < iMaxDistance)//仍在搜尋次數內 繼續找下一個節點
                 {
                     int aCurPathState = GetPathState(aPos.x, aPos.y);
                     foreach (var aPathState in PathStateDic.Keys)
@@ -251,17 +369,12 @@ namespace ATS
                             {
                                 aVisited.Add(aNextPos);
                                 aNodes.Enqueue(new PathNode(aNextPos, aCurNode, aCurNode.m_Distance + 1));
-
-
                             }
                         }
                     }
                 }
             }
-            //if(aTargetNode == null)//找不到目標
-            //{
-            //    return null;
-            //}
+
             var aPath = new ATS_Path();
             var aNode = aTargetNode;
             if(aNode != null)
@@ -276,7 +389,62 @@ namespace ATS
 
             return aPath;
         }
+        /// <summary>
+        /// Search Cells(BFS)
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="iCheckFunc"></param>
+        /// <param name="iMaxDistance"></param>
+        /// <param name="iMaxSearchTimes"></param>
+        /// <returns></returns>
+        public List<(Cell, PathNode)> Search(float x, float y, System.Func<Cell, PathNode, bool> iCheckFunc, int iSearchCount = 1, int iMaxDistance = 999, int iMaxSearchTimes = 9999)
+        {
+            HashSet<Vector2Int> aVisited = new HashSet<Vector2Int>();
+            Queue<PathNode> aNodes = new Queue<PathNode>();
+            List<(Cell, PathNode)> aTargets = new ();
 
+            var aStartPos = new Vector2Int(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
+            PathNode aStart = new PathNode(aStartPos, null, 0);
+            aVisited.Add(aStartPos);
+            aNodes.Enqueue(aStart);
+            var aCells = Cells;
+            int aSearchTimes = 0;
+            while (aNodes.Count > 0 && aSearchTimes++ < iMaxSearchTimes)
+            {
+                var aCurNode = aNodes.Dequeue();
+                var aPos = aCurNode.m_Pos;
+                var aCell = aCells[aPos.x, aPos.y];
+                //Debug.LogError($"SearchPath aPos:{aPos}");
+                if (iCheckFunc(aCell, aCurNode))//找值最小的點
+                {
+                    aTargets.Add((aCell, aCurNode));
+                    if(aTargets.Count >= iSearchCount)//已經找到足夠數量的目標
+                    {
+                        break;
+                    }
+                }
+                if (aCurNode.m_Distance < iMaxDistance)//仍在搜尋次數內 繼續找下一個節點
+                {
+                    int aCurPathState = GetPathState(aPos.x, aPos.y);
+                    foreach (var aPathState in PathStateDic.Keys)
+                    {
+                        if ((aCurPathState & (int)aPathState) != 0)//可以往此方向移動
+                        {
+                            var aDir = PathStateDic[aPathState];
+                            var aNextPos = aPos + aDir;
+                            if (!aVisited.Contains(aNextPos))//確保還沒走過
+                            {
+                                aVisited.Add(aNextPos);
+                                aNodes.Enqueue(new PathNode(aNextPos, aCurNode, aCurNode.m_Distance + 1));
+                            }
+                        }
+                    }
+                }
+            }
+
+            return aTargets;
+        }
         public List<PathState> GetPaths(int x, int y)
         {
             List<PathState> aPaths = new List<PathState>();

@@ -1,5 +1,8 @@
 {
-	"Work":100,
+	"RequireConstruct":"True",
+	"ConstructCost":{
+		"Work":100
+	},
 	"Sprite":{
 		"DataLoadType":"ModResources",
 		"ModResourcesData":{
@@ -10,7 +13,8 @@
 	},
 	"BuildingTypes":
 	[
-		"Entrance"
+		"Entrance",
+		"Storage"
 	],
 	"GridData":{
 		"Width":1,

@@ -31,6 +31,10 @@ namespace ATS
         /// 提供路徑(例如梯子 可以讓船員上下移動)
         /// </summary>
         Path,
+        /// <summary>
+        /// 倉庫
+        /// </summary>
+        Storage,
     }
     public class ATS_BuildingData : UCL_Asset<ATS_BuildingData>
     {
@@ -65,7 +69,10 @@ namespace ATS
         public Texture2D Texture => m_Sprite.Texture;
         public int Width => m_GridData.m_Width;
         public int Height => m_GridData.m_Height;
-
+        /// <summary>
+        /// 是否為倉庫
+        /// </summary>
+        public bool IsStorage => m_BuildingTypes.Contains(BuildingType.Storage);
         public bool CheckBuildingType(BuildingType iBuildingType) => m_BuildingTypes.Contains(iBuildingType);
 
         /// <summary>
@@ -85,7 +92,8 @@ namespace ATS
             var aTexture = m_Sprite.Texture;
             if (aTexture != null)
             {
-                GUILayout.Box(aTexture, GUILayout.Width(64), GUILayout.Height(64));
+                float aUnitSize = UCL_GUIStyle.GetScaledSize(64f);
+                GUILayout.Box(aTexture, GUILayout.Width(Width * aUnitSize), GUILayout.Height(Height * aUnitSize));
             }
         }
         public void DrawOnGrid(ATS_RegionGrid iGrid, int x, int y)

@@ -95,7 +95,7 @@ namespace ATS
                     }
                     finally
                     {
-                        aCells[x, y] = new Cell(aTile);
+                        aCells[x, y] = new Cell(aTile, x, y);
                     }
                 }
             }

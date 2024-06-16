@@ -89,6 +89,11 @@ namespace ATS
         /// </summary>
         public ATS_Vector2Int m_Pos = new ATS_Vector2Int();
         public BuildingState m_BuildingState = BuildingState.Constructed;
+        /// <summary>
+        /// 避免過度頻繁的判斷部分邏輯(例如搬運工作)
+        /// </summary>
+        public int m_LogicTimer = 0;
+
         #region Getter
 
         public ATS_BuildingData BuildingData => m_BuildingDataEntry.GetData();
@@ -129,7 +134,7 @@ namespace ATS
             }
             if (aGUIColor.HasValue) UCL_GUIStyle.PushGUIColor(aGUIColor.Value);
 
-            BuildingData.DrawOnGrid(iGrid, m_Pos.m_X, m_Pos.m_Y);
+            BuildingData.DrawOnGrid(iGrid, m_Pos.x, m_Pos.y);
 
             if (aGUIColor.HasValue) UCL_GUIStyle.PopGUIColor();
         }
@@ -145,6 +150,50 @@ namespace ATS
         {
             ATS_RegionGrid aGrid = p_SandBox.GetAirShipRegionGrid();
             DrawOnGrid(aGrid);
+        }
+        const int LogicUpdateInterval = 10;
+        const int ResourceNotFindInterval = 30;
+        public override void GameUpdate()
+        {
+            base.GameUpdate();
+            if (m_LogicTimer > 0)
+            {
+                --m_LogicTimer;
+            }
+            else
+            {
+                m_LogicTimer = LogicUpdateInterval;
+                if (BuildingData.IsStorage)//倉庫 判斷附近是否有能搬運的資源
+                {
+                    bool SearchResource(Cell iCell, PathNode iPathNode)
+                    {
+                        if (!iCell.m_Resources.IsNullOrEmpty())
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                    var aResult = PathFinder.Search(m_Pos.x, m_Pos.y, SearchResource);
+
+                    if(!aResult.IsNullOrEmpty())//有可搬運的資源
+                    {
+                        var aCell = aResult[0].Item1;
+                        aCell.GenerateHaulJob(this);//生成搬運的工作
+                        //if (!aCell.Resources.IsNullOrEmpty())
+                        //{
+                        //    var aTarget = aCell.Resources[0];
+
+                        //    Debug.LogError($"ATS_Building.GameUpdate, aTarget:{aTarget}");
+                        //}
+                        
+                    }
+                    else
+                    {
+                        m_LogicTimer = ResourceNotFindInterval;//目前沒找到可搬運的資源 延長下次搜尋的間格
+                    }
+                }
+            }
+            
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UCL.Core;
 using UCL.Core.MathLib;
+using UCL.Core.UI;
 using UnityEngine;
 
 namespace ATS
@@ -16,6 +17,15 @@ namespace ATS
         /// </summary>
         Idle,
 
+        /// <summary>
+        /// 執行所有的m_Jobs
+        /// </summary>
+        Working,
+
+        /// <summary>
+        /// 睡眠
+        /// </summary>
+        Sleep,
     }
 
     /// <summary>
@@ -23,10 +33,23 @@ namespace ATS
     /// </summary>
     public class ATS_Minion : SandBoxBase
     {
-        public const float GroundHeight = 0.1f;
+        /// <summary>
+        /// 移動相關資料
+        /// </summary>
+        public class MoveData
+        {
+            /// <summary>
+            /// 當前路徑
+            /// </summary>
+            public ATS_Path m_Path = null;
+            public ATS_Vector3 m_TargetPos = null;
 
-
-
+            public void Clear()
+            {
+                m_Path = null;
+                m_TargetPos = null;
+            }
+        }
         /// <summary>
         /// 單位類型
         /// </summary>
@@ -34,28 +57,35 @@ namespace ATS
         /// <summary>
         /// 座標對應到飛船實際的格子 例如3.5代表在X=3格子的0.5位置(中間)
         /// </summary>
-        public float m_X;
-        public float m_Y;
-        public float m_Z;
-        public bool m_Moved = false;
+        public ATS_Vector3 m_Pos = new ATS_Vector3();
+        /// <summary>
+        /// 移動相關資料
+        /// </summary>
+        public MoveData m_MoveData = new MoveData();
+        public MinionState m_State = MinionState.Idle;
+        /// <summary>
+        /// 當前所有的Job
+        /// </summary>
+        public List<ATS_Job> m_Jobs = new List<ATS_Job>();
+
+        public ATS_Vector2Int PosInt => m_Pos.ToVector2Int;
         /// <summary>
         /// 目前在哪個Cell(X座標)
         /// </summary>
-        public int PosX => Mathf.FloorToInt(m_X);
+        public int PosX => Mathf.FloorToInt(m_Pos.x);
         /// <summary>
         /// 目前在哪個Cell(Y座標)
         /// </summary>
-        public int PosY => Mathf.FloorToInt(m_Y);
+        public int PosY => Mathf.FloorToInt(m_Pos.y);
 
-        public MinionState m_MinionState = MinionState.Idle;
+        
 
 
         public ATS_Minion() { }
         public ATS_Minion(string iID, float iX, float iY) {
             m_CreatureDataEntry.ID = iID;
-            m_X = iX;
-            m_Y = iY;
-            m_Z = 0;
+            m_Pos.x = iX;
+            m_Pos.y = iY;
         }
         #region Getter
         public ATS_CreatureData CreatureData => m_CreatureDataEntry.GetData();
@@ -70,7 +100,7 @@ namespace ATS
         //    }
         //}
 
-        private ATS_CreatureData m_CreatureData = null;
+        //private ATS_CreatureData m_CreatureData = null;
 
         public Texture2D Texture => CreatureData.Texture;
         public float Width => CreatureData.m_Width;
@@ -92,182 +122,214 @@ namespace ATS
         {
             base.GameUpdate();
 
-            switch (m_MinionState)
+            switch (m_State)
             {
                 case MinionState.Idle:
                     {
                         IdleUpdate();
                         break;
                     }
+                case MinionState.Working:
+                    {
+                        WorkingUpdate();
+                        break;
+                    }
             }
-
+            if(m_MoveData.m_Path != null)
+            {
+                MoveUpdate();
+            }
         }
-
-        private ATS_Path m_Path = null;
+        public void SetState(MinionState iState)
+        {
+            switch (iState)
+            {
+                //case MinionState.Working:
+                //    {
+                //        m_MoveData.Clear();
+                //        break;
+                //    }
+                default:
+                    {
+                        m_MoveData.Clear();
+                        break;
+                    }
+            }
+            m_State = iState;
+        }
         private int m_Timer = 0;
         private int m_At = 0;
-        private Vector2? m_Pos = null;
-        private Vector2? m_NextPos = null;
-        virtual protected void IdleUpdate()
+
+        const int MoveCounter = 30;
+        protected void WorkingUpdate()
         {
-            const int Counter = 30;
-            if(m_Path == null)
+            if (m_Jobs.IsNullOrEmpty())
             {
-                int aTargetDistance = UCL_Random.Instance.Range(2, 5);
-                //return true if find target
-                bool CheckNode(Cell iCell, PathNode iNode)
-                {
-                    if(iNode.m_Distance >= aTargetDistance)
-                    {
-                        return true;
-                    }
-                    return false;
-                }
-                m_Path = PathFinder.SearchPath(m_X, m_Y, CheckNode);
-                //Debug.LogError($"({m_X},{m_Y}), m_Path:{m_Path.m_Path.ConcatString(iPos => $"{iPos.m_X},{iPos.m_Y}")}");
-                m_Timer = Counter;
-                m_At = 0;
-                m_NextPos = null;
-                m_Pos = new Vector2(m_X, m_Y);
+                SetState(MinionState.Idle);
+                return;
             }
-            else
+            ATS_Job aCurJob = m_Jobs[0];
+            aCurJob.WorkingUpdate(this);
+        }
+        protected void IdleUpdate()
+        {
+            
+            if(m_MoveData.m_Path == null)
             {
-                m_Timer++;
-                if (m_Timer >= Counter)
                 {
-                    m_Timer = 0;
-                    var aPath = m_Path.m_Path;
-                    if (m_At < aPath.Count)
+                    bool SearchJob(Cell iCell, PathNode iPathNode)
                     {
-                        if(m_NextPos.HasValue)
+                        if (!iCell.m_Jobs.IsNullOrEmpty())
                         {
-                            m_Pos = m_NextPos.Value;
+                            return true;
                         }
-                        
-
-                        var aPos = aPath[m_At];
-                        m_NextPos = new Vector2(aPos.m_X + 0.5f, aPos.m_Y + Random.Range(0.01f, GroundHeight));
-
-                        //m_X = aPos.m_X + 0.5f;
-                        //m_Y = aPos.m_Y;
+                        return false;
                     }
-                    else//End
+                    //先嘗試找工作
+                    var aResult = PathFinder.Search(m_Pos.x, m_Pos.y, SearchJob);
+                    if (!aResult.IsNullOrEmpty())
                     {
-                        m_Path = null;
-                    }
+                        var aCell = aResult[0].Item1;
+                        if(!aCell.m_Jobs.IsNullOrEmpty())//找到工作
+                        {
+                            var aJob = aCell.m_Jobs[0];
+                            aCell.m_Jobs.RemoveAt(0);
 
-                    m_At++;
+                            m_Jobs.Add(aJob);
+                            SetState(MinionState.Working);
+                            return;
+                        }
+                    }
+                }
+
+                int aTargetDistance = UCL_Random.Instance.Range(2, 8);
+                //return true if find target
+                int CheckNode(Cell iCell, PathNode iNode)
+                {
+                    if (iNode.m_Distance >= aTargetDistance)//距離滿足aTargetDistance 找到目標位置
+                    {
+                        return 0;
+                    }
+                    return aTargetDistance - iNode.m_Distance;//尚未找到目標 回傳與目標的距離
+                }
+                m_MoveData.m_Path = PathFinder.SearchPath(m_Pos.x, m_Pos.y, CheckNode);
+                //Debug.LogError($"({m_Pos.x},{m_Pos.y}), m_Path:{m_Path.m_Path.ConcatString(iPos => $"{iPos.m_Pos.x},{iPos.m_Pos.y}")}");
+                m_Timer = MoveCounter;
+                m_At = 0;
+            }
+            //else
+            //{
+            //    MoveUpdate();
+            //}
+            
+        }
+
+        public void MoveUpdate()
+        {
+            var aCurPath = m_MoveData.m_Path;
+            if (aCurPath == null)
+            {
+                return;
+            }
+            var aPath = aCurPath.m_Path;
+
+            //已經到達當前目標位置 尋找下一個位置
+            if (m_MoveData.m_TargetPos == null)
+            {
+                if (aPath.IsNullOrEmpty())//已經走整個路徑
+                {
+                    m_MoveData.Clear();
+                    return;
+                }
+
+                ATS_Vector2Int aCurPos = PosInt;//目前位置 用來判斷是否移動到下一格
+                var aNextPos = aPath[0];
+                int aCellLen = (aCurPos - aNextPos).CellLen;
+                if (aCellLen <= 1)//下個目標必須距離一格之內
+                {
+                    aPath.RemoveAt(0);
+                    m_MoveData.m_TargetPos = new ATS_Vector3(aNextPos.x + 0.5f, aNextPos.y + UCL_Random.Instance.Range(0f, ATS_Const.GroundHeight), 0);
                 }
                 else
                 {
-                    if (m_Pos.HasValue && m_NextPos.HasValue)
+                    Debug.LogError($"MoveUpdate, aCurPos:{aCurPos}, aNextPos:{aNextPos}, aCellLen:{aCellLen}");
+                    m_MoveData.Clear();
+                    return;
+                }
+            }
+            const float Vel = 0.02f;
+            const float Offset = 1.5f * Vel;
+            var aTargetPos = m_MoveData.m_TargetPos;//目標位置(下一格)
+            float aDx = aTargetPos.x - m_Pos.x;
+            if (Mathf.Abs(aDx) <= Offset)
+            {//水平位置已到達 判斷是否需要上下移動
+                m_Pos.x = aTargetPos.x;
+
+                float aDy = aTargetPos.y - m_Pos.y;
+                if (Mathf.Abs(aDy) <= Offset)//抵達目標
+                {
+                    m_Pos.y = aTargetPos.y;
+                    m_MoveData.m_TargetPos = null;
+                }
+                else//先進行上下移動
+                {
+                    if (aDy > 0)
                     {
-                        var aPos = Vector2.Lerp(m_Pos.Value, m_NextPos.Value, ((float)m_Timer / Counter));
-                        m_X = aPos.x;
-                        m_Y = aPos.y;
+                        m_Pos.y += Vel;
                     }
+                    else
+                    {
+                        m_Pos.y -= Vel;
+                    }
+                }
+
+            }
+            else//先進行水平移動
+            {
+                if(aDx > 0)
+                {
+                    m_Pos.x += Vel;
+                }
+                else
+                {
+                    m_Pos.x -= Vel;
                 }
             }
 
 
-
-            //PathFinder.FindPath(m_X, m_Y);
-            //int aCurX = PosX;
-            //int aCurY = PosY;
-
-            
-
-            //if (m_Dir == PathState.None)
+            //m_Timer++;
+            //if (m_Timer >= MoveCounter)
             //{
-            //    var aPaths = PathFinder.GetPaths(aCurX, aCurY);
-            //    if (!aPaths.IsNullOrEmpty())
+            //    m_Timer = 0;
+            //    if (m_At < aPath.Count)
             //    {
-            //        m_Dir = UCL_Random.Instance.RandomPick(aPaths);
-            //        //m_DebugPaths.Add((m_Dir, new ATS_Vector2Int(aCurX, aCurY)));
-            //        Debug.LogError($"IdleUpdate m_Dir:{m_Dir},({aCurX},{aCurY})");
-            //    }
-            //    else
-            //    {
-            //        Debug.LogError($"IdleUpdate aPaths.IsNullOrEmpty(),({aCurX},{aCurY})");
-            //    }
-            //}
-            //const float Acc = 0.003f;
-            //const float Dec = 0.98f;
-            //float aX = m_X - aCurX;
-            //bool aInCenter = aX <= 0.6f && aX >= 0.4f;
-            //switch (m_Dir)
-            //{
-            //    case PathState.Right:
+            //        if (m_NextPos.HasValue)
             //        {
-            //            m_VelX += Acc;
-            //            m_VelY = 0;
-            //            break;
+            //            m_CurPos = m_NextPos.Value;
             //        }
-            //    case PathState.Left:
-            //        {
-            //            m_VelX -= Acc;
-            //            m_VelY = 0;
-            //            break;
-            //        }
-            //    case PathState.Up:
-            //        {
-            //            //必須先移動到中央
-            //            if(aX < 0.4f)
-            //            {
-            //                m_VelX += Acc;
-            //                m_VelY = 0;
-            //            }
-            //            else if(aX > 0.6f)
-            //            {
-            //                m_VelX -= Acc;
-            //                m_VelY = 0;
-            //            }
-            //            else//上下移動
-            //            {
-            //                m_VelX = 0;
-            //                m_VelY += Acc;
-            //            }
-            //            break;
-            //        }
-            //    case PathState.Down:
-            //        {
-            //            //必須先移動到中央
-            //            if (aX < 0.4f)
-            //            {
-            //                m_VelX += Acc;
-            //                m_VelY = 0;
-            //            }
-            //            else if (aX > 0.6f)
-            //            {
-            //                m_VelX -= Acc;
-            //                m_VelY = 0;
-            //            }
-            //            else//上下移動
-            //            {
-            //                m_VelX = 0;
-            //                m_VelY -= Acc;
-            //            }
-            //            break;
-            //        }
-            //}
-            //m_VelY *= Dec;
-            //m_VelX *= Dec;
-            //m_X += m_VelX;
-            //m_Y += m_VelY;
 
-            //if (PosX != aCurX || PosY != aCurY)//已經移動到下一格
-            //{
-            //    m_Moved = true;
-            //    //m_VelX = 0;
-            //    //m_VelY = 0;
-            //    //m_Dir = PathState.None;
+
+            //        var aPos = aPath[m_At];
+            //        m_NextPos = new Vector2(aPos.x + 0.5f, aPos.y + Random.Range(0.01f, ATS_Const.GroundHeight));
+
+            //        //m_Pos.x = aPos.m_Pos.x + 0.5f;
+            //        //m_Pos.y = aPos.m_Pos.y;
+            //    }
+            //    else//End
+            //    {
+            //        m_MoveData.Clear();
+            //    }
+
+            //    m_At++;
             //}
-            //if (aInCenter && m_Moved)
+            //else
             //{
-            //    m_VelX = 0;
-            //    m_VelY = 0;
-            //    m_Dir = PathState.None;
-            //    m_Moved = false;
+            //    if (m_CurPos.HasValue && m_NextPos.HasValue)
+            //    {
+            //        var aPos = Vector2.Lerp(m_CurPos.Value, m_NextPos.Value, ((float)m_Timer / MoveCounter));
+            //        m_Pos.x = aPos.x;
+            //        m_Pos.y = aPos.y;
+            //    }
             //}
         }
         public void DrawOnGrid(ATS_RegionGrid iGrid)
@@ -277,7 +339,7 @@ namespace ATS
             {
                 return;
             }
-            var aRect = iGrid.GetCellRect(m_X - 0.5f * Width, m_Y, Width, Height);
+            var aRect = iGrid.GetCenterCellRect(m_Pos.x, m_Pos.y, Width, Height);
             //GUI.DrawTexture(aRect, aTexture);
             if (m_VelX < 0)
             {
@@ -286,6 +348,15 @@ namespace ATS
             else
             {
                 GUI.DrawTexture(aRect, aTexture);
+            }
+
+            var aTargetPos = m_MoveData.m_TargetPos;//目標位置(下一格)
+            if (aTargetPos != null)
+            {
+                aRect = iGrid.GetCenterCellRect(aTargetPos.x, aTargetPos.y, 0.3f, 0.3f);
+                UCL_GUIStyle.PushGUIColor(UCL_Color.Half.Green);
+                GUI.DrawTexture(aRect, ATS_StaticTextures.White);
+                UCL_GUIStyle.PopGUIColor();
             }
         }
     }

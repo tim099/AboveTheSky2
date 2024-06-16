@@ -1,5 +1,4 @@
-﻿
-// ATS_AutoHeader
+﻿// ATS_AutoHeader
 // to change the auto header please go to ATS_AutoHeader.cs
 using System.Collections;
 using System.Collections.Generic;
@@ -16,13 +15,30 @@ namespace ATS
     /// </summary>
     public class ResourceAmount : UCLI_ShortName
     {
+        /// <summary>
+        /// 資源類型
+        /// </summary>
         public ATS_ResourceEntry m_Resource = new ATS_ResourceEntry();
+        /// <summary>
+        /// 資源數量
+        /// </summary>
         public int m_Amount = 1;
+
+        #region Getter
+        public ATS_ResourceData ResourceData => m_Resource.GetData();
+        public Texture2D Texture => ResourceData.Texture;
+        #endregion
 
         public string GetShortName() => ToString();
         public override string ToString()
         {
             return $"{m_Resource.ID} : {m_Amount}";
+        }
+
+        public void Init(string iID, int iAmount)
+        {
+            m_Resource.ID = iID;
+            m_Amount = iAmount;
         }
         public void OnGUI()
         {
@@ -64,6 +80,10 @@ namespace ATS
         /// 例如Size = 100時 1000單位的倉庫可以放十份這個資源
         /// </summary>
         public int m_Size = 100;
+
+
+        public Texture2D Texture => m_Icon.GetData().IconTexture;
+
         #region must override 一定要override的部份
         /// <summary>
         /// 預覽

@@ -76,6 +76,7 @@ namespace ATS.Page
         }
         public override void Init(UCL_GUIPageController iGUIPageController)
         {
+            UCL.Core.UCL_ModResourcesService.ReleaseAll();
             base.Init(iGUIPageController);
             s_RunTimeData = LoadRunTimeData();
 

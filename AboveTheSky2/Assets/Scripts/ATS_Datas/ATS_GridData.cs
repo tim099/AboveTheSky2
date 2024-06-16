@@ -114,6 +114,17 @@ namespace ATS
                 width * aCellWidth,//Width
                 height * aCellHeight);//Height
         }
+        virtual public Rect GetCenterCellRect(float x, float y, float width, float height)
+        {
+            float aCellWidth = GridRect.width / m_Width;//單位寬度
+            float aCellHeight = GridRect.height / m_Height;//單位高度
+
+            return new Rect(GridRect.position.x + (x - 0.5f * width) * aCellWidth,//X
+                GridRect.position.y + GridRect.height - (y + height) * aCellHeight,//Y
+
+                width * aCellWidth,//Width
+                height * aCellHeight);//Height
+        }
         virtual protected void EditGrid(UCL_ObjectDictionary iDataDic)
         {
             DrawGrid(iDataDic);

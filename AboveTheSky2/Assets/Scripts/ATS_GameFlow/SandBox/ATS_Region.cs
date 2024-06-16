@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UCL.Core;
 using UCL.Core.JsonLib;
 using UCL.Core.UI;
@@ -10,8 +11,9 @@ namespace ATS
     /// <summary>
     /// 基礎的單元格
     /// </summary>
-    public class Cell
+    public class Cell : UCL.Core.JsonLib.UnityJsonSerializable, UCLI_ShortName
     {
+        public ATS_Vector2Int m_Pos = new ATS_Vector2Int();
         /// <summary>
         /// 此格子上的建築(一個建築可以占用多個格子)
         /// </summary>
@@ -23,10 +25,21 @@ namespace ATS
 
         public ATS_TileData m_TileData = null;
         public int m_PathState = 0;
+        /// <summary>
+        /// 此地塊上的所有工作
+        /// </summary>
+        public List<ATS_Job> m_Jobs = new();
+        /// <summary>
+        /// 掉落在此地的資源
+        /// </summary>
+        public List<ATS_Resource> m_Resources = new();// { get; private set; } = new ();
+        public string GetShortName() => $"Cell {m_Pos}";
         public Cell() { }
-        public Cell(ATS_TileData iTileData)
+        public Cell(ATS_TileData iTileData, int x, int y)
         {
             m_TileData = iTileData;
+            m_Pos.x = x;
+            m_Pos.y = y;
         }
 
         public bool CanBuild
@@ -46,11 +59,6 @@ namespace ATS
         {
             get
             {
-                //if (m_TileData == null)
-                //{
-                //    Debug.LogError("Cell.Passable, m_TileData == null");
-                //    return false;
-                //}
                 return !m_TileData.m_TilePathState.GetPathState(PathState.Obstacle);
             }
         }
@@ -80,6 +88,25 @@ namespace ATS
             m_Building = iBuilding;
             m_BuildingCellPos = iBuildingCellPos;
         }
+        /// <summary>
+        /// 生成搬運工作
+        /// </summary>
+        public void GenerateHaulJob(ATS_Building iBuilding)
+        {
+            if (m_Resources.IsNullOrEmpty())
+            {
+                return;
+            }
+            foreach(var aRes in m_Resources.ToList())
+            {
+                Debug.LogError($"Cell.GenerateHaulJob, aRes:{aRes}");
+                //aRes.SetState(ATS_Resource.ResourceState.PrepareToHaul);
+                JobHauling aJobHauling = new JobHauling();
+                aJobHauling.Init(iBuilding, aRes);
+                m_Jobs.Add(aJobHauling);
+            }
+            
+        }
     }
     /// <summary>
     /// Runtime region(Sandbox)
@@ -88,9 +115,10 @@ namespace ATS
     {
         public class RuntimeData : UnityJsonSerializable
         {
-
+            public RegionCells m_Cells = new RegionCells();
             public RegionBuildings m_Buildings = new RegionBuildings();
             public RegionMinions m_Minions = new RegionMinions();
+            public RegionResources m_Resources = new RegionResources();
         }
         
 
@@ -140,11 +168,17 @@ namespace ATS
             //ATS_AirshipDataEntry aAirshipDataEntry = new ATS_AirshipDataEntry();
 
             AddComponent(m_Region.m_GridData);
+
+            AddComponent(m_RuntimeData.m_Cells);
             AddComponent(m_RuntimeData.m_Buildings);
             AddComponent(m_RuntimeData.m_Minions);
+            AddComponent(m_RuntimeData.m_Resources);
 
             m_Cells = m_Region.m_GridData.CreateCells();
-
+            foreach (Cell cell in m_Cells)
+            {
+                m_RuntimeData.m_Cells.m_Cells.Add(cell);
+            }
 
             AddComponent(m_PathFinder);
         }
@@ -175,7 +209,7 @@ namespace ATS
         public void Build(ATS_Building iBuilding)
         {
             m_RuntimeData.m_Buildings.Build(iBuilding);
-            var aBuildPos = new Vector2Int(iBuilding.m_Pos.m_X, iBuilding.m_Pos.m_Y);
+            var aBuildPos = new Vector2Int(iBuilding.m_Pos.x, iBuilding.m_Pos.y);
             var aCellsPos = iBuilding.BuildingCells;
             foreach (var aCellPos in aCellsPos)//將建築設定到地塊上
             {
@@ -202,6 +236,14 @@ namespace ATS
         public void Spawn(ATS_Minion iMinion)
         {
             m_RuntimeData.m_Minions.Spawn(iMinion);
+        }
+        /// <summary>
+        /// 生成一個資源物件(實體)
+        /// </summary>
+        /// <param name="iResource"></param>
+        public void SpawnResource(ATS_Resource iResource)
+        {
+            m_RuntimeData.m_Resources.Add(iResource);
         }
         #endregion
 
@@ -339,7 +381,10 @@ namespace ATS
 
 
     }
-
+    public class RegionCells : SandBoxBase
+    {
+        public List<Cell> m_Cells = new List<Cell>();
+    }
     public class RegionBuildings : SandBoxBase
     {
         public List<ATS_Building> m_Buildings = new List<ATS_Building>();
@@ -358,6 +403,44 @@ namespace ATS
         {
             m_Minions.Add(iMinion);
             AddComponent(iMinion);//要在AddComponent後 ATS_Minion才會Init
+        }
+    }
+    public class RegionResources : SandBoxBase
+    {
+        /// <summary>
+        /// 散落在地上的資源(可搬運)
+        /// </summary>
+        public List<ATS_Resource> m_Resources = new ();
+        /// <summary>
+        /// 所有儲藏在區域內的資源
+        /// </summary>
+        public Dictionary<ATS_ResourceEntry, int> m_StorageResources = new Dictionary<ATS_ResourceEntry, int>();
+        public void Add(ATS_Resource iResource)
+        {
+            m_Resources.Add(iResource);
+            AddComponent(iResource);
+        }
+        /// <summary>
+        /// 把散落在地上的資源放入倉庫
+        /// </summary>
+        /// <param name="iResource"></param>
+        public void AddToStorage(ATS_Resource iResource)
+        {
+            m_Resources.Remove(iResource);
+            RemoveComponent(iResource);
+            AddToStorage(iResource.m_ResourceAmount.m_Resource, iResource.m_ResourceAmount.m_Amount);
+        }
+        public void AddToStorage(ATS_ResourceEntry iRes, int iAmount)
+        {
+            if (!m_StorageResources.ContainsKey(iRes))
+            {
+                m_StorageResources.Add(iRes, 0);
+            }
+            m_StorageResources[iRes] += iAmount;
+        }
+        public override void ContentOnGUI(UCL_ObjectDictionary iDic)
+        {
+            base.ContentOnGUI(iDic);
         }
     }
 }

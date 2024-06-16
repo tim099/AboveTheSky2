@@ -44,7 +44,7 @@ namespace ATS
                 {
                     return Parent.RegionGrid;
                 }
-                return p_SandBox.GetAirShipRegionGrid();
+                return null;//p_SandBox.GetAirShipRegionGrid();
             }
         }
         virtual public ATS_Region Region
@@ -108,7 +108,19 @@ namespace ATS
                 Debug.LogError($"SandBoxBase.AddComponent({GetType().FullName}), Exception:{ex}");
                 //throw new System.Exception($"SandBoxBase.AddComponent({GetType().FullName}), Exception:{ex}", ex);
             }
-
+        }
+        virtual public void RemoveComponent(ISandBox iComponent)
+        {
+            try
+            {
+                m_Components.Remove(iComponent);
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogException(ex);
+                Debug.LogError($"SandBoxBase.RemoveComponent({GetType().FullName}), Exception:{ex}");
+                //throw new System.Exception($"SandBoxBase.AddComponent({GetType().FullName}), Exception:{ex}", ex);
+            }
         }
         /// <summary>
         /// Logic base update

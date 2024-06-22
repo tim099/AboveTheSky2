@@ -119,6 +119,7 @@ namespace ATS
             public RegionBuildings m_Buildings = new RegionBuildings();
             public RegionMinions m_Minions = new RegionMinions();
             public RegionResources m_Resources = new RegionResources();
+
         }
         
 
@@ -141,10 +142,16 @@ namespace ATS
         /// 所有的建築格(地塊)
         /// </summary>
         private Cell[,] m_Cells = null;
+
         /// <summary>
         /// 所有的建築格(地塊)
         /// </summary>
         public Cell[,] Cells => m_Cells;
+        /// <summary>
+        /// SandBox執行期的所有資訊
+        /// </summary>
+        public RuntimeData Data => m_RuntimeData;
+
         #endregion
 
 
@@ -379,16 +386,26 @@ namespace ATS
             GUILayout.Space(20);
         }
 
+        public override string SaveKey => "Region";
 
+        public override SaveData SaveGame()
+        {
+            return base.SaveGame();
+        }
+        //public override JsonData SaveMain()
+        //{
+        //    return m_RuntimeData.SerializeToJson();
+        //}
     }
     public class RegionCells : SandBoxBase
     {
         public List<Cell> m_Cells = new List<Cell>();
+        public override string SaveKey => "RegionCells";
     }
     public class RegionBuildings : SandBoxBase
     {
         public List<ATS_Building> m_Buildings = new List<ATS_Building>();
-
+        public override string SaveKey => "RegionBuildings";
         public void Build(ATS_Building iBuilding)
         {
             m_Buildings.Add(iBuilding);
@@ -398,7 +415,7 @@ namespace ATS
     public class RegionMinions : SandBoxBase
     {
         public List<ATS_Minion> m_Minions = new ();
-
+        public override string SaveKey => "RegionMinions";
         public void Spawn(ATS_Minion iMinion)
         {
             m_Minions.Add(iMinion);
@@ -415,6 +432,9 @@ namespace ATS
         /// 所有儲藏在區域內的資源
         /// </summary>
         public Dictionary<ATS_ResourceEntry, int> m_StorageResources = new Dictionary<ATS_ResourceEntry, int>();
+
+
+        public override string SaveKey => "RegionResources";
         public void Add(ATS_Resource iResource)
         {
             m_Resources.Add(iResource);
@@ -441,6 +461,34 @@ namespace ATS
         public override void ContentOnGUI(UCL_ObjectDictionary iDic)
         {
             base.ContentOnGUI(iDic);
+            using(var aScope = new GUILayout.VerticalScope())
+            {
+                GUILayout.BeginHorizontal();
+                int aCount = 0;
+                foreach (var aKey in m_StorageResources.Keys)
+                {
+                    if (aCount % 2 == 0)
+                    {
+                        GUILayout.FlexibleSpace();
+                        GUILayout.EndHorizontal();
+                        GUILayout.BeginHorizontal();
+                    }
+                    aCount++;
+
+                    var aResData = aKey.GetData();
+                    var aResAmount = m_StorageResources[aKey];
+                    GUILayout.BeginHorizontal();
+                    float aSize = UCL_GUIStyle.GetScaledSize(16);
+                    UCL_GUILayout.DrawTexture(aResData.Texture, aSize, aSize);
+                    //GUILayout.Box(aResData.Texture, UCL_GUIStyle.BoxStyle);
+                    GUILayout.Label($"{aResData.ID} : {aResAmount}", UCL_GUIStyle.LabelStyle, GUILayout.ExpandWidth(false));
+                    GUILayout.FlexibleSpace();
+                    GUILayout.EndHorizontal();
+                }
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
+            }
+
         }
     }
 }

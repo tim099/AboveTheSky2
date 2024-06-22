@@ -148,7 +148,7 @@ namespace ATS
         /// </summary>
         override public void ContentOnGUI(UCL_ObjectDictionary iDic)
         {
-            ATS_RegionGrid aGrid = p_SandBox.GetAirShipRegionGrid();
+            ATS_RegionGrid aGrid = RegionGrid;
             DrawOnGrid(aGrid);
         }
         const int LogicUpdateInterval = 10;

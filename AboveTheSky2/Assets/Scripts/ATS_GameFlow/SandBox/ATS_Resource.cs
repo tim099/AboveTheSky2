@@ -14,6 +14,11 @@ namespace ATS
     /// </summary>
     public class ATS_Resource : SandBoxBase, UCLI_ShortName
     {
+        /// <summary>
+        /// 資源尺寸(基於房間尺寸的比例)
+        /// </summary>
+        public const float ResourceSize = 0.35f;
+
         public enum ResourceState
         {
             /// <summary>
@@ -33,7 +38,7 @@ namespace ATS
             /// </summary>
             Hauling,
         }
-        const float ResourceSize = 0.35f;
+        
 
         public Cell p_Cell = null;
 
@@ -93,6 +98,14 @@ namespace ATS
             var aPos = m_Pos.ToVector2Int;
             p_Cell = Region.Cells[aPos.x, aPos.y];
             p_Cell.m_Resources.Add(this);//紀錄掉落位置
+        }
+        /// <summary>
+        /// 把散落在地上的資源放入倉庫
+        /// </summary>
+        /// <param name="iResource"></param>
+        public void AddToStorage()
+        {
+            Region.Data.m_Resources.AddToStorage(this);
         }
         public void SetState(ResourceState iState)
         {

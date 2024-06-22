@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UCL.Core;
 using UCL.Core.EditorLib.Page;
 using UCL.Core.JsonLib;
@@ -33,7 +34,7 @@ namespace ATS.Page
         protected override bool ShowBackButton => true;
 
         protected UCL_ObjectDictionary m_Dic = new UCL_ObjectDictionary();
-        protected ATS_SandBox m_SandBox = new ATS_SandBox();
+        protected ATS_SandBox m_SandBox = null;
         #region
         const string RunTimeDataKey = "ATS_SandboxPage.RunTimeData";
 
@@ -79,8 +80,36 @@ namespace ATS.Page
             UCL.Core.UCL_ModResourcesService.ReleaseAll();
             base.Init(iGUIPageController);
             s_RunTimeData = LoadRunTimeData();
-
+            InitSandBox();
+        }
+        private void InitSandBox()
+        {
+            m_SandBox = new ATS_SandBox();
             m_SandBox.Init();
+        }
+        private string SaveFolder => Path.Combine(Application.persistentDataPath, "Saves");
+        private string SavePath => Path.Combine(SaveFolder, "Save01");
+        protected override void TopBarButtons()
+        {
+            base.TopBarButtons();
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+            if (GUILayout.Button(UCL_LocalizeManager.Get("Open Saves"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
+            {
+                UCL.Core.FileLib.WindowsLib.OpenExplorer(SaveFolder);
+            }
+#endif
+            if (GUILayout.Button(UCL_LocalizeManager.Get("Save"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
+            {
+                SaveData aSaveData = m_SandBox.SaveGame();
+                aSaveData.Save(SavePath);
+            }
+            if (GUILayout.Button(UCL_LocalizeManager.Get("Load"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
+            {
+                InitSandBox();
+                SaveData aSaveData = new SaveData(SavePath);
+                //aSaveData.Load(SavePath);
+                m_SandBox.LoadGame(aSaveData);
+            }
         }
         /// <summary>
         /// 繪製選單 開啟其他編輯器

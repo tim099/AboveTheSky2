@@ -67,16 +67,10 @@ namespace ATS
         /// 當前所有的Job
         /// </summary>
         public List<ATS_Job> m_Jobs = new List<ATS_Job>();
-
+        /// <summary>
+        /// 目前在哪個Cell(X,Y)
+        /// </summary>
         public ATS_Vector2Int PosInt => m_Pos.ToVector2Int;
-        /// <summary>
-        /// 目前在哪個Cell(X座標)
-        /// </summary>
-        public int PosX => Mathf.FloorToInt(m_Pos.x);
-        /// <summary>
-        /// 目前在哪個Cell(Y座標)
-        /// </summary>
-        public int PosY => Mathf.FloorToInt(m_Pos.y);
 
         
 
@@ -169,7 +163,15 @@ namespace ATS
                 return;
             }
             ATS_Job aCurJob = m_Jobs[0];
+            if(aCurJob.m_JobState == ATS_Job.JobState.Pending)
+            {
+                aCurJob.Start();
+            }
             aCurJob.WorkingUpdate(this);
+            if(aCurJob.Complete)//工作已完成
+            {
+                m_Jobs.RemoveAt(0);
+            }
         }
         protected void IdleUpdate()
         {
@@ -238,24 +240,31 @@ namespace ATS
             {
                 if (aPath.IsNullOrEmpty())//已經走整個路徑
                 {
+                    //var aFinalPos = aCurPath.m_FinalPos;
+                    //if (aFinalPos != null && !aFinalPos.Equals(m_MoveData.m_TargetPos))
+                    //{
+                    //    m_MoveData.m_TargetPos = aFinalPos;//將最終位置設定為目標
+                    //    return;
+                    //}
+
                     m_MoveData.Clear();
                     return;
                 }
 
-                ATS_Vector2Int aCurPos = PosInt;//目前位置 用來判斷是否移動到下一格
+                //ATS_Vector2Int aCurPos = PosInt;//目前位置 用來判斷是否移動到下一格
                 var aNextPos = aPath[0];
-                int aCellLen = (aCurPos - aNextPos).CellLen;
-                if (aCellLen <= 1)//下個目標必須距離一格之內
+                //int aCellLen = (aCurPos - aNextPos).CellLen;
+                //if (aCellLen <= 1)//下個目標必須距離一格之內
                 {
                     aPath.RemoveAt(0);
-                    m_MoveData.m_TargetPos = new ATS_Vector3(aNextPos.x + 0.5f, aNextPos.y + UCL_Random.Instance.Range(0f, ATS_Const.GroundHeight), 0);
+                    m_MoveData.m_TargetPos = aNextPos;//new ATS_Vector3(aNextPos.x + 0.5f, aNextPos.y + UCL_Random.Instance.Range(0f, ATS_Const.GroundHeight), 0);
                 }
-                else
-                {
-                    Debug.LogError($"MoveUpdate, aCurPos:{aCurPos}, aNextPos:{aNextPos}, aCellLen:{aCellLen}");
-                    m_MoveData.Clear();
-                    return;
-                }
+                //else
+                //{
+                //    Debug.LogError($"MoveUpdate, aCurPos:{aCurPos}, aNextPos:{aNextPos}, aCellLen:{aCellLen}");
+                //    m_MoveData.Clear();
+                //    return;
+                //}
             }
             const float Vel = 0.02f;
             const float Offset = 1.5f * Vel;

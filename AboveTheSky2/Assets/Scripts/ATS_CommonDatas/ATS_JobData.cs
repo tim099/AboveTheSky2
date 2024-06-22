@@ -15,6 +15,23 @@ namespace ATS
     /// </summary>
     public class ATS_Job : UCL.Core.JsonLib.UnityJsonSerializable, UCLI_TypeList
     {
+        public enum JobState
+        {
+            /// <summary>
+            /// 尚未開始
+            /// </summary>
+            Pending = 0,
+            /// <summary>
+            /// 工作中
+            /// </summary>
+            Working,
+            /// <summary>
+            /// 已完成
+            /// </summary>
+            Complete,
+        }
+
+        #region Interface
         static List<System.Type> s_Types = null;
         virtual public IList<System.Type> GetAllTypes()
         {
@@ -25,17 +42,44 @@ namespace ATS
             }
             return s_Types;
         }
+        #endregion
 
+        public JobState m_JobState = JobState.Pending;
+
+        /// <summary>
+        /// 工作已完成
+        /// </summary>
+        public bool Complete => m_JobState == JobState.Complete;
+
+        /// <summary>
+        /// 開始執行工作
+        /// </summary>
+        virtual public void Start()
+        {
+            SetJobState(JobState.Working);
+        }
         virtual public void WorkingUpdate(ATS_Minion iMinion)
         {
 
         }
+        virtual public void SetJobState(JobState state)
+        {
+            m_JobState = state;
+        }
     }
     public class JobHauling : ATS_Job
     {
+        public enum HaulingState
+        {
+            Init = 0,
+            MoveToResource,
+            Haul,
+            Hauling,
+        }
         public ATS_Building m_Building;
         public ATS_Resource m_Resource;
-
+        public HaulingState m_HaulingState = HaulingState.Init;
+        
         public JobHauling() { }
         public void Init(ATS_Building iBuilding, ATS_Resource iResource)
         {
@@ -43,22 +87,76 @@ namespace ATS
             m_Resource = iResource;
             m_Resource.SetState(ATS_Resource.ResourceState.PrepareToHaul);
         }
+
         override public void WorkingUpdate(ATS_Minion iMinion)
         {
-            if(iMinion.m_MoveData.m_Path == null)
+            switch (m_HaulingState)
             {
-                var aPos = m_Resource.m_Pos.ToVector2Int;
-                //return true if find target
-                int CheckNode(Cell iCell, PathNode iNode)
-                {
-                    if (iCell.m_Pos == aPos)//距離滿足aTargetDistance 找到目標位置
+                case HaulingState.Init:
                     {
-                        return 0;
+                        //if (iMinion.m_MoveData.m_Path == null)
+                        {
+                            var aPos = m_Resource.m_Pos.ToVector2Int;
+                            //return true if find target
+                            int CheckNode(Cell iCell, PathNode iNode)
+                            {
+                                if (iCell.m_Pos == aPos)//找到資源位置!
+                                {
+                                    return 0;
+                                }
+                                return int.MaxValue;//尚未找到目標 回傳與目標的距離
+                            }
+                            var aPath = iMinion.PathFinder.SearchPath(iMinion.m_Pos.x, iMinion.m_Pos.y, CheckNode);
+                            //aPath.m_Path.LastElement().Set(m_Resource.m_Pos);//走到資源位置
+                            aPath.m_Path.Add(m_Resource.m_Pos);//走到資源位置
+                            iMinion.m_MoveData.m_Path = aPath;
+                        }
+                        m_HaulingState = HaulingState.MoveToResource;
+                        break;
                     }
-                    return int.MaxValue;//尚未找到目標 回傳與目標的距離
-                }
-                iMinion.m_MoveData.m_Path = iMinion.PathFinder.SearchPath(iMinion.m_Pos.x, iMinion.m_Pos.y, CheckNode);
+                case HaulingState.MoveToResource:
+                    {
+                        if (iMinion.m_MoveData.m_Path == null)//Move Complete
+                        {
+                            m_Resource.SetState(ATS_Resource.ResourceState.Hauling);
+                            m_HaulingState = HaulingState.Haul;
+                        }
+                        break;
+                    }
+                case HaulingState.Haul:
+                    {
+                        var aPos = m_Building.m_Pos;
+                        //return true if find target
+                        int CheckNode(Cell iCell, PathNode iNode)
+                        {
+                            if (iCell.m_Pos == aPos)//找到倉庫位置!
+                            {
+                                return 0;
+                            }
+                            return int.MaxValue;//尚未找到目標 回傳與目標的距離
+                        }
+                        var aPath = iMinion.PathFinder.SearchPath(iMinion.m_Pos.x, iMinion.m_Pos.y, CheckNode);
+                        iMinion.m_MoveData.m_Path = aPath;
+                        m_HaulingState = HaulingState.Hauling;
+                        break;
+                    }
+                case HaulingState.Hauling:
+                    {
+                        if (iMinion.m_MoveData.m_Path == null)//Move Complete
+                        {
+                            //搬運完成
+                            m_Resource.AddToStorage();
+                            SetJobState(JobState.Complete);
+                            //m_Completed = true;
+                        }
+                        else
+                        {
+                            m_Resource.m_Pos.Set(iMinion.m_Pos + new ATS_Vector3(0, iMinion.Height - 0.5f * ATS_Resource.ResourceSize, 0));
+                        }
+                        break;
+                    }
             }
+
         }
     }
 

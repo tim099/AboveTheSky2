@@ -84,6 +84,27 @@ namespace ATS
             base.GameUpdate();
         }
 
+
+        public override string SaveKey => "AirShip";
+
+        //public override Dictionary<string, ISandBox> SaveComponentsDic
+        //{
+        //    get
+        //    {
+        //        Dictionary<string, ISandBox> saveComponentsDic = new Dictionary<string, ISandBox>();
+        //        saveComponentsDic["Region"] = m_Region;
+        //        return saveComponentsDic;
+        //    }
+        //}
+        public override SaveData SaveGame()
+        {
+            SaveData aSaveData = base.SaveGame();
+            //aSaveData.AddFile("AirShip", SerializeToJson());
+            //aSaveData.AddFolder("Region", m_Region.SaveGame());
+
+            return aSaveData;
+        }
+
         private ATS_ResourceEntry m_SpawnResType = new ATS_ResourceEntry();
         /// <summary>
         /// 用在ATS_SandboxPage
@@ -124,7 +145,7 @@ namespace ATS
                     {
                         var aPos = aPath.m_Path.LastElement();
 
-                        aRes.m_Pos.x = aPos.x + UCL_Random.Instance.Range(0.01f,0.99f);
+                        aRes.m_Pos.x = aPos.x + UCL_Random.Instance.Range(-0.4f,0.4f);
                         aRes.m_Pos.y = aPos.y + ATS_Const.GroundHeight + UCL_Random.Instance.Range(0.1f, 0.5f);
                     }
 
@@ -154,118 +175,6 @@ namespace ATS
 
             base.ContentOnGUI(iDic);
             GUILayout.Label($"ATS_AirShip m_GameUpdateCount:{m_GameUpdateCount}", UCL_GUIStyle.LabelStyle);
-            //switch (p_SandBox.CurGameState)
-            //{
-            //    case GameState.Build:
-            //        {
-            //            var aIDs = ATS_BuildingData.Util.GetAllIDs();
-
-            //            GUILayout.BeginHorizontal();
-            //            GUILayout.Label("Building ID", UCL_GUIStyle.LabelStyle, GUILayout.ExpandWidth(false));
-            //            m_BuildData.BuildingID = UCL_GUILayout.PopupAuto(m_BuildData.BuildingID, aIDs, iDic, "BuildingID");
-            //            GUILayout.EndHorizontal();
-            //            //if(m_BuildData.m_BuildingData != null)
-            //            //{
-            //            //    var aTexture = m_BuildData.m_BuildingData.Texture;
-            //            //    if(aTexture != null)
-            //            //    {
-            //            //        float aSize = UCL_GUIStyle.GetScaledSize(64);
-            //            //        GUILayout.Box(aTexture,GUILayout.Width(aSize),GUILayout.Height(aSize));
-            //            //    }
-            //            //}
-                        
-            //            break;
-            //        }
-            //}
-            ////using (var aScope = new GUILayout.HorizontalScope())
-            ////{
-            ////    GUILayout.Space(UCL_GUIStyle.GetScaledSize(32));
-            ////    using (var aScope2 = new GUILayout.VerticalScope())
-            ////    {
-            ////        m_Region.ContentOnGUI(iDic.GetSubDic("Region"));
-            ////    }  
-            ////}
-            //using (var aScope = new GUILayout.HorizontalScope())
-            //{
-            //    GUILayout.Space(UCL_GUIStyle.GetScaledSize(32));
-            //    using (var aScope2 = new GUILayout.VerticalScope())
-            //    {
-            //        base.ContentOnGUI(iDic.GetSubDic("BaseContentOnGUI"));//繪製區域&建築
-            //    }
-            //}
-            
-            //var aGrid = p_SandBox.GetAirShipRegionGrid();
-
-            //switch (p_SandBox.CurGameState)
-            //{
-            //    case GameState.Build:
-            //        {
-            //            var aBuildingData = m_BuildData.m_BuildingData;
-            //            //Debug.LogError($"MousePos:{m_Region.m_GridData.MousePos},Event.current.type:{Event.current.type}");
-            //            //bool aClicked = false;
-            //            if (aBuildingData != null)
-            //            {
-            //                var aPosition = m_BuildData.m_Pos;
-            //                aBuildingData.DrawOnGrid(aGrid, aPosition.x, aPosition.y);
-
-            //                {
-            //                    int aWidth = Width;
-            //                    int aHeight = Height;
-            //                    void DrawMoveButton(int x, int y, Vector2Int dir, string name)
-            //                    {
-            //                        int aX = aPosition.x + x;
-            //                        int aY = aPosition.y + y;
-            //                        if(aX < 0 || aX >= aWidth || aY < 0 || aY >= aHeight)
-            //                        {
-            //                            return;
-            //                        }
-            //                        var aRect = m_Region.m_GridData.GetCellRect(aX, aY, 1, 1);
-            //                        if (GUI.Button(aRect, name))
-            //                        {
-            //                            //Debug.LogError($"Move Pos:{m_BuildData.m_Pos},dir:{dir}");
-            //                            m_BuildData.m_Pos += dir;
-            //                        }
-            //                    }
-
-            //                    void DrawBuild(int x, int y)
-            //                    {
-            //                        int aX = aPosition.x + x;
-            //                        int aY = aPosition.y + y;
-            //                        if (aX < 0 || aX >= aWidth || aY < 0 || aY >= aHeight)//Out of range
-            //                        {
-            //                            return;
-            //                        }
-            //                        var aRect = m_Region.m_GridData.GetCellRect(aX, aY, 1, 1);
-            //                        bool aCanBuild = CheckCanBuild(m_BuildData);
-            //                        string aName = aCanBuild? "✔️":"X";
-            //                        //CheckCanBuild
-            //                        if (GUI.Button(aRect, aName, UCL_GUIStyle.GetButtonStyle(aCanBuild? Color.green : Color.red)))//
-            //                        {
-            //                            if (aCanBuild)
-            //                            {
-            //                                Debug.Log($"Build:{aBuildingData.ID},aPosition:{aPosition}");
-            //                                var aBuilding = new ATS_Building(aBuildingData.ID, aPosition);
-            //                                Build(aBuilding);
-            //                            }
-            //                        }
-            //                    }
-            //                    UCL_GUIStyle.PushGUIColor(new Color(1, 1, 1, 0.5f));
-            //                    DrawMoveButton(-1, 0, Vector2Int.left, "A");
-            //                    DrawMoveButton(1, 0, Vector2Int.right, "D");
-            //                    DrawMoveButton(0, 1, Vector2Int.up, "W");
-            //                    DrawMoveButton(0, -1, Vector2Int.down, "S");
-                                
-            //                    //UCL_GUIStyle.RestoreGUIColor();
-
-            //                    //UCL_GUIStyle.SetGUIColor(new Color(1, 1, 1, 0.4f));
-            //                    DrawBuild(0, 0);
-            //                    UCL_GUIStyle.PopGUIColor();
-
-            //                }
-            //            }
-            //            aGrid.DrawMouseFrame();
-
-            //            var aCurrentEvent = Event.current;
 
             //            //Debug.LogError($"m_BuildData.m_PrevClickCount:{m_BuildData.m_PrevClickCount},aCurrentEvent.clickCount:{aCurrentEvent.clickCount}");
             //            //https://forum.unity.com/threads/check-if-any-button-is-pressed.271010/

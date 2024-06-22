@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UCL.Core;
 using UCL.Core.JsonLib;
+using UCL.Core.MathLib;
 using UCL.Core.UI;
 using UnityEngine;
 
@@ -31,6 +32,12 @@ namespace ATS
             x = iPos.x; y = iPos.y; z = iPos.z;
         }
         public void Set(Vector3 iPos)
+        {
+            x = iPos.x;
+            y = iPos.y;
+            z = iPos.z;
+        }
+        public void Set(ATS_Vector3 iPos)
         {
             x = iPos.x;
             y = iPos.y;
@@ -85,10 +92,16 @@ namespace ATS
 
 
         public int CellLen => x + y;
+        public ATS_Vector3 ToATS_Vector3 => new ATS_Vector3(x + 0.5f, y + UCL_Random.Instance.Range(0f, ATS_Const.GroundHeight), 0);
+
         public ATS_Vector2Int() { }
         public ATS_Vector2Int(int iX ,int iY)
         {
             x = iX; y = iY;
+        }
+        public ATS_Vector2Int(ATS_Vector2Int iPos)
+        {
+            x = iPos.x; y = iPos.y;
         }
         public ATS_Vector2Int(Vector2Int iPos)
         {
@@ -117,7 +130,9 @@ namespace ATS
             return x == obj.x && y == obj.y;
         }
         public static ATS_Vector2Int operator +(ATS_Vector2Int a, ATS_Vector2Int b) => new ATS_Vector2Int(a.x + b.x, a.y + b.y);
+        public static ATS_Vector2Int operator +(ATS_Vector2Int a, Vector2Int b) => new ATS_Vector2Int(a.x + b.x, a.y + b.y);
         public static ATS_Vector2Int operator -(ATS_Vector2Int a, ATS_Vector2Int b) => new ATS_Vector2Int(a.x - b.x, a.y - b.y);
+        public static ATS_Vector2Int operator -(ATS_Vector2Int a, Vector2Int b) => new ATS_Vector2Int(a.x - b.x, a.y - b.y);
         /// <summary>
         /// Dot
         /// </summary>
@@ -147,15 +162,21 @@ namespace ATS
 
     public class ATS_Path : UCL.Core.JsonLib.UnityJsonSerializable
     {
-        public List<ATS_Vector2Int> m_Path = new List<ATS_Vector2Int>();
+        public List<ATS_Vector3> m_Path = new ();
+        /// <summary>
+        /// 終點位置(可為空)
+        /// </summary>
+        public ATS_Vector3 m_FinalPos = null;
+
+        public ATS_Path() { }
     }
     public class PathNode
     {
-        public Vector2Int m_Pos;
+        public ATS_Vector2Int m_Pos;
         public PathNode m_PrevNode;
         public int m_Distance = 0;
         public PathNode() { }
-        public PathNode(Vector2Int pos, PathNode prevNode, int distance)
+        public PathNode(ATS_Vector2Int pos, PathNode prevNode, int distance)
         {
             m_Pos = pos;
             m_PrevNode = prevNode;
@@ -329,10 +350,10 @@ namespace ATS
         /// <returns></returns>
         public ATS_Path SearchPath(float x, float y, System.Func<Cell, PathNode, int> iCheckFunc, int iMaxDistance = 999, int iMaxSearchTimes = 9999)
         {
-            HashSet<Vector2Int> aVisited = new HashSet<Vector2Int>();
+            HashSet<ATS_Vector2Int> aVisited = new ();
             Queue<PathNode> aNodes = new Queue<PathNode>();
 
-            var aStartPos = new Vector2Int(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
+            var aStartPos = new ATS_Vector2Int(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
             PathNode aStart = new PathNode(aStartPos, null, 0);
             PathNode aTargetNode = null;
             int aTargetValue = int.MaxValue;
@@ -364,7 +385,7 @@ namespace ATS
                         if ((aCurPathState & (int)aPathState) != 0)//可以往此方向移動
                         {
                             var aDir = PathStateDic[aPathState];
-                            var aNextPos = aPos + aDir;
+                            ATS_Vector2Int aNextPos = aPos + aDir;
                             if (!aVisited.Contains(aNextPos))//確保還沒走過
                             {
                                 aVisited.Add(aNextPos);
@@ -381,10 +402,12 @@ namespace ATS
             {
                 while (aNode != null)
                 {
-                    aPath.m_Path.Add(new ATS_Vector2Int(aNode.m_Pos));
+                    aPath.m_Path.Add(aNode.m_Pos.ToATS_Vector3);//new ATS_Vector2Int(aNode.m_Pos)
                     aNode = aNode.m_PrevNode;
                 }
                 aPath.m_Path.Reverse();
+                aPath.m_Path[0].x = x;
+                aPath.m_Path[0].y = y;
             }
 
             return aPath;
@@ -400,11 +423,11 @@ namespace ATS
         /// <returns></returns>
         public List<(Cell, PathNode)> Search(float x, float y, System.Func<Cell, PathNode, bool> iCheckFunc, int iSearchCount = 1, int iMaxDistance = 999, int iMaxSearchTimes = 9999)
         {
-            HashSet<Vector2Int> aVisited = new HashSet<Vector2Int>();
+            HashSet<ATS_Vector2Int> aVisited = new ();
             Queue<PathNode> aNodes = new Queue<PathNode>();
             List<(Cell, PathNode)> aTargets = new ();
 
-            var aStartPos = new Vector2Int(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
+            var aStartPos = new ATS_Vector2Int(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
             PathNode aStart = new PathNode(aStartPos, null, 0);
             aVisited.Add(aStartPos);
             aNodes.Enqueue(aStart);

@@ -4,6 +4,7 @@
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using UCL.Core;
 using UCL.Core.JsonLib;
@@ -30,9 +31,19 @@ namespace ATS
         ATS_RegionGrid RegionGrid { get; }
 
         ATS_PathFinder PathFinder { get; }
+
+        #region Save & Load
+        SaveData SaveGame();
+        void LoadGame(SaveData iJson);
+
+        string SaveKey { get; }
+        Dictionary<string, ISandBox> SaveComponentsDic { get; }
+        #endregion
     }
     public class SandBoxBase : UCL.Core.JsonLib.UnityJsonSerializable, ISandBox, UCLI_FieldOnGUI
     {
+        public const string MainFileKey = "Main";
+
         public ATS_SandBox p_SandBox { get; private set; } = null;
         public ISandBox Parent { get; private set; } = null;
 
@@ -70,8 +81,34 @@ namespace ATS
             }
         }
         virtual public GameState CurGameState => p_SandBox.CurGameState;
-
-
+        /// <summary>
+        /// 需要存檔的Component
+        /// </summary>
+        virtual public Dictionary<string, ISandBox> SaveComponentsDic
+        {
+            get
+            {
+                if (m_Components.IsNullOrEmpty())
+                {
+                    return null;
+                }
+                Dictionary<string, ISandBox> dic = null;
+                foreach(var component in m_Components)
+                {
+                    var key = component.SaveKey;
+                    if(!string.IsNullOrEmpty(key))
+                    {
+                        if(dic == null)
+                        {
+                            dic = new Dictionary<string, ISandBox>();
+                        }
+                        dic[key] = component;
+                    }
+                }
+                return dic;
+            }
+        }
+        virtual public string SaveKey => string.Empty;
 
         protected List<ISandBox> m_Components = new List<ISandBox>();//[UCL.Core.PA.UCL_FieldOnGUI]
         protected bool m_Inited = false;
@@ -169,7 +206,173 @@ namespace ATS
             //Save Component
             return aJson;
         }
+        public override void DeserializeFromJson(JsonData iJson)
+        {
+            base.DeserializeFromJson(iJson);
+        }
+        #region Save & Load
+        const string ComponentsKey = "Components";
+
+        virtual public JsonData SaveMain()
+        {
+            return SerializeToJson();
+        }
+        virtual public void LoadMain(JsonData iJson)
+        {
+            DeserializeFromJson(iJson);
+        }
+        virtual public void SaveComponents(SaveData saveData)
+        {
+            var aSaveComponentsDic = SaveComponentsDic;
+            if (aSaveComponentsDic.IsNullOrEmpty())
+            {
+                return;
+            }
+            SaveData aComponents = new SaveData();
+            saveData.AddFolder(ComponentsKey, aComponents);
+            foreach (var key in aSaveComponentsDic.Keys)
+            {
+                var aComponent = aSaveComponentsDic[key];
+                aComponents.AddFolder(key, aComponent.SaveGame());
+            }
+        }
+        virtual public void LoadComponents(SaveData saveData)
+        {
+            var aSaveComponentsDic = SaveComponentsDic;
+            if (aSaveComponentsDic.IsNullOrEmpty())
+            {
+                return;
+            }
+            var aComponents = saveData.LoadFolder(ComponentsKey);
+
+
+            foreach (var key in aSaveComponentsDic.Keys)
+            {
+                var aComponent = aSaveComponentsDic[key];
+                aComponent.LoadGame(aComponents.LoadFolder(key));
+            }
+        }
+        virtual public SaveData SaveGame()
+        {
+            //return null;
+            SaveData aSaveData = new SaveData();
+            aSaveData.AddFile(MainFileKey, SaveMain());
+            SaveComponents(aSaveData);
+
+            return aSaveData;
+        }
+        virtual public void LoadGame(SaveData iSaveData)
+        {
+            Debug.LogError($"LoadGame path:{iSaveData.m_Dir}");
+            var aMain = iSaveData.LoadFile(MainFileKey);
+            LoadMain(aMain);
+            LoadComponents(iSaveData);
+
+        }
+        #endregion
     }
+
+    public class SaveData
+    {
+        public string m_Dir;
+
+        public Dictionary<string, JsonData> m_Files = new Dictionary<string, JsonData>();
+        /// <summary>
+        /// Dir
+        /// </summary>
+        public Dictionary<string, SaveData> m_Dirs = new ();
+
+        public static string FileName(string iKey) => $"{iKey}.json";
+
+        public SaveData() { }
+        public SaveData(string iDir)
+        {
+            m_Dir = iDir;
+        }
+
+        public void AddFile(string key, JsonData jsonData)
+        {
+            if(jsonData == null)
+            {
+                return;
+            }
+            if (m_Files.ContainsKey(key))
+            {
+                Debug.LogError($"SaveData.AddFile key:{key}, m_Files.ContainsKey(key)");
+                return;
+            }
+            m_Files[key] = jsonData;
+        }
+        public JsonData LoadFile(string key)
+        {
+            string aPath = Path.Combine(m_Dir, FileName(key));
+            if (!File.Exists(aPath))
+            {
+                Debug.LogError($"SaveData.LoadFile, !File.Exists(aPath) aPath:{aPath}");
+                return null;
+            }
+            string aJson = File.ReadAllText(aPath);
+            return JsonData.ParseJson(aJson);
+        }
+        public void AddFolder(string key, SaveData saveData)
+        {
+            if(saveData == null)
+            {
+                return;
+            }
+            if (m_Dirs.ContainsKey(key))
+            {
+                Debug.LogError($"SaveData.AddFolder key:{key}, m_Dirs.ContainsKey(key)");
+                return;
+            }
+            m_Dirs[key] = saveData;
+        }
+        public SaveData LoadFolder(string key)
+        {
+            string aPath = Path.Combine(m_Dir, key);
+            if (!Directory.Exists(aPath))
+            {
+                Debug.LogError($"SaveData.LoadFolder, !Directory.Exists(aPath) aPath:{aPath}");
+                return null;
+            }
+            return new SaveData(aPath);
+        }
+        public void Save(string dir)
+        {
+            Debug.LogError($"Save dir:{dir}");
+            Directory.CreateDirectory(dir);
+
+            if (m_Files.Count > 0)
+            {
+                foreach (var key in m_Files.Keys)
+                {
+                    var json = m_Files[key];
+                    string savePath = Path.Combine(dir, FileName(key));
+                    File.WriteAllText(savePath, json.ToJsonBeautify());
+                }
+            }
+            if (m_Dirs.Count > 0)
+            {
+                foreach (var key in m_Dirs.Keys)
+                {
+                    var save = m_Dirs[key];
+                    save.Save(Path.Combine(dir, key));
+                }
+            }
+
+        }
+        //public void Load(string dir)
+        //{
+        //    if (!Directory.Exists(dir))
+        //    {
+        //        Debug.LogError($"SaveData.Load !Directory.Exists(dir), dir:{dir}");
+        //        return;
+        //    }
+        //    var aDirs = Directory.GetDirectories(dir);
+
+        //}
+    }
+
     public enum GameState
     {
         /// <summary>
@@ -192,7 +395,7 @@ namespace ATS
     {
         const int LogicIntervalMS = 30;
 
-        public ATS_AirShip m_AirShip = new ATS_AirShip();
+        protected ATS_AirShip m_AirShip = new ATS_AirShip();
 
         
         private bool m_End = false;
@@ -317,19 +520,27 @@ namespace ATS
             }
             UCL_GUILayout.DrawObjectData(this, iDic.GetSubDic("Data"));
         }
-        
+
+        public override SaveData SaveGame()
+        {
+            return base.SaveGame();
+            //SaveData aSaveData = new SaveData();
+            //aSaveData.AddFile("SandBox", SerializeToJson());
+            //aSaveData.AddFolder("AirShip", m_AirShip.SaveGame());
+
+            //return aSaveData;
+        }
     }
 
     public static partial class SandBoxExtension
     {
-        public static ATS_AirShip GetAirShip(this SandBoxBase iSandBoxBase)
-        {
-            return iSandBoxBase.p_SandBox.m_AirShip;
-        }
-        public static ATS_RegionGrid GetAirShipRegionGrid(this SandBoxBase iSandBoxBase)
-        {
-            return iSandBoxBase.GetAirShip().RegionGrid;
-        }
-        //
+        //public static ATS_AirShip GetAirShip(this SandBoxBase iSandBoxBase)
+        //{
+        //    return iSandBoxBase.p_SandBox.m_AirShip;
+        //}
+        //public static ATS_RegionGrid GetAirShipRegionGrid(this SandBoxBase iSandBoxBase)
+        //{
+        //    return iSandBoxBase.GetAirShip().RegionGrid;
+        //}
     }
 }

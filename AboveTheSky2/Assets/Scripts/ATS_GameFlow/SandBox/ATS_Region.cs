@@ -9,109 +9,9 @@ using UnityEngine;
 namespace ATS
 {
     /// <summary>
-    /// 基礎的單元格
-    /// </summary>
-    public class Cell : UCL.Core.JsonLib.UnityJsonSerializable, UCLI_ShortName
-    {
-        public ATS_Vector2Int m_Pos = new ATS_Vector2Int();
-        /// <summary>
-        /// 此格子上的建築(一個建築可以占用多個格子)
-        /// </summary>
-        public ATS_Building m_Building = null;
-        /// <summary>
-        /// 對應建築中的哪個格子(一個建築可以占用多個格子)
-        /// </summary>
-        public Vector2Int m_BuildingCellPos;
-
-        public ATS_TileData m_TileData = null;
-        public int m_PathState = 0;
-        /// <summary>
-        /// 此地塊上的所有工作
-        /// </summary>
-        public List<ATS_Job> m_Jobs = new();
-        /// <summary>
-        /// 掉落在此地的資源
-        /// </summary>
-        public List<ATS_Resource> m_Resources = new();// { get; private set; } = new ();
-        public string GetShortName() => $"Cell {m_Pos}";
-        public Cell() { }
-        public Cell(ATS_TileData iTileData, int x, int y)
-        {
-            m_TileData = iTileData;
-            m_Pos.x = x;
-            m_Pos.y = y;
-        }
-
-        public bool CanBuild
-        {
-            get
-            {
-                if (m_Building != null) return false;//已被占用
-                if (!m_TileData.CanBuild) return false;//非可建造地塊
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// 是否能夠進入此地塊
-        /// </summary>
-        public bool Passable
-        {
-            get
-            {
-                return !m_TileData.m_TilePathState.GetPathState(PathState.Obstacle);
-            }
-        }
-        public int BuildingPathState
-        {
-            get
-            {
-                if(m_Building == null)
-                {
-                    return 0;
-                }
-                return m_Building.BuildingData.GetPathState(m_BuildingCellPos.x, m_BuildingCellPos.y);
-            }
-        }
-        public int SelfPathState
-        {
-            get
-            {
-                int aPathState = m_TileData.m_TilePathState.m_PathState;//(int)(PathState.Left | PathState.Right | PathState.Down);//所有可通行地塊都能往左右與下方移動
-                aPathState |= BuildingPathState;//額外抓取建築物的通行資訊
-
-                return aPathState;
-            }
-        }
-        public void SetBuilding(ATS_Building iBuilding, Vector2Int iBuildingCellPos)
-        {
-            m_Building = iBuilding;
-            m_BuildingCellPos = iBuildingCellPos;
-        }
-        /// <summary>
-        /// 生成搬運工作
-        /// </summary>
-        public void GenerateHaulJob(ATS_Building iBuilding)
-        {
-            if (m_Resources.IsNullOrEmpty())
-            {
-                return;
-            }
-            foreach(var aRes in m_Resources.ToList())
-            {
-                Debug.LogError($"Cell.GenerateHaulJob, aRes:{aRes}");
-                //aRes.SetState(ATS_Resource.ResourceState.PrepareToHaul);
-                JobHauling aJobHauling = new JobHauling();
-                aJobHauling.Init(iBuilding, aRes);
-                m_Jobs.Add(aJobHauling);
-            }
-            
-        }
-    }
-    /// <summary>
     /// Runtime region(Sandbox)
     /// </summary>
-    public class ATS_Region : SandBoxBase
+    public class ATS_Region : ATS_SandBoxBase
     {
         public class RuntimeData : UnityJsonSerializable
         {
@@ -168,7 +68,7 @@ namespace ATS
         {
             m_Region = iRegionData;
         }
-        override public void Init(ATS_SandBox iSandBox, ISandBox iParent)
+        override public void Init(ATS_SandBox iSandBox, ATSI_SandBox iParent)
         {
             base.Init(iSandBox, iParent);
             //暫時抓取預設的AirShip(初始飛船)
@@ -221,7 +121,7 @@ namespace ATS
             foreach (var aCellPos in aCellsPos)//將建築設定到地塊上
             {
                 var aCell = m_Cells[aCellPos.x, aCellPos.y];
-                aCell.SetBuilding(iBuilding, aCellPos - aBuildPos);
+                aCell.SetBuilding(iBuilding);
                 //aCell.m_Building = iBuilding;
             }
             PathFinder.RequireRefreshAllPathState = true;//標記需要刷新所有路徑 會在下次Update時刷新
@@ -386,43 +286,60 @@ namespace ATS
             GUILayout.Space(20);
         }
 
-        public override string SaveKey => "Region";
+        //public override string SaveKey => "Region";
+        public override (SaveType, string) SaveKey => (SaveType.Folder, "Region");
 
-        public override SaveData SaveGame()
-        {
-            return base.SaveGame();
-        }
         //public override JsonData SaveMain()
         //{
         //    return m_RuntimeData.SerializeToJson();
         //}
     }
-    public class RegionCells : SandBoxBase
+    public class RegionCells : ATS_SandBoxBase
     {
         public List<Cell> m_Cells = new List<Cell>();
-        public override string SaveKey => "RegionCells";
+        //public override string SaveKey => "RegionCells";
+        public override (SaveType, string) SaveKey => (SaveType.File, "RegionCells");
     }
-    public class RegionBuildings : SandBoxBase
+    public class RegionBuildings : ATS_SandBoxBase
     {
         public List<ATS_Building> m_Buildings = new List<ATS_Building>();
-        public override string SaveKey => "RegionBuildings";
+        public override (SaveType, string) SaveKey => (SaveType.File, "RegionBuildings");
         public void Build(ATS_Building iBuilding)
         {
             m_Buildings.Add(iBuilding);
             AddComponent(iBuilding);//要在AddComponent後 ATS_Building才會Init
         }
+        public override void LoadMain(JsonData iJson)
+        {
+            base.LoadMain(iJson);
+            foreach (var aData in m_Buildings)
+            {
+                AddComponent(aData);//還原
+            }
+            //Debug.LogError($"LoadMain RegionResources iJson:{iJson.ToJsonBeautify()}");
+        }
     }
-    public class RegionMinions : SandBoxBase
+    public class RegionMinions : ATS_SandBoxBase
     {
         public List<ATS_Minion> m_Minions = new ();
-        public override string SaveKey => "RegionMinions";
+
+        public override (SaveType, string) SaveKey => (SaveType.File, "RegionMinions");
         public void Spawn(ATS_Minion iMinion)
         {
             m_Minions.Add(iMinion);
             AddComponent(iMinion);//要在AddComponent後 ATS_Minion才會Init
         }
+        public override void LoadMain(JsonData iJson)
+        {
+            base.LoadMain(iJson);
+            foreach (var aData in m_Minions)
+            {
+                AddComponent(aData);//還原
+            }
+            //Debug.LogError($"LoadMain RegionResources iJson:{iJson.ToJsonBeautify()}");
+        }
     }
-    public class RegionResources : SandBoxBase
+    public class RegionResources : ATS_SandBoxBase
     {
         /// <summary>
         /// 散落在地上的資源(可搬運)
@@ -433,8 +350,21 @@ namespace ATS
         /// </summary>
         public Dictionary<ATS_ResourceEntry, int> m_StorageResources = new Dictionary<ATS_ResourceEntry, int>();
 
-
-        public override string SaveKey => "RegionResources";
+        public override (SaveType, string) SaveKey => (SaveType.File, "RegionResources");
+        public override JsonData SaveMain()
+        {
+            return SerializeToJson();
+        }
+        public override void LoadMain(JsonData iJson)
+        {
+            base.LoadMain(iJson);
+            foreach(var aRes in m_Resources)
+            {
+                AddComponent(aRes);//還原
+            }
+            //Debug.LogError($"LoadMain RegionResources iJson:{iJson.ToJsonBeautify()}");
+        }
+        //public override string SaveKey => "RegionResources";
         public void Add(ATS_Resource iResource)
         {
             m_Resources.Add(iResource);

@@ -217,7 +217,7 @@ namespace ATS
             }
         }
 
-        public override void Init(ATS_SandBox iSandBox, ISandBox iParent)
+        public override void Init(ATS_SandBox iSandBox, ATSI_SandBox iParent)
         {
             base.Init(iSandBox, iParent);
         }

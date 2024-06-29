@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace ATS
 {
-    public class ATS_GridData : SandBoxBase, UCLI_FieldOnGUI
+    public class ATS_GridData : ATS_SandBoxBase, UCLI_FieldOnGUI
     {
         public const float CellSize = 32f;
         public class RuntimeData
@@ -167,7 +167,7 @@ namespace ATS
             }
         }
         #region SandBox
-        override public void Init(ATS_SandBox iSandBox, ISandBox iParent)
+        override public void Init(ATS_SandBox iSandBox, ATSI_SandBox iParent)
         {
             base.Init(iSandBox, iParent);
             RTData = new RuntimeData();

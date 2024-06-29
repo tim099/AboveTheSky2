@@ -76,7 +76,7 @@ namespace ATS
         public bool CheckBuildingType(BuildingType iBuildingType) => m_BuildingTypes.Contains(iBuildingType);
 
         /// <summary>
-        /// 獲取對應
+        /// 獲取對應路徑狀態
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>

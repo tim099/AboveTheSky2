@@ -270,7 +270,7 @@ namespace ATS
     /// <summary>
     /// Find path base on region
     /// </summary>
-    public class ATS_PathFinder : SandBoxBase
+    public class ATS_PathFinder : ATS_SandBoxBase
     {
         public static Dictionary<PathState, Vector2Int> PathStateDic
         {
@@ -298,7 +298,7 @@ namespace ATS
         public bool RequireRefreshAllPathState { get; set; } = false;
 
 
-        public override void Init(ATS_SandBox iSandBox, ISandBox iParent)
+        public override void Init(ATS_SandBox iSandBox, ATSI_SandBox iParent)
         {
             base.Init(iSandBox, iParent);
             var aRegion = Region;

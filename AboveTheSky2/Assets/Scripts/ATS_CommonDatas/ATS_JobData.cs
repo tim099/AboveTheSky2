@@ -76,16 +76,16 @@ namespace ATS
             Haul,
             Hauling,
         }
-        public ATS_Building m_Building;
-        public ATS_Resource m_Resource;
+        public ATS_BuildingRef m_Building = new ();
+        public ATS_ResourceRef m_Resource = new ();
         public HaulingState m_HaulingState = HaulingState.Init;
         
         public JobHauling() { }
         public void Init(ATS_Building iBuilding, ATS_Resource iResource)
         {
-            m_Building = iBuilding;
-            m_Resource = iResource;
-            m_Resource.SetState(ATS_Resource.ResourceState.PrepareToHaul);
+            m_Building.Value = iBuilding;
+            m_Resource.Value = iResource;
+            m_Resource.Value.SetState(ATS_Resource.ResourceState.PrepareToHaul);
         }
 
         override public void WorkingUpdate(ATS_Minion iMinion)
@@ -96,7 +96,7 @@ namespace ATS
                     {
                         //if (iMinion.m_MoveData.m_Path == null)
                         {
-                            var aPos = m_Resource.m_Pos.ToVector2Int;
+                            var aPos = m_Resource.Value.m_Pos.ToVector2Int;
                             //return true if find target
                             int CheckNode(Cell iCell, PathNode iNode)
                             {
@@ -108,7 +108,7 @@ namespace ATS
                             }
                             var aPath = iMinion.PathFinder.SearchPath(iMinion.m_Pos.x, iMinion.m_Pos.y, CheckNode);
                             //aPath.m_Path.LastElement().Set(m_Resource.m_Pos);//走到資源位置
-                            aPath.m_Path.Add(m_Resource.m_Pos);//走到資源位置
+                            aPath.m_Path.Add(m_Resource.Value.m_Pos);//走到資源位置
                             iMinion.m_MoveData.m_Path = aPath;
                         }
                         m_HaulingState = HaulingState.MoveToResource;
@@ -118,14 +118,14 @@ namespace ATS
                     {
                         if (iMinion.m_MoveData.m_Path == null)//Move Complete
                         {
-                            m_Resource.SetState(ATS_Resource.ResourceState.Hauling);
+                            m_Resource.Value.SetState(ATS_Resource.ResourceState.Hauling);
                             m_HaulingState = HaulingState.Haul;
                         }
                         break;
                     }
                 case HaulingState.Haul:
                     {
-                        var aPos = m_Building.m_Pos;
+                        var aPos = m_Building.Value.m_Pos;
                         //return true if find target
                         int CheckNode(Cell iCell, PathNode iNode)
                         {
@@ -145,13 +145,13 @@ namespace ATS
                         if (iMinion.m_MoveData.m_Path == null)//Move Complete
                         {
                             //搬運完成
-                            m_Resource.AddToStorage();
+                            m_Resource.Value.AddToStorage();
                             SetJobState(JobState.Complete);
                             //m_Completed = true;
                         }
                         else
                         {
-                            m_Resource.m_Pos.Set(iMinion.m_Pos + new ATS_Vector3(0, iMinion.Height - 0.5f * ATS_Resource.ResourceSize, 0));
+                            m_Resource.Value.m_Pos.Set(iMinion.m_Pos + new ATS_Vector3(0, iMinion.Height - 0.5f * ATS_Resource.ResourceSize, 0));
                         }
                         break;
                     }

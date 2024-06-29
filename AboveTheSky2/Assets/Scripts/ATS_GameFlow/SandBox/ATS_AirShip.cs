@@ -17,7 +17,7 @@ namespace ATS
     /// <summary>
     /// Runtime airship
     /// </summary>
-    public class ATS_AirShip : SandBoxBase
+    public class ATS_AirShip : ATS_SandBoxBase
     {
         public class RuntimeData : UnityJsonSerializable
         {
@@ -41,7 +41,7 @@ namespace ATS
         public override ATS_PathFinder PathFinder => m_Region.PathFinder;
         #endregion
 
-        override public void Init(ATS_SandBox iSandBox, ISandBox iParent)
+        override public void Init(ATS_SandBox iSandBox, ATSI_SandBox iParent)
         {
             base.Init(iSandBox, iParent);
             //暫時抓取預設的AirShip(初始飛船)
@@ -85,7 +85,7 @@ namespace ATS
         }
 
 
-        public override string SaveKey => "AirShip";
+        public override (SaveType, string) SaveKey => (SaveType.Folder, "AirShip");
 
         //public override Dictionary<string, ISandBox> SaveComponentsDic
         //{
@@ -96,14 +96,7 @@ namespace ATS
         //        return saveComponentsDic;
         //    }
         //}
-        public override SaveData SaveGame()
-        {
-            SaveData aSaveData = base.SaveGame();
-            //aSaveData.AddFile("AirShip", SerializeToJson());
-            //aSaveData.AddFolder("Region", m_Region.SaveGame());
 
-            return aSaveData;
-        }
 
         private ATS_ResourceEntry m_SpawnResType = new ATS_ResourceEntry();
         /// <summary>

@@ -31,7 +31,7 @@ namespace ATS
     /// <summary>
     /// 基礎單位(船員或其他動物)
     /// </summary>
-    public class ATS_Minion : SandBoxBase
+    public class ATS_Minion : ATS_SandBoxBase
     {
         /// <summary>
         /// 移動相關資料

@@ -8,11 +8,14 @@ using UnityEngine;
 
 namespace ATS
 {
+    public class ATS_ResourceRef : ATS_SandBoxRef<ATS_Resource>
+    {
 
+    }
     /// <summary>
     /// Sandbox中的實體資源(可被搬運)
     /// </summary>
-    public class ATS_Resource : SandBoxBase, UCLI_ShortName
+    public class ATS_Resource : ATS_SandBoxBase, UCLI_ShortName
     {
         /// <summary>
         /// 資源尺寸(基於房間尺寸的比例)
@@ -38,8 +41,8 @@ namespace ATS
             /// </summary>
             Hauling,
         }
-        
 
+        [UCL.Core.ATTR.UCL_HideInJson]
         public Cell p_Cell = null;
 
         public ResourceAmount m_ResourceAmount = new ResourceAmount();
@@ -53,6 +56,9 @@ namespace ATS
         public ATS_Vector3 m_Vel = new ATS_Vector3();
 
         public ResourceState m_State = ResourceState.Dropping;
+
+
+
         public Texture2D Texture => m_ResourceAmount.Texture;
         public string GetShortName() => $"{m_ResourceAmount},{m_Pos}({m_State})";
         public override string ToString() => GetShortName();
@@ -98,6 +104,21 @@ namespace ATS
             var aPos = m_Pos.ToVector2Int;
             p_Cell = Region.Cells[aPos.x, aPos.y];
             p_Cell.m_Resources.Add(this);//紀錄掉落位置
+        }
+        public override void LoadGame(ATS_SaveData iSaveData)
+        {
+            base.LoadGame(iSaveData);
+            p_SandBox.AddOnLoadEndAction(() =>
+            {
+                switch (m_State)
+                {
+                    case ResourceState.Dropped:
+                        {
+                            UpdateCell();
+                            break;
+                        }
+                }
+            });
         }
         /// <summary>
         /// 把散落在地上的資源放入倉庫

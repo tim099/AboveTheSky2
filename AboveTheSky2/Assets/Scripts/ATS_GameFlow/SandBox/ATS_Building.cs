@@ -73,11 +73,14 @@ namespace ATS
         /// </summary>
         Destroyed,
     }
+    public class ATS_BuildingRef : ATS_SandBoxRef<ATS_Building>
+    {
 
+    }
     /// <summary>
     /// Sandbox中使用的建築
     /// </summary>
-    public class ATS_Building : SandBoxBase
+    public class ATS_Building : ATS_SandBoxBase
     {
         /// <summary>
         /// 建築類型
@@ -110,6 +113,19 @@ namespace ATS
             //m_Y = iPos.y;
             m_BuildingState = iBuildingState;
         }
+        /// <summary>
+        /// 獲取對應路徑狀態
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public int GetPathState(int x, int y)
+        {
+            return BuildingData.GetPathState(x - m_Pos.x, y - m_Pos.y);//傳入相對位置
+        }
+
+
+
         public override void DeserializeFromJson(JsonData iJson)
         {
             base.DeserializeFromJson(iJson);
@@ -139,7 +155,7 @@ namespace ATS
             if (aGUIColor.HasValue) UCL_GUIStyle.PopGUIColor();
         }
 
-        public override void Init(ATS_SandBox iSandBox, ISandBox iParent)
+        public override void Init(ATS_SandBox iSandBox, ATSI_SandBox iParent)
         {
             base.Init(iSandBox, iParent);
         }

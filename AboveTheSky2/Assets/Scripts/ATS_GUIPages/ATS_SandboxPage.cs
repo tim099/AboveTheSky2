@@ -100,13 +100,20 @@ namespace ATS.Page
 #endif
             if (GUILayout.Button(UCL_LocalizeManager.Get("Save"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
             {
-                SaveData aSaveData = m_SandBox.SaveGame();
-                aSaveData.Save(SavePath);
+                var aPath = SavePath;
+                if (Directory.Exists(aPath))
+                {
+                    Directory.Delete(aPath, true);
+                }
+                ATS_SaveData aSaveData = new ATS_SaveData(aPath);
+                m_SandBox.SaveGame(aSaveData);
+                //SaveData aSaveData = m_SandBox.SaveGame();
+                aSaveData.Save(aPath);
             }
             if (GUILayout.Button(UCL_LocalizeManager.Get("Load"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
             {
                 InitSandBox();
-                SaveData aSaveData = new SaveData(SavePath);
+                ATS_SaveData aSaveData = new ATS_SaveData(SavePath);
                 //aSaveData.Load(SavePath);
                 m_SandBox.LoadGame(aSaveData);
             }

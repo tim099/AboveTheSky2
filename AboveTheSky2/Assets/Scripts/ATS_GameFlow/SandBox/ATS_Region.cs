@@ -19,7 +19,16 @@ namespace ATS
             public RegionBuildings m_Buildings = new RegionBuildings();
             public RegionMinions m_Minions = new RegionMinions();
             public RegionResources m_Resources = new RegionResources();
+            public RegionJobs m_Jobs = new RegionJobs();
 
+            public void Init(ATS_Region iRegion)
+            {
+                iRegion.AddComponent(m_Cells);
+                iRegion.AddComponent(m_Buildings);
+                iRegion.AddComponent(m_Minions);
+                iRegion.AddComponent(m_Resources);
+                iRegion.AddComponent(m_Jobs);
+            }
         }
         
 
@@ -41,12 +50,12 @@ namespace ATS
         /// <summary>
         /// 所有的建築格(地塊)
         /// </summary>
-        private Cell[,] m_Cells = null;
+        //private Cell[,] m_Cells = null;
 
         /// <summary>
         /// 所有的建築格(地塊)
         /// </summary>
-        public Cell[,] Cells => m_Cells;
+        public Cell[,] Cells => m_RuntimeData.m_Cells.m_GridCells;
         /// <summary>
         /// SandBox執行期的所有資訊
         /// </summary>
@@ -76,16 +85,20 @@ namespace ATS
 
             AddComponent(m_Region.m_GridData);
 
-            AddComponent(m_RuntimeData.m_Cells);
-            AddComponent(m_RuntimeData.m_Buildings);
-            AddComponent(m_RuntimeData.m_Minions);
-            AddComponent(m_RuntimeData.m_Resources);
+            m_RuntimeData.Init(this);
 
-            m_Cells = m_Region.m_GridData.CreateCells();
-            foreach (Cell cell in m_Cells)
-            {
-                m_RuntimeData.m_Cells.m_Cells.Add(cell);
-            }
+            //AddComponent(m_RuntimeData.m_Cells);
+            //AddComponent(m_RuntimeData.m_Buildings);
+            //AddComponent(m_RuntimeData.m_Minions);
+            //AddComponent(m_RuntimeData.m_Resources);
+
+            m_RuntimeData.m_Cells.Init(m_Region.m_GridData);
+
+            //m_Cells = m_Region.m_GridData.CreateCells();
+            //foreach (Cell cell in m_Cells)
+            //{
+            //    m_RuntimeData.m_Cells.AddCell(cell);
+            //}
 
             AddComponent(m_PathFinder);
         }
@@ -104,7 +117,7 @@ namespace ATS
             var aCellsPos = iBuildData.BuildingCells;
             foreach (var aCellPos in aCellsPos)
             {
-                var aCell = m_Cells[aCellPos.x, aCellPos.y];
+                var aCell = Cells[aCellPos.x, aCellPos.y];
                 if (!aCell.CanBuild)//已被占用
                 {
                     return false;
@@ -116,22 +129,15 @@ namespace ATS
         public void Build(ATS_Building iBuilding)
         {
             m_RuntimeData.m_Buildings.Build(iBuilding);
-            var aBuildPos = new Vector2Int(iBuilding.m_Pos.x, iBuilding.m_Pos.y);
+            //var aBuildPos = new Vector2Int(iBuilding.m_Pos.x, iBuilding.m_Pos.y);
             var aCellsPos = iBuilding.BuildingCells;
             foreach (var aCellPos in aCellsPos)//將建築設定到地塊上
             {
-                var aCell = m_Cells[aCellPos.x, aCellPos.y];
+                var aCell = Cells[aCellPos.x, aCellPos.y];
                 aCell.SetBuilding(iBuilding);
                 //aCell.m_Building = iBuilding;
             }
             PathFinder.RequireRefreshAllPathState = true;//標記需要刷新所有路徑 會在下次Update時刷新
-
-            //PathFinder.RefreshAllPathState();//刷新所有路徑
-            //foreach (var aCellPos in aCellsPos)
-            //{
-            //    //Debug.LogError($"Build RefreshPathState aCellPos:{aCellPos}");
-            //    PathFinder.RefreshPathState(aCellPos.x, aCellPos.y);//刷新建築占用地塊的路徑
-            //}
         }
         #endregion
 
@@ -282,7 +288,7 @@ namespace ATS
                     }
             }
 
-            UCL_GUILayout.DrawObjectData(m_RuntimeData.m_Buildings, iDic.GetSubDic("m_Buildings"), "Buildings");
+            UCL_GUILayout.DrawObjectData(m_RuntimeData, iDic.GetSubDic("RuntimeData"), "RuntimeData");
             GUILayout.Space(20);
         }
 
@@ -296,9 +302,43 @@ namespace ATS
     }
     public class RegionCells : ATS_SandBoxBase
     {
-        public List<Cell> m_Cells = new List<Cell>();
+        /// <summary>
+        /// 所有的建築格(地塊)
+        /// </summary>
+        [UCL.Core.ATTR.UCL_HideInJson]
+        public Cell[,] m_GridCells = null;
+
+        /// <summary>
+        /// 存檔用
+        /// </summary>
+        [SerializeField] private List<Cell> m_Cells = new List<Cell>();
         //public override string SaveKey => "RegionCells";
         public override (SaveType, string) SaveKey => (SaveType.File, "RegionCells");
+
+        public void Init(ATS_RegionGrid iGridData)
+        {
+            m_GridCells = iGridData.CreateCells();
+        }
+
+        public override void LoadMain(JsonData iJson)
+        {
+            base.LoadMain(iJson);
+            foreach (Cell aCell in m_Cells)
+            {
+                m_GridCells[aCell.m_Pos.x, aCell.m_Pos.y] = aCell;
+            }
+            m_Cells.Clear();//讀檔後清理
+        }
+        public override JsonData SaveMain()
+        {
+            foreach (Cell aCell in m_GridCells)
+            {
+                m_Cells.Add(aCell);
+            }
+            var aJson = base.SaveMain();
+            m_Cells.Clear();
+            return aJson;
+        }
     }
     public class RegionBuildings : ATS_SandBoxBase
     {
@@ -335,6 +375,31 @@ namespace ATS
             foreach (var aData in m_Minions)
             {
                 AddComponent(aData);//還原
+            }
+            //Debug.LogError($"LoadMain RegionResources iJson:{iJson.ToJsonBeautify()}");
+        }
+    }
+    public class RegionJobs : ATS_SandBoxBase
+    {
+        public List<ATS_Job> m_Jobs = new();
+
+        public override (SaveType, string) SaveKey => (SaveType.File, "RegionJobs");
+        public void Add(ATS_Job iJob)
+        {
+            m_Jobs.Add(iJob);
+            AddComponent(iJob);//要在AddComponent後 ATS_Minion才會Init
+        }
+        public void Remove(ATS_Job iJob)
+        {
+            m_Jobs.Remove(iJob);
+            RemoveComponent(iJob);
+        }
+        public override void LoadMain(JsonData iJson)
+        {
+            base.LoadMain(iJson);
+            foreach (var aJob in m_Jobs)
+            {
+                AddComponent(aJob);//還原
             }
             //Debug.LogError($"LoadMain RegionResources iJson:{iJson.ToJsonBeautify()}");
         }

@@ -13,7 +13,8 @@ namespace ATS
     /// <summary>
     /// Sanbox中使用的實際Job
     /// </summary>
-    public class ATS_Job : UCL.Core.JsonLib.UnityJsonSerializable, UCLI_TypeList
+    public class ATS_Job : ATS_SandBoxBase //UCL.Core.JsonLib.UnityJsonSerializable
+        , UCLI_TypeList
     {
         public enum JobState
         {
@@ -25,6 +26,10 @@ namespace ATS
             /// 工作中
             /// </summary>
             Working,
+            /// <summary>
+            /// 中斷(例如搬運時找不到路徑)
+            /// </summary>
+            Cancel,
             /// <summary>
             /// 已完成
             /// </summary>
@@ -50,6 +55,11 @@ namespace ATS
         /// 工作已完成
         /// </summary>
         public bool Complete => m_JobState == JobState.Complete;
+        /// <summary>
+        /// 工作中斷
+        /// </summary>
+        public bool Cancel => m_JobState == JobState.Cancel;
+        public override string TypeName => typeof(ATS_Job).Name;
 
         /// <summary>
         /// 開始執行工作
@@ -57,6 +67,10 @@ namespace ATS
         virtual public void Start()
         {
             SetJobState(JobState.Working);
+        }
+        virtual public void End()
+        {
+            Region.Data.m_Jobs.Remove(this);
         }
         virtual public void WorkingUpdate(ATS_Minion iMinion)
         {
@@ -66,6 +80,22 @@ namespace ATS
         {
             m_JobState = state;
         }
+    }
+
+    public class ATS_JobRef : ATS_SandBoxRef<ATS_Job>
+    {
+        public ATS_JobRef() { }
+        public ATS_JobRef(ATS_Job iJob)
+        {
+            Value = iJob;
+        }
+        //public override string TypeName => base.TypeName;
+        //public override void DeserializeFromJson(JsonData iJson)
+        //{
+        //    base.DeserializeFromJson(iJson);
+        //    var aIndex = iJson.GetInt(-1);
+        //    Debug.LogError($"ATS_JobRef Index:{aIndex}");
+        //}
     }
     public class JobHauling : ATS_Job
     {
@@ -94,29 +124,23 @@ namespace ATS
             {
                 case HaulingState.Init:
                     {
-                        //if (iMinion.m_MoveData.m_Path == null)
+                        //走到資源位置
+                        var aPath = iMinion.PathFinder.FindPath(iMinion.m_Pos, m_Resource.Value.m_Pos);
+                        if(aPath == null)//找不到前往資源的路
                         {
-                            var aPos = m_Resource.Value.m_Pos.ToVector2Int;
-                            //return true if find target
-                            int CheckNode(Cell iCell, PathNode iNode)
-                            {
-                                if (iCell.m_Pos == aPos)//找到資源位置!
-                                {
-                                    return 0;
-                                }
-                                return int.MaxValue;//尚未找到目標 回傳與目標的距離
-                            }
-                            var aPath = iMinion.PathFinder.SearchPath(iMinion.m_Pos.x, iMinion.m_Pos.y, CheckNode);
-                            //aPath.m_Path.LastElement().Set(m_Resource.m_Pos);//走到資源位置
-                            aPath.m_Path.Add(m_Resource.Value.m_Pos);//走到資源位置
-                            iMinion.m_MoveData.m_Path = aPath;
+                            SetJobState(JobState.Cancel);
+                            m_Resource.Value.SetState(ATS_Resource.ResourceState.Dropped);
+                            //中斷
+                            return;
                         }
+                        iMinion.m_MoveData.m_Path = aPath;
+
                         m_HaulingState = HaulingState.MoveToResource;
                         break;
                     }
                 case HaulingState.MoveToResource:
                     {
-                        if (iMinion.m_MoveData.m_Path == null)//Move Complete
+                        if (iMinion.MoveUpdate())//Move Complete
                         {
                             m_Resource.Value.SetState(ATS_Resource.ResourceState.Hauling);
                             m_HaulingState = HaulingState.Haul;
@@ -125,31 +149,21 @@ namespace ATS
                     }
                 case HaulingState.Haul:
                     {
-                        var aPos = m_Building.Value.m_Pos;
-                        //return true if find target
-                        int CheckNode(Cell iCell, PathNode iNode)
-                        {
-                            if (iCell.m_Pos == aPos)//找到倉庫位置!
-                            {
-                                return 0;
-                            }
-                            return int.MaxValue;//尚未找到目標 回傳與目標的距離
-                        }
-                        var aPath = iMinion.PathFinder.SearchPath(iMinion.m_Pos.x, iMinion.m_Pos.y, CheckNode);
+                        var aPath = iMinion.PathFinder.FindPath(iMinion.m_Pos, m_Building.Value.m_Pos.ToATS_Vector3);
                         iMinion.m_MoveData.m_Path = aPath;
                         m_HaulingState = HaulingState.Hauling;
                         break;
                     }
                 case HaulingState.Hauling:
                     {
-                        if (iMinion.m_MoveData.m_Path == null)//Move Complete
+                        if (iMinion.MoveUpdate())//Move Complete
                         {
                             //搬運完成
                             m_Resource.Value.AddToStorage();
                             SetJobState(JobState.Complete);
                             //m_Completed = true;
                         }
-                        else
+                        else//搬運中
                         {
                             m_Resource.Value.m_Pos.Set(iMinion.m_Pos + new ATS_Vector3(0, iMinion.Height - 0.5f * ATS_Resource.ResourceSize, 0));
                         }

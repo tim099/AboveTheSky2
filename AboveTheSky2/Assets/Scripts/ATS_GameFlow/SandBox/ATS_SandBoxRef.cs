@@ -36,6 +36,7 @@ namespace ATS
                 m_Value = value;
             }
         }
+        virtual public string TypeName => typeof(T).Name;
 
         private T m_Value = null;
 
@@ -58,7 +59,7 @@ namespace ATS
                 aSandBox.AddOnLoadEndAction(OnLoadEnd);//必須在全部讀檔結束時才能恢復Reference
                 void OnLoadEnd()
                 {
-                    m_Value = aSandBox.GetSandBoxItemByIndex<T>(aIndex);
+                    m_Value = aSandBox.GetSandBoxItemByIndex<T>(aIndex, TypeName);
                 }
             }
 

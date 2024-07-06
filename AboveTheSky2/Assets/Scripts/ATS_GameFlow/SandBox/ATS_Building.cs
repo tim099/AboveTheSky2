@@ -102,6 +102,8 @@ namespace ATS
         public ATS_BuildingData BuildingData => m_BuildingDataEntry.GetData();
 
         public IList<Vector2Int> BuildingCells => BuildingData.GetBuildingCells(m_Pos.ToVector2Int);
+
+        override public string GetShortName() => $"{m_BuildingDataEntry.ID} {m_Pos}[{m_BuildingState}]";
         #endregion
 
         public ATS_Building() { }
@@ -116,8 +118,8 @@ namespace ATS
         /// <summary>
         /// 獲取對應路徑狀態
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
+        /// <param name="x">地塊在Region中的x</param>
+        /// <param name="y">地塊在Region中的y</param>
         /// <returns></returns>
         public int GetPathState(int x, int y)
         {

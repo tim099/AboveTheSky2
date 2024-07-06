@@ -66,7 +66,7 @@ namespace ATS
         /// <summary>
         /// 當前所有的Job
         /// </summary>
-        public List<ATS_Job> m_Jobs = new List<ATS_Job>();
+        public List<ATS_JobRef> m_Jobs = new List<ATS_JobRef>();
         /// <summary>
         /// 目前在哪個Cell(X,Y)
         /// </summary>
@@ -129,10 +129,7 @@ namespace ATS
                         break;
                     }
             }
-            if(m_MoveData.m_Path != null)
-            {
-                MoveUpdate();
-            }
+
         }
         public void SetState(MinionState iState)
         {
@@ -151,10 +148,6 @@ namespace ATS
             }
             m_State = iState;
         }
-        private int m_Timer = 0;
-        private int m_At = 0;
-
-        const int MoveCounter = 30;
         protected void WorkingUpdate()
         {
             if (m_Jobs.IsNullOrEmpty())
@@ -162,15 +155,22 @@ namespace ATS
                 SetState(MinionState.Idle);
                 return;
             }
-            ATS_Job aCurJob = m_Jobs[0];
+            ATS_Job aCurJob = m_Jobs[0].Value;
+            if(aCurJob == null)//Bug!!
+            {
+                Debug.LogError("WorkingUpdate aCurJob == null");
+                m_Jobs.RemoveAt(0);
+                return;
+            }
             if(aCurJob.m_JobState == ATS_Job.JobState.Pending)
             {
                 aCurJob.Start();
             }
             aCurJob.WorkingUpdate(this);
-            if(aCurJob.Complete)//工作已完成
+            if(aCurJob.Complete || aCurJob.Cancel)//工作已完成 或 取消
             {
                 m_Jobs.RemoveAt(0);
+                aCurJob.End();
             }
         }
         protected void IdleUpdate()
@@ -216,58 +216,42 @@ namespace ATS
                 }
                 m_MoveData.m_Path = PathFinder.SearchPath(m_Pos.x, m_Pos.y, CheckNode);
                 //Debug.LogError($"({m_Pos.x},{m_Pos.y}), m_Path:{m_Path.m_Path.ConcatString(iPos => $"{iPos.m_Pos.x},{iPos.m_Pos.y}")}");
-                m_Timer = MoveCounter;
-                m_At = 0;
             }
-            //else
-            //{
-            //    MoveUpdate();
-            //}
-            
-        }
+            else
+            {
+                MoveUpdate();
+            }
 
-        public void MoveUpdate()
+        }
+        /// <summary>
+        /// 若走到終點則回傳true
+        /// </summary>
+        /// <returns></returns>
+        public bool MoveUpdate()
         {
             var aCurPath = m_MoveData.m_Path;
             if (aCurPath == null)
             {
-                return;
+                return true;
             }
             var aPath = aCurPath.m_Path;
-
+            const float Vel = 0.02f;
+            const float Offset = 1.5f * Vel;
             //已經到達當前目標位置 尋找下一個位置
             if (m_MoveData.m_TargetPos == null)
             {
                 if (aPath.IsNullOrEmpty())//已經走整個路徑
                 {
-                    //var aFinalPos = aCurPath.m_FinalPos;
-                    //if (aFinalPos != null && !aFinalPos.Equals(m_MoveData.m_TargetPos))
-                    //{
-                    //    m_MoveData.m_TargetPos = aFinalPos;//將最終位置設定為目標
-                    //    return;
-                    //}
-
                     m_MoveData.Clear();
-                    return;
+                    return true;
                 }
 
-                //ATS_Vector2Int aCurPos = PosInt;//目前位置 用來判斷是否移動到下一格
                 var aNextPos = aPath[0];
-                //int aCellLen = (aCurPos - aNextPos).CellLen;
-                //if (aCellLen <= 1)//下個目標必須距離一格之內
-                {
-                    aPath.RemoveAt(0);
-                    m_MoveData.m_TargetPos = aNextPos;//new ATS_Vector3(aNextPos.x + 0.5f, aNextPos.y + UCL_Random.Instance.Range(0f, ATS_Const.GroundHeight), 0);
-                }
-                //else
-                //{
-                //    Debug.LogError($"MoveUpdate, aCurPos:{aCurPos}, aNextPos:{aNextPos}, aCellLen:{aCellLen}");
-                //    m_MoveData.Clear();
-                //    return;
-                //}
+                aPath.RemoveAt(0);
+                m_MoveData.m_TargetPos = aNextPos;
             }
-            const float Vel = 0.02f;
-            const float Offset = 1.5f * Vel;
+
+
             var aTargetPos = m_MoveData.m_TargetPos;//目標位置(下一格)
             float aDx = aTargetPos.x - m_Pos.x;
             if (Mathf.Abs(aDx) <= Offset)
@@ -304,42 +288,7 @@ namespace ATS
                     m_Pos.x -= Vel;
                 }
             }
-
-
-            //m_Timer++;
-            //if (m_Timer >= MoveCounter)
-            //{
-            //    m_Timer = 0;
-            //    if (m_At < aPath.Count)
-            //    {
-            //        if (m_NextPos.HasValue)
-            //        {
-            //            m_CurPos = m_NextPos.Value;
-            //        }
-
-
-            //        var aPos = aPath[m_At];
-            //        m_NextPos = new Vector2(aPos.x + 0.5f, aPos.y + Random.Range(0.01f, ATS_Const.GroundHeight));
-
-            //        //m_Pos.x = aPos.m_Pos.x + 0.5f;
-            //        //m_Pos.y = aPos.m_Pos.y;
-            //    }
-            //    else//End
-            //    {
-            //        m_MoveData.Clear();
-            //    }
-
-            //    m_At++;
-            //}
-            //else
-            //{
-            //    if (m_CurPos.HasValue && m_NextPos.HasValue)
-            //    {
-            //        var aPos = Vector2.Lerp(m_CurPos.Value, m_NextPos.Value, ((float)m_Timer / MoveCounter));
-            //        m_Pos.x = aPos.x;
-            //        m_Pos.y = aPos.y;
-            //    }
-            //}
+            return false;
         }
         public void DrawOnGrid(ATS_RegionGrid iGrid)
         {

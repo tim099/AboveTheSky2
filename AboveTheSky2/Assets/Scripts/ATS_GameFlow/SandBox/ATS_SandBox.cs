@@ -198,7 +198,7 @@ namespace ATS
         /// <param name="iSandBox"></param>
         public void AddSandBoxItem(ATSI_SandBox iSandBox)
         {
-            var aTypeName = iSandBox.GetType().Name;
+            var aTypeName = iSandBox.TypeName;
             if (!m_SandBoxItems.ContainsKey(aTypeName))
             {
                 m_SandBoxItems[aTypeName] = new ATS_Indexer();
@@ -207,7 +207,7 @@ namespace ATS
         }
         public void RemoveSandBoxItem(ATSI_SandBox iSandBox)
         {
-            var aTypeName = iSandBox.GetType().Name;
+            var aTypeName = iSandBox.TypeName;
             if (!m_SandBoxItems.ContainsKey(aTypeName))
             {
                 Debug.LogError($"RemoveSandBoxItem !m_SandBoxItems.ContainsKey(aTypeName), aTypeName:{aTypeName}");
@@ -215,15 +215,23 @@ namespace ATS
             }
             m_SandBoxItems[aTypeName].RemoveItem(iSandBox);
         }
-        public T GetSandBoxItemByIndex<T>(int iIndex) where T : class, ATSI_SandBox, new()
+        public T GetSandBoxItemByIndex<T>(int iIndex, string iTypeName) where T : class, ATSI_SandBox, new()
         {
-            var aTypeName = typeof(T).Name;
-            if (!m_SandBoxItems.ContainsKey(aTypeName))
+            if (!m_SandBoxItems.ContainsKey(iTypeName))
             {
                 return null;
             }
-            return m_SandBoxItems[aTypeName].GetItem(iIndex) as T;
+            return m_SandBoxItems[iTypeName].GetItem(iIndex) as T;
         }
+        //public T GetSandBoxItemByIndex<T>(int iIndex) where T : class, ATSI_SandBox, new()
+        //{
+        //    var aTypeName = typeof(T).Name;
+        //    if (!m_SandBoxItems.ContainsKey(aTypeName))
+        //    {
+        //        return null;
+        //    }
+        //    return m_SandBoxItems[aTypeName].GetItem(iIndex) as T;
+        //}
         /// <summary>
         /// 讀檔結束時會觸發的Action
         /// </summary>

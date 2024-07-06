@@ -48,6 +48,8 @@ namespace ATS
             x = y = z = 0f;
         }
 
+        public float magnitude => Mathf.Sqrt(x * x + y * y + z * z);
+
         public Vector3 ToVector3 => new Vector3(x, y, z);
         public ATS_Vector2Int ToVector2Int => new ATS_Vector2Int(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
         public string GetShortName() => $"({x},{y},{z})";
@@ -90,9 +92,9 @@ namespace ATS
         public int x;
         public int y;
 
-
+        public float magnitude => Mathf.Sqrt(x * x + y * y);
         public int CellLen => x + y;
-        public ATS_Vector3 ToATS_Vector3 => new ATS_Vector3(x + 0.5f, y + UCL_Random.Instance.Range(0f, ATS_Const.GroundHeight), 0);
+        public ATS_Vector3 ToATS_Vector3 => new ATS_Vector3(x + 0.5f, y + ATS_Const.GroundHeight * UCL_Random.Instance.Range(0.2f, 0.8f), 0);
 
         public ATS_Vector2Int() { }
         public ATS_Vector2Int(int iX ,int iY)
@@ -328,17 +330,99 @@ namespace ATS
             }
             RequireRefreshAllPathState = false;
         }
+
         /// <summary>
-        /// TODO
+        /// SearchPath(A*)
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="targetX"></param>
         /// <param name="targetY"></param>
         /// <returns></returns>
-        public ATS_Path FindPath(float x, float y, float targetX, float targetY)
+        public ATS_Path FindPath(ATS_Vector3 iStart, ATS_Vector3 iTarget, int iMaxDistance = 999, int iMaxSearchTimes = 9999)
         {
-            return new ATS_Path();
+            HashSet<ATS_Vector2Int> aVisited = new();
+            PriorityQueue<PathNode, float> aNodes = new ();
+
+            var aStartPos = iStart.ToVector2Int;//new ATS_Vector2Int(Mathf.FloorToInt(iStart.x), Mathf.FloorToInt(y));
+            var aEndPos = iTarget.ToVector2Int;
+            PathNode aStart = new PathNode(aStartPos, null, 0);
+            PathNode aTargetNode = null;
+            aVisited.Add(aStartPos);
+            float Evaluate(PathNode iNode)
+            {
+                return iNode.m_Distance + 1.3f * (iTarget - iNode.m_Pos.ToATS_Vector3).magnitude;
+            }
+            aNodes.Enqueue(aStart, Evaluate(aStart));
+            var aCells = Cells;
+            int aSearchTimes = 0;
+            while (aNodes.Count > 0 && aSearchTimes++ < iMaxSearchTimes)
+            {
+                var aCurNode = aNodes.Dequeue();
+                var aPos = aCurNode.m_Pos;
+                //Debug.LogError($"SearchPath aPos:{aPos},aDis:{aCurNode.m_Distance}");
+
+                if (aEndPos.Equals(aPos))//找到目標
+                {
+                    aTargetNode = aCurNode;
+                    break;
+                }
+                if (aCurNode.m_Distance < iMaxDistance)//仍在搜尋次數內 繼續找下一個節點
+                {
+                    int aCurPathState = GetPathState(aPos.x, aPos.y);
+                    foreach (var aPathState in PathStateDic.Keys)//判斷能走的方向
+                    {
+                        if ((aCurPathState & (int)aPathState) != 0)//可以往此方向移動
+                        {
+                            var aDir = PathStateDic[aPathState];
+                            ATS_Vector2Int aNextPos = aPos + aDir;
+                            if (!aVisited.Contains(aNextPos))//確保還沒走過
+                            {
+                                aVisited.Add(aNextPos);
+                                var aNextNode = new PathNode(aNextPos, aCurNode, aCurNode.m_Distance + 1);
+                                aNodes.Enqueue(aNextNode,Evaluate(aNextNode));
+                            }
+                        }
+                    }
+                }
+            }
+            if(aTargetNode == null)//找不到目標
+            {
+                return null;
+            }
+
+            var aPath = new ATS_Path();
+            var aNode = aTargetNode;
+            while (aNode != null)
+            {
+                aPath.m_Path.Add(aNode.m_Pos.ToATS_Vector3);//new ATS_Vector2Int(aNode.m_Pos)
+                aNode = aNode.m_PrevNode;
+            }
+            aPath.m_Path.Reverse();
+            aPath.m_Path[0].Set(iStart);
+            var aLast = aPath.m_Path.LastElement();
+            int aLen = aPath.m_Path.Count;
+            if (aLen >= 2)
+            {
+                var aLast2 = aPath.m_Path[aLen - 2];
+                var aDel = aLast - aLast2;
+
+                if (Mathf.Abs(aDel.y) > ATS_Const.GroundHeight)//有垂直移動
+                {
+                    aPath.m_Path.Add(iTarget);
+                }
+                else
+                {
+                    aLast.Set(iTarget);
+                }
+                //Debug.LogError($"aDel:{aDel}");
+            }
+            else
+            {
+                aLast.Set(iTarget);
+            }
+
+            return aPath;
         }
         /// <summary>
         /// SearchPath(BFS)

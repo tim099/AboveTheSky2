@@ -39,9 +39,10 @@ namespace ATS
 
         (SaveType, string) SaveKey { get; }
         Dictionary<string, ATSI_SandBox> SaveComponentsDic { get; }
+        string TypeName { get; }
         #endregion
     }
-    public class ATS_SandBoxBase : UCL.Core.JsonLib.UnityJsonSerializable, ATSI_SandBox, UCLI_FieldOnGUI
+    public class ATS_SandBoxBase : UCL.Core.JsonLib.UnityJsonSerializable, ATSI_SandBox, UCLI_FieldOnGUI, UCLI_ShortName
     {
         public const string MainFileKey = "Main";
 
@@ -81,6 +82,8 @@ namespace ATS
                 return Parent.PathFinder;
             }
         }
+        virtual public string TypeName => GetType().Name;
+        virtual public string GetShortName() => $"{GetType().Name}";
         virtual public GameState CurGameState => p_SandBox.CurGameState;
 
         virtual public int Index { get => m_Index; set => m_Index = value; }

@@ -13,12 +13,29 @@ namespace ATS
     /// </summary>
     public class Cell : UCL.Core.JsonLib.UnityJsonSerializable, UCLI_ShortName
     {
-        [UCL.Core.ATTR.UCL_HideInJson]
+        //[UCL.Core.ATTR.UCL_HideInJson]
         public ATS_Vector2Int m_Pos = new ATS_Vector2Int();
         /// <summary>
         /// 此格子上的建築(一個建築可以占用多個格子)
         /// </summary>
-        public ATS_Building m_Building = null;
+        public ATS_BuildingRef m_Building = new ATS_BuildingRef();
+
+        
+        public ATS_TileDataEntry m_TileDataEntry = new ATS_TileDataEntry();
+        /// <summary>
+        /// 路徑狀態
+        /// </summary>
+        public int m_PathState = 0;
+        /// <summary>
+        /// 此地塊上的所有工作
+        /// </summary>
+        public List<ATS_JobRef> m_Jobs = new();
+        /// <summary>
+        /// 掉落在此地的資源(存檔時忽略 因為ATS_Resource會自己在讀檔時還原)
+        /// </summary>
+        [UCL.Core.ATTR.UCL_HideInJson]
+        public List<ATS_Resource> m_Resources = new();// { get; private set; } = new ();
+
 
         /// <summary>
         /// 對應建築中的哪個格子(一個建築可以占用多個格子)
@@ -27,30 +44,21 @@ namespace ATS
         {
             get
             {
-                if(m_Building == null)
+                if(m_Building.Value == null)
                 {
                     return m_Pos;
                 }
-                return m_Building.m_Pos - m_Pos;
+                return m_Building.Value.m_Pos - m_Pos;
             }
         }
+        public ATS_TileData TileData => m_TileDataEntry.GetData();
 
-        public ATS_TileData m_TileData = null;
-        public int m_PathState = 0;
-        /// <summary>
-        /// 此地塊上的所有工作
-        /// </summary>
-        public List<ATS_Job> m_Jobs = new();
-        /// <summary>
-        /// 掉落在此地的資源
-        /// </summary>
-        [UCL.Core.ATTR.UCL_HideInJson]
-        public List<ATS_Resource> m_Resources = new();// { get; private set; } = new ();
+
         public string GetShortName() => $"Cell[{m_Pos}]";
         public Cell() { }
-        public Cell(ATS_TileData iTileData, int x, int y)
+        public Cell(string iTileID, int x, int y)
         {
-            m_TileData = iTileData;
+            m_TileDataEntry.ID = iTileID;
             m_Pos.x = x;
             m_Pos.y = y;
         }
@@ -59,8 +67,8 @@ namespace ATS
         {
             get
             {
-                if (m_Building != null) return false;//已被占用
-                if (!m_TileData.CanBuild) return false;//非可建造地塊
+                if (m_Building.Value != null) return false;//已被占用
+                if (!TileData.CanBuild) return false;//非可建造地塊
                 return true;
             }
         }
@@ -72,26 +80,29 @@ namespace ATS
         {
             get
             {
-                return !m_TileData.m_TilePathState.GetPathState(PathState.Obstacle);
+                return !TileData.m_TilePathState.GetPathState(PathState.Obstacle);
             }
         }
         public int BuildingPathState
         {
             get
             {
-                if (m_Building == null)
+                if (m_Building.Value == null)
                 {
                     return 0;
                 }
                 //return m_Building.BuildingData.GetPathState(m_BuildingCellPos.x, m_BuildingCellPos.y);
-                return m_Building.GetPathState(m_Pos.x, m_Pos.y);
+                return m_Building.Value.GetPathState(m_Pos.x, m_Pos.y);
             }
         }
+        /// <summary>
+        /// 地塊本身&建築的通行資訊
+        /// </summary>
         public int SelfPathState
         {
             get
             {
-                int aPathState = m_TileData.m_TilePathState.m_PathState;//(int)(PathState.Left | PathState.Right | PathState.Down);//所有可通行地塊都能往左右與下方移動
+                int aPathState = TileData.m_TilePathState.m_PathState;//(int)(PathState.Left | PathState.Right | PathState.Down);//所有可通行地塊都能往左右與下方移動
                 aPathState |= BuildingPathState;//額外抓取建築物的通行資訊
 
                 return aPathState;
@@ -103,7 +114,7 @@ namespace ATS
         }
         public void SetBuilding(ATS_Building iBuilding)
         {
-            m_Building = iBuilding;
+            m_Building.Value = iBuilding;
         }
         /// <summary>
         /// 生成搬運工作
@@ -118,9 +129,12 @@ namespace ATS
             {
                 Debug.LogError($"Cell.GenerateHaulJob, aRes:{aRes}");
                 //aRes.SetState(ATS_Resource.ResourceState.PrepareToHaul);
+                
                 JobHauling aJobHauling = new JobHauling();
                 aJobHauling.Init(iBuilding, aRes);
-                m_Jobs.Add(aJobHauling);
+                iBuilding.Region.Data.m_Jobs.Add(aJobHauling);
+                
+                m_Jobs.Add(new ATS_JobRef(aJobHauling));
             }
 
         }

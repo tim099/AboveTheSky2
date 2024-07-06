@@ -81,22 +81,24 @@ namespace ATS
             {
                 for (int x = 0; x < m_Width; x++)
                 {
-                    ATS_TileData aTile = null;
+                    //ATS_TileData aTile = null;
                     int aIndex = Grid[x, y];
                     try
                     {
                         string aID = aIDs[aIndex];
-                        aTile = ATS_TileData.Util.GetData(aID);
+                        //ATS_TileDataEntry aTileDataEntry = new ATS_TileDataEntry(aID);
+                        //aTile = ATS_TileData.Util.GetData(aID);
+                        aCells[x, y] = new Cell(aID, x, y);
                     }
                     catch(System.Exception ex)
                     {
                         Debug.LogException(ex);
                         Debug.LogError($"CreateCells x:{x},y:{y},aIndex:{aIndex},Exception:{ex}");
                     }
-                    finally
-                    {
-                        aCells[x, y] = new Cell(aTile, x, y);
-                    }
+                    //finally
+                    //{
+                    //    aCells[x, y] = new Cell(aTile, x, y);
+                    //}
                 }
             }
             return aCells;
@@ -114,16 +116,6 @@ namespace ATS
             {
                 GUI.DrawTexture(iGridRect, aTile.Texture);
             }
-
-            //if (GUI.Button(iGridRect, aTile.m_Sprite.Texture, iButtonStyle))//, $"{Grid[x, y]}"
-            //{
-            //    //int aVal = Grid[x, y] + 1;
-            //    //if (aVal >= MaxIndex)
-            //    //{
-            //    //    aVal = 0;
-            //    //}
-            //    Grid[x, y] = m_TileIndex;
-            //}
 
         }
         protected override void EditGrid(UCL_ObjectDictionary iDataDic)

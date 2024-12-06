@@ -42,7 +42,7 @@ namespace ATS
 
             var aToken = gameObject.GetCancellationTokenOnDestroy();
             //Debug.LogError("ATS_Boot.Init()");
-            var aCancellationToken = gameObject.GetCancellationTokenOnDestroy();
+            var token = gameObject.GetCancellationTokenOnDestroy();
             if (m_TestMode)
             {
                 var aGameManager = await Addressables.LoadAssetAsync<GameObject>(m_GameManagerKey);
@@ -63,8 +63,9 @@ namespace ATS
             var aCatalogUpdates = await Addressables.CheckForCatalogUpdates(false);
             //UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(new Page.ATS_EditorMenuPage());
 
+            await UCL_ModuleService.Ins.LoadModulePlaylistAsync(UCL_ModulePlaylist.CurPlaylist, token);//載入當前模組
 
-            await UniTask.WaitUntil(()=> UCL_ModuleService.Initialized, cancellationToken: aCancellationToken);
+            //await UniTask.WaitUntil(()=> UCL_ModuleService.Initialized, cancellationToken: aCancellationToken);
             //Debug.LogError("UCL_ModuleService.Initialized");
             Debug.LogError($"UCL_ModuleService.Modules:{UCL_ModuleService.Ins.LoadedModules.ConcatString(iModule => iModule.ID)}");
             if (!m_TestMode)
@@ -84,7 +85,7 @@ namespace ATS
 
 
 
-            await ATS_IconSprite.InitSpriteAsset(aCancellationToken);
+            await ATS_IconSprite.InitSpriteAsset(token);
 
             await UI.ATS_MainMenu.CreateAsync();
 

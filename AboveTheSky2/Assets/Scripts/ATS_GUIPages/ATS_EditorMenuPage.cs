@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UCL.Core;
@@ -66,6 +67,10 @@ namespace ATS.Page
             s_RunTimeData = LoadRunTimeData();
             var aStyleData = UCL_GUIStyle.CurStyleData;
             aStyleData.SetScale(s_RunTimeData.m_Scale);
+            if (!UCL_ModuleService.Initialized)
+            {
+                UCL_ModuleService.WaitUntilInitialized(default).Forget();
+            }
         }
         /// <summary>
         /// 繪製選單 開啟其他編輯器

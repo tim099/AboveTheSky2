@@ -444,6 +444,7 @@ Transform:
   - {fileID: 8591478489550570982}
   - {fileID: 16668011157244768}
   - {fileID: 6806634865030310810}
+  - {fileID: 7415027258143787873}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5600759642120577527
@@ -467,4 +468,52 @@ MonoBehaviour:
   - {fileID: 2682330341483604552}
   - {fileID: 5356076982108104386}
   - {fileID: 3563168780125940208}
+  - {fileID: 1956768212054558116}
   m_InitOnAwake: 0
+--- !u!1 &7960535086658211516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7415027258143787873}
+  - component: {fileID: 1956768212054558116}
+  m_Layer: 0
+  m_Name: UCL_SteamworkService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7415027258143787873
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7960535086658211516}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9216030195921639503}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1956768212054558116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7960535086658211516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a6156b0c69ca5642af7cce0d0b623d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SubscribedItems: []
+  m_Logs: []
+  m_NewItems: []

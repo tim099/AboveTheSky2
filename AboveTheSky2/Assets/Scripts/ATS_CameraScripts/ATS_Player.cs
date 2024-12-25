@@ -38,9 +38,9 @@ namespace ATS
             {
                 m_Rigidbody.AddForce((Vector3.back + Vector3.right) * Speed);
             }
-            if(m_Rigidbody.velocity.magnitude > 0)
+            if(m_Rigidbody.linearVelocity.magnitude > 0)
             {
-                m_PlayerObj.transform.LookAt(m_PlayerObj.transform.position + m_Rigidbody.velocity);
+                m_PlayerObj.transform.LookAt(m_PlayerObj.transform.position + m_Rigidbody.linearVelocity);
             }
         }
     }

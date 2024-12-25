@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UCL.Core.UI;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering.Universal;
+
 
 namespace ATS
 {
@@ -15,7 +15,7 @@ namespace ATS
     {
         public static ATS_ToonCamera Ins { get; private set; } = null;
 
-        public PixelPerfectCamera m_PixelPerfectCamera;
+        public UnityEngine.Rendering.Universal.PixelPerfectCamera m_PixelPerfectCamera;
         public Camera m_Camera;
         public GameObject m_RayCastIndicator;
         public float m_MaxRayDistance = 500f;

@@ -186,9 +186,9 @@ namespace StylizedWater
 
         public static PipelineType DetectPipeline()
         {
-            if (GraphicsSettings.renderPipelineAsset != null)
+            if (GraphicsSettings.defaultRenderPipeline != null)
             {
-                var type = GraphicsSettings.renderPipelineAsset.GetType().ToString();
+                var type = GraphicsSettings.defaultRenderPipeline.GetType().ToString();
                 if (type.Contains("HDRenderPipelineAsset")) return PipelineType.HighDefinition;
                 else if (type.Contains("UniversalRenderPipelineAsset")) return PipelineType.Universal;
                 else if (type.Contains("LightweightRenderPipelineAsset")) return PipelineType.Lightweight;

@@ -97,7 +97,7 @@ namespace ATS
                 
             }
 
-            var aSpriteSheet = new Texture2D(0, 0, TextureFormat.ARGB32, true, false);
+            var aSpriteSheet = new Texture2D(1, 1, TextureFormat.ARGB32, true, false);
             aSpriteSheet.filterMode = FilterMode.Bilinear;
             var rects = aSpriteSheet.PackTextures(aTextures, 20, iMaxAtlasSize, false);
             //cleanup textures

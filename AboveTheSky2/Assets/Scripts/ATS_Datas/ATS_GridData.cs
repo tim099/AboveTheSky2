@@ -86,7 +86,7 @@ namespace ATS
         /// <param name="iFieldName"></param>
         /// <param name="iDataDic"></param>
         /// <returns></returns>
-        override public object OnGUI(string iFieldName, UCL_ObjectDictionary iDataDic)
+        override public object OnGUI(string iFieldName, UCL_ObjectDictionary iDataDic, UCL_GUILayout.DrawObjectParams iParams)
         {
             UCL_GUILayout.DrawObjExSetting aDrawObjExSetting = new UCL_GUILayout.DrawObjExSetting();
             aDrawObjExSetting.OnShowField = () =>

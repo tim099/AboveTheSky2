@@ -1,0 +1,109 @@
+﻿49
+12,4
+Edit Modules:編輯模組
+8,3
+Playlist:播放集
+22,5
+UCL_ModulePlayListPage:編輯播放集
+17,5
+Create new module:創建新模組
+9,4
+Module ID:模組ID
+17,72
+EditModulewarning:對內建模組(Core)的編輯，會在更新後失效
+請建立新的模組，來新增或覆蓋原有內容
+不同模組中，若有相同ID的內容
+將會由後載入的模組的內容覆蓋
+8,4
+EditType:編輯模式
+26,4
+UCL_ModuleEditType_Builtin:內建模組
+26,4
+UCL_ModuleEditType_Runtime:遊戲模組
+11,4
+Save Config:保存設定
+11,4
+Load Config:載入設定
+18,7
+Open Module Folder:開啟模組資料夾
+20,6
+ModuleService Config:模組相關設定
+14,7
+Loaded modules:目前載入的模組
+6,2
+Config:設定
+16,8
+Current playlist:目前的模組播放集
+19,8
+Create new playlist:創建新模組播放集
+21,7
+Load current playlist:載入目前播放集
+17,34
+ModulePlayListTip:若要啟用模組
+請按下「編輯播放集按鈕」
+並將要啟用的模組加入播放集中
+25,22
+UCL_ModulePlayListPageTip:請選取想要編輯的播放集
+或是創建新模組播放集
+29,35
+UCL_ModulePlayListPageSaveTip:編輯播放集後請按下「存檔」
+若要套用當前播放集請按下「載入目前播放集」
+26,68
+UCL_CreateNewModulePageTip:模組ID請避免使用「純數字」(例如3387893998)
+Steam訂閱的模組以數字為ID
+若ID與Steam訂閱的模組相同，將會被覆蓋
+15,7
+DeleteTargetDes:刪除「{0}」
+17,5
+UCL_LocalizeAsset:本地化設定
+20,4
+UCL_ModResourceAsset:模組資源
+21,6
+UCL_LanguageCodeAsset:支援的語言碼
+22,8
+UCL_SteamWorkshopAsset:Steam工作坊
+14,4
+Module Content:模組內容
+10,4
+Asset Type:資產類型
+11,5
+Open Folder:開啟資料夾
+16,11
+SteamAPILangCode:SteamAPI語言碼
+17,7
+EWorkshopFileType:工作坊檔案類型
+10,3
+Visibility:可見度
+12,3
+Dependencies:相依性
+15,7
+PublishedFileId:工作坊物品ID
+9,4
+ChangeLog:變更日誌
+20,7
+Create workshop item:生成工作坊物品
+23,8
+Update item to workshop:同步物品到工作坊
+83,2
+ERemoteStoragePublishedFileVisibility_k_ERemoteStoragePublishedFileVisibilityPublic:公開
+46,2
+EWorkshopFileType_k_EWorkshopFileTypeCommunity:社區
+24,7
+SteamAPILangCode_english:English
+25,4
+SteamAPILangCode_tchinese:繁體中文
+25,4
+SteamAPILangCode_schinese:简体中文
+25,3
+SteamAPILangCode_japanese:日本語
+24,3
+SteamAPILangCode_koreana:한국어
+24,7
+SteamAPILangCode_russian:Русский
+27,12
+AddModulesToCurrentPlaylist:將模組加入當前的播放清單
+37,30
+AddNewModulesToCurrentPlaylistContent:是否要將新訂閱的模組{0}
+加入到目前的播放清單({1})?
+14,5
+HideThisOption:隱藏此選項

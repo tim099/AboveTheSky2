@@ -117,7 +117,7 @@ namespace ATS
 
         }
 
-        virtual public void NameOnGUI(UCL.Core.UCL_ObjectDictionary iDataDic, string iDisplayName)
+        virtual public void NameOnGUI(UCL.Core.UCL_ObjectDictionary iDataDic, string iDisplayName, UCL_GUILayout.DrawObjectParams iParams)
         {
             {
                 GUILayout.Label(iDisplayName, UCL.Core.UI.UCL_GUIStyle.LabelStyle);

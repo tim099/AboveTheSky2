@@ -1,0 +1,111 @@
+﻿49
+12,12
+Edit Modules:Edit Modules
+8,8
+Playlist:Playlist
+22,13
+UCL_ModulePlayListPage:Edit playlist
+17,17
+Create new module:Create new module
+9,9
+Module ID:Module ID
+17,270
+EditModulewarning:Edits to the built-in module (Core) 
+will become invalid after updates. 
+Please create a new module to add or overwrite existing content. 
+If there are contents with the same ID in different modules
+the content of the later-loaded module will overwrite the previous one.
+8,9
+EditType:Edit type
+26,7
+UCL_ModuleEditType_Builtin:Builtin
+26,7
+UCL_ModuleEditType_Runtime:Runtime
+11,11
+Save Config:Save Config
+11,11
+Load Config:Load Config
+18,18
+Open Module Folder:Open Module Folder
+20,20
+ModuleService Config:ModuleService Config
+14,14
+Loaded modules:Loaded modules
+6,6
+Config:Config
+16,16
+Current playlist:Current playlist
+19,19
+Create new playlist:Create new playlist
+21,21
+Load current playlist:Load current playlist
+17,113
+ModulePlayListTip:To enable the module
+please press the Edit Playlist button
+and add the module you want to enable to the playlist.
+25,77
+UCL_ModulePlayListPageTip:Please select the playlist you want to edit
+ or create a new module playlist.
+29,114
+UCL_ModulePlayListPageSaveTip:After editing the playlist， please press "Save"
+To apply the current playlist
+please press "Load current playlist"
+26,186
+UCL_CreateNewModulePageTip:Please avoid using 'pure numbers' for module IDs (e.g.， 3387893998).
+Steam subscriptions use numbers as IDs.
+If the ID is the same as a Steam subscription module， it will be overwritten.
+15,12
+DeleteTargetDes:Delete "{0}"
+17,8
+UCL_LocalizeAsset:Localize
+20,11
+UCL_ModResourceAsset:ModResource
+21,12
+UCL_LanguageCodeAsset:LanguageCode
+22,13
+UCL_SteamWorkshopAsset:SteamWorkshop
+14,14
+Module Content:Module Content
+10,10
+Asset Type:Asset Type
+11,11
+Open Folder:Open Folder
+16,17
+SteamAPILangCode:SteamAPI LangCode
+17,19
+EWorkshopFileType:Workshop File Types
+10,10
+Visibility:Visibility
+12,12
+Dependencies:Dependencies
+15,16
+PublishedFileId:Published FileId
+9,10
+ChangeLog:Change Log
+20,20
+Create workshop item:Create workshop item
+23,23
+Update item to workshop:Update item to workshop
+83,6
+ERemoteStoragePublishedFileVisibility_k_ERemoteStoragePublishedFileVisibilityPublic:Public
+46,9
+EWorkshopFileType_k_EWorkshopFileTypeCommunity:Community
+24,7
+SteamAPILangCode_english:English
+25,4
+SteamAPILangCode_tchinese:繁體中文
+25,4
+SteamAPILangCode_schinese:简体中文
+25,3
+SteamAPILangCode_japanese:日本語
+24,3
+SteamAPILangCode_koreana:한국어
+24,7
+SteamAPILangCode_russian:Русский
+27,31
+AddModulesToCurrentPlaylist:Add modules to current playlist
+37,84
+AddNewModulesToCurrentPlaylistContent:Would you like to add the newly subscribed modules {0}
+to the current playlist({1})?
+14,16
+HideThisOption:Hide this option

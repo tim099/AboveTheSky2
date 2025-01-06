@@ -157,9 +157,9 @@ namespace ATS
         /// 編輯用的TilePathState
         /// </summary>
         private TilePathState CurTilePathState { get; set; } = new TilePathState();
-        public override object OnGUI(string iFieldName, UCL_ObjectDictionary iDataDic)
+        public override object OnGUI(string iFieldName, UCL_ObjectDictionary iDataDic, UCL_GUILayout.DrawObjectParams iParams)
         {
-            return base.OnGUI(iFieldName, iDataDic);
+            return base.OnGUI(iFieldName, iDataDic, iParams);
         }
         protected override void DrawCell(Rect iRect, Rect iCellRect, int x, int y, GUIStyle iButtonStyle)
         {

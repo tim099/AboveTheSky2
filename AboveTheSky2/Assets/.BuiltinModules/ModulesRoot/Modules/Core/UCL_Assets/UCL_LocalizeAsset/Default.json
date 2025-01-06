@@ -1,123 +1,21 @@
 {
 	"LocalizeType":"GoogleSheet",
-	"LocalizeDatas":{
-		"zh-Hant":{
-			"LocalizeDic":{
-				"Edit Modules":"\u7de8\u8f2f\u6a21\u7d44",
-				"Playlist":"\u64ad\u653e\u96c6",
-				"UCL_ModulePlayListPage":"\u7de8\u8f2f\u64ad\u653e\u96c6",
-				"Create new module":"\u5275\u5efa\u65b0\u6a21\u7d44",
-				"Module ID":"\u6a21\u7d44ID",
-				"EditModulewarning":"\u5c0d\u5167\u5efa\u6a21\u7d44(Core)\u7684\u7de8\u8f2f\uff0c\u6703\u5728\u66f4\u65b0\u5f8c\u5931\u6548\n\u8acb\u5efa\u7acb\u65b0\u7684\u6a21\u7d44\uff0c\u4f86\u65b0\u589e\u6216\u8986\u84cb\u539f\u6709\u5167\u5bb9\n\u4e0d\u540c\u6a21\u7d44\u4e2d\uff0c\u82e5\u6709\u76f8\u540cID\u7684\u5167\u5bb9\n\u5c07\u6703\u7531\u5f8c\u8f09\u5165\u7684\u6a21\u7d44\u7684\u5167\u5bb9\u8986\u84cb",
-				"EditType":"\u7de8\u8f2f\u6a21\u5f0f",
-				"UCL_ModuleEditType_Builtin":"\u5167\u5efa\u6a21\u7d44",
-				"UCL_ModuleEditType_Runtime":"\u904a\u6232\u6a21\u7d44",
-				"Save Config":"\u4fdd\u5b58\u8a2d\u5b9a",
-				"Load Config":"\u8f09\u5165\u8a2d\u5b9a",
-				"Open Module Folder":"\u958b\u555f\u6a21\u7d44\u8cc7\u6599\u593e",
-				"ModuleService Config":"\u6a21\u7d44\u76f8\u95dc\u8a2d\u5b9a",
-				"Loaded modules":"\u76ee\u524d\u8f09\u5165\u7684\u6a21\u7d44",
-				"Config":"\u8a2d\u5b9a",
-				"Current playlist":"\u76ee\u524d\u7684\u6a21\u7d44\u64ad\u653e\u96c6",
-				"Create new playlist":"\u5275\u5efa\u65b0\u6a21\u7d44\u64ad\u653e\u96c6",
-				"Load current playlist":"\u8f09\u5165\u76ee\u524d\u64ad\u653e\u96c6",
-				"ModulePlayListTip":"\u82e5\u8981\u555f\u7528\u6a21\u7d44\n\u8acb\u6309\u4e0b\u300c\u7de8\u8f2f\u64ad\u653e\u96c6\u6309\u9215\u300d\n\u4e26\u5c07\u8981\u555f\u7528\u7684\u6a21\u7d44\u52a0\u5165\u64ad\u653e\u96c6\u4e2d",
-				"UCL_ModulePlayListPageTip":"\u8acb\u9078\u53d6\u60f3\u8981\u7de8\u8f2f\u7684\u64ad\u653e\u96c6\n\u6216\u662f\u5275\u5efa\u65b0\u6a21\u7d44\u64ad\u653e\u96c6",
-				"UCL_ModulePlayListPageSaveTip":"\u7de8\u8f2f\u64ad\u653e\u96c6\u5f8c\u8acb\u6309\u4e0b\u300c\u5b58\u6a94\u300d\n\u82e5\u8981\u5957\u7528\u7576\u524d\u64ad\u653e\u96c6\u8acb\u6309\u4e0b\u300c\u8f09\u5165\u76ee\u524d\u64ad\u653e\u96c6\u300d",
-				"DeleteTargetDes":"\u522a\u9664\u300c{0}\u300d",
-				"UCL_LocalizeAsset":"\u672c\u5730\u5316\u8a2d\u5b9a",
-				"UCL_ModResourceAsset":"\u6a21\u7d44\u8cc7\u6e90",
-				"UCL_LanguageCodeAsset":"\u652f\u63f4\u7684\u8a9e\u8a00\u78bc"
-			}
-		},
-		"en":{
-			"LocalizeDic":{
-				"Edit Modules":"Edit Modules",
-				"Playlist":"Playlist",
-				"UCL_ModulePlayListPage":"Edit playlist",
-				"Create new module":"Create new module",
-				"Module ID":"Module ID",
-				"EditModulewarning":"Edits to the built-in module (Core) \nwill become invalid after updates. \nPlease create a new module to add or overwrite existing content. \nIf there are contents with the same ID in different modules\nthe content of the later-loaded module will overwrite the previous one.",
-				"EditType":"Edit type",
-				"UCL_ModuleEditType_Builtin":"Builtin",
-				"UCL_ModuleEditType_Runtime":"Runtime",
-				"Save Config":"Save Config",
-				"Load Config":"Load Config",
-				"Open Module Folder":"Open Module Folder",
-				"ModuleService Config":"ModuleService Config",
-				"Loaded modules":"Loaded modules",
-				"Config":"Config",
-				"Current playlist":"Current playlist",
-				"Create new playlist":"Create new playlist",
-				"Load current playlist":"Load current playlist",
-				"ModulePlayListTip":"To enable the module\nplease press the Edit Playlist button\nand add the module you want to enable to the playlist.",
-				"UCL_ModulePlayListPageTip":"Please select the playlist you want to edit\n or create a new module playlist.",
-				"UCL_ModulePlayListPageSaveTip":"After editing the playlist\uff0c please press \"Save\"\nTo apply the current playlist\nplease press \"Load current playlist\"",
-				"DeleteTargetDes":"Delete \"{0}\"",
-				"UCL_LocalizeAsset":"Localize",
-				"UCL_ModResourceAsset":"ModResource",
-				"UCL_LanguageCodeAsset":"LanguageCode"
-			}
-		},
-		"zh-Hans":{
-			"LocalizeDic":{
-				"Edit Modules":"\u7f16\u8f91\u6a21\u7ec4",
-				"Playlist":"\u64ad\u653e\u96c6",
-				"UCL_ModulePlayListPage":"\u7f16\u8f91\u64ad\u653e\u96c6",
-				"Create new module":"\u521b\u5efa\u65b0\u6a21\u7ec4",
-				"Module ID":"\u6a21\u7ec4ID",
-				"EditModulewarning":"\u5bf9\u5185\u5efa\u6a21\u7ec4(Core)\u7684\u7f16\u8f91\uff0c\u4f1a\u5728\u66f4\u65b0\u540e\u5931\u6548\n\u8bf7\u5efa\u7acb\u65b0\u7684\u6a21\u7ec4\uff0c\u6765\u65b0\u589e\u6216\u590d\u76d6\u539f\u6709\u5185\u5bb9\n\u4e0d\u540c\u6a21\u7ec4\u4e2d\uff0c\u82e5\u6709\u76f8\u540cID\u7684\u5185\u5bb9\n\u5c06\u4f1a\u7531\u540e\u8f7d\u5165\u7684\u6a21\u7ec4\u7684\u5185\u5bb9\u590d\u76d6",
-				"EditType":"\u7f16\u8f91\u6a21\u5f0f",
-				"UCL_ModuleEditType_Builtin":"\u5185\u5efa\u6a21\u7ec4",
-				"UCL_ModuleEditType_Runtime":"\u6e38\u620f\u6a21\u7ec4",
-				"Save Config":"\u4fdd\u5b58\u8bbe\u5b9a",
-				"Load Config":"\u8f7d\u5165\u8bbe\u5b9a",
-				"Open Module Folder":"\u5f00\u542f\u6a21\u7ec4\u8d44\u6599\u5939",
-				"ModuleService Config":"\u6a21\u7ec4\u76f8\u5173\u8bbe\u5b9a",
-				"Loaded modules":"\u76ee\u524d\u8f7d\u5165\u7684\u6a21\u7ec4",
-				"Config":"\u8bbe\u5b9a",
-				"Current playlist":"\u76ee\u524d\u7684\u6a21\u7ec4\u64ad\u653e\u96c6",
-				"Create new playlist":"\u521b\u5efa\u65b0\u6a21\u7ec4\u64ad\u653e\u96c6",
-				"Load current playlist":"\u8f7d\u5165\u76ee\u524d\u64ad\u653e\u96c6",
-				"ModulePlayListTip":"\u82e5\u8981\u542f\u7528\u6a21\u7ec4\n\u8bf7\u6309\u4e0b\u300c\u7f16\u8f91\u64ad\u653e\u96c6\u6309\u94ae\u300d\n\u5e76\u5c06\u8981\u542f\u7528\u7684\u6a21\u7ec4\u52a0\u5165\u64ad\u653e\u96c6\u4e2d",
-				"UCL_ModulePlayListPageTip":"\u8bf7\u9009\u53d6\u60f3\u8981\u7f16\u8f91\u7684\u64ad\u653e\u96c6\n\u6216\u662f\u521b\u5efa\u65b0\u6a21\u7ec4\u64ad\u653e\u96c6",
-				"UCL_ModulePlayListPageSaveTip":"\u7f16\u8f91\u64ad\u653e\u96c6\u540e\u8bf7\u6309\u4e0b\u300c\u5b58\u6863\u300d\n\u82e5\u8981\u5957\u7528\u5f53\u524d\u64ad\u653e\u96c6\u8bf7\u6309\u4e0b\u300c\u8f7d\u5165\u76ee\u524d\u64ad\u653e\u96c6\u300d",
-				"DeleteTargetDes":"\u5220\u9664\u300c{0}\u300d",
-				"UCL_LocalizeAsset":"\u672c\u5730\u5316\u8bbe\u5b9a",
-				"UCL_ModResourceAsset":"\u6a21\u7ec4\u8d44\u6e90",
-				"UCL_LanguageCodeAsset":"\u7f16\u8f91\u652f\u6301\u7684\u8bed\u8a00\u7801"
-			}
-		},
-		"ja":{
-			"LocalizeDic":{
-				"Edit Modules":"Edit Modules",
-				"Playlist":"\u30d7\u30ec\u30a4\u30ea\u30b9\u30c8",
-				"UCL_ModulePlayListPage":"\u30d7\u30ec\u30a4\u30ea\u30b9\u30c8\u3092\u7de8\u96c6\u3059\u308b",
-				"Create new module":"Create new module",
-				"Module ID":"Module ID",
-				"EditModulewarning":"\u5185\u8535\u30e2\u30b8\u30e5\u30fc\u30eb\uff08Core\uff09\u306e\u7de8\u96c6\u306f\u3001\u66f4\u65b0\u5f8c\u306b\u7121\u52b9\u306b\u306a\u308a\u307e\u3059\u3002\n\u65b0\u3057\u3044\u30e2\u30b8\u30e5\u30fc\u30eb\u3092\u4f5c\u6210\u3057\u3066\u3001\u65e2\u5b58\u306e\u30b3\u30f3\u30c6\u30f3\u30c4\u3092\u8ffd\u52a0\u307e\u305f\u306f\u4e0a\u66f8\u304d\u3057\u3066\u304f\u3060\u3055\u3044\u3002 \n\u7570\u306a\u308b\u30e2\u30b8\u30e5\u30fc\u30eb\u306b\u540c\u3058ID\u306e\u30b3\u30f3\u30c6\u30f3\u30c4\u304c\u3042\u308b\u5834\u5408\u3001 \n\u5f8c\u304b\u3089\u8aad\u307f\u8fbc\u307e\u308c\u305f\u30e2\u30b8\u30e5\u30fc\u30eb\u306e\u30b3\u30f3\u30c6\u30f3\u30c4\u304c\u524d\u306e\u3082\u306e\u3092\u4e0a\u66f8\u304d\u3057\u307e\u3059\u3002",
-				"EditType":"Edit type",
-				"UCL_ModuleEditType_Builtin":"Builtin",
-				"UCL_ModuleEditType_Runtime":"Runtime",
-				"Save Config":"Save Config",
-				"Load Config":"Load Config",
-				"Open Module Folder":"Open Module Folder",
-				"ModuleService Config":"ModuleService Config",
-				"Loaded modules":"Loaded modules",
-				"Config":"\u8a2d\u5b9a",
-				"Current playlist":"Current playlist",
-				"Create new playlist":"Create new playlist",
-				"Load current playlist":"\u73fe\u5728\u306e\u30d7\u30ec\u30a4\u30ea\u30b9\u30c8\u3092\u8aad\u307f\u8fbc\u3080",
-				"ModulePlayListTip":"\u30e2\u30b8\u30e5\u30fc\u30eb\u3092\u6709\u52b9\u306b\u3059\u308b\u306b\u306f\u3001 \n\u300c\u30d7\u30ec\u30a4\u30ea\u30b9\u30c8\u3092\u7de8\u96c6\u3059\u308b\u300d\u3092\u62bc\u3057\u3066\u3001 \n\u6709\u52b9\u306b\u3057\u305f\u3044\u30e2\u30b8\u30e5\u30fc\u30eb\u3092\u30d7\u30ec\u30a4\u30ea\u30b9\u30c8\u306b\u8ffd\u52a0\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
-				"UCL_ModulePlayListPageTip":"\u7de8\u96c6\u3057\u305f\u3044\u30d7\u30ec\u30a4\u30ea\u30b9\u30c8\u3092\u9078\u629e\u3059\u308b\u304b\u3001\n\u65b0\u3057\u3044\u30e2\u30b8\u30e5\u30fc\u30eb\u30d7\u30ec\u30a4\u30ea\u30b9\u30c8\u3092\u4f5c\u6210\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
-				"UCL_ModulePlayListPageSaveTip":"\u30d7\u30ec\u30a4\u30ea\u30b9\u30c8\u3092\u7de8\u96c6\u3057\u305f\u5f8c\u3001\u300c\u4fdd\u5b58\u300d\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044\u3002\n \u73fe\u5728\u306e\u30d7\u30ec\u30a4\u30ea\u30b9\u30c8\u3092\u9069\u7528\u3059\u308b\u306b\u306f\u3001\n\u300c\u73fe\u5728\u306e\u30d7\u30ec\u30a4\u30ea\u30b9\u30c8\u3092\u8aad\u307f\u8fbc\u3080\u300d\u3092\u62bc\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
-				"DeleteTargetDes":"\"{0}\"\u3092\u524a\u9664\u3057\u307e\u3059",
-				"UCL_LocalizeAsset":"\u30ed\u30fc\u30ab\u30e9\u30a4\u30ba\u8cc7\u7523",
-				"UCL_ModResourceAsset":"ModResource",
-				"UCL_LanguageCodeAsset":"\u7de8\u8f2f\u652f\u63f4\u306e\u8a00\u8a9e\u30b3\u30fc\u30c9"
-			}
-		}
+	"LangKeys":
+	[
+		"zh-Hant",
+		"en",
+		"zh-Hans",
+		"ja"
+	],
+	"DefaultLang":{
+		"ID":"en"
 	},
+	"SaveToModResources":"True",
+	"SavaPath":{
+		"ModuleID":"Core",
+		"FileName":""
+	},
+	"SaveFolderName":"Default",
 	"GoogleSheetData":{
 		"TableId":"1zLXwb8ASmI0B5_GxuUtQUopPFEOE29K18jp9mC9Auxo",
 		"GidTable":-1,

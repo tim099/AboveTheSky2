@@ -212,7 +212,7 @@ namespace ATS
                 aComponent.ContentOnGUI(iDic.GetSubDic("Component", aIndex++));
             }
         }
-        virtual public object OnGUI(string iFieldName, UCL_ObjectDictionary iDataDic)
+        virtual public object OnGUI(string iFieldName, UCL_ObjectDictionary iDataDic, UCL_GUILayout.DrawObjectParams iParams)
         {
             var aDrawObjExSetting = new UCL_GUILayout.DrawObjExSetting();
             void ShowComponents()

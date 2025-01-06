@@ -1,4 +1,4 @@
-
+ï»¿
 // ATS_AutoHeader
 // to change the auto header please go to ATS_AutoHeader.cs
 // Create time : 02/22 2024 09:14
@@ -23,7 +23,7 @@ namespace ATS
 
         [SerializeField] private string m_GameManagerKey = "Assets/Addressables/Prefabs/ATS_GameManager.prefab";
         /// <summary>
-        /// TestMode·|ª½±µ¨Ï¥Îm_GameManagerKeyÅª¨úGameManager
+        /// TestModeæœƒç›´æ¥ä½¿ç”¨m_GameManagerKeyè®€å–GameManager
         /// </summary>
         [SerializeField] private bool m_TestMode = false;
         GameObject m_GameManager;
@@ -63,11 +63,12 @@ namespace ATS
             var aCatalogUpdates = await Addressables.CheckForCatalogUpdates(false);
             //UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(new Page.ATS_EditorMenuPage());
 
-            await UCL_ModuleService.Ins.LoadModulePlaylistAsync(UCL_ModulePlaylist.CurPlaylist, token);//¸ü¤J·í«e¼Ò²Õ
+            //æ¨¡çµ„ç›¸é—œåŠŸèƒ½åˆå§‹åŒ–
+            await UCL_ModuleService.Ins.LoadModulePlaylistAsync(UCL_ModulePlaylist.CurPlaylist, token);//è¼‰å…¥ç•¶å‰æ¨¡çµ„
 
             //await UniTask.WaitUntil(()=> UCL_ModuleService.Initialized, cancellationToken: aCancellationToken);
             //Debug.LogError("UCL_ModuleService.Initialized");
-            Debug.LogError($"UCL_ModuleService.Modules:{UCL_ModuleService.Ins.LoadedModules.ConcatString(iModule => iModule.ID)}");
+            //Debug.LogError($"UCL_ModuleService.Modules:{UCL_ModuleService.Ins.LoadedModules.ConcatString(iModule => iModule.ID)}");
             if (!m_TestMode)
             {
                 var aGameManager = await m_GameManagerAssetEntry.GetData().LoadAsync(aToken);

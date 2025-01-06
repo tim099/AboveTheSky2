@@ -140,7 +140,7 @@ namespace ATS.Page
                     ATS_DeveloperPage.Create();
                 }
 
-                if (GUILayout.Button(UCL_LocalizeManager.Get("Edit CommonData"), UCL_GUIStyle.GetButtonStyle(Color.yellow)))
+                if (GUILayout.Button(UCL_LocalizeManager.Get("Edit Modules"), UCL_GUIStyle.GetButtonStyle(Color.yellow)))
                 {
                     UCL_ModuleServiceEditPage.Create();
                 }

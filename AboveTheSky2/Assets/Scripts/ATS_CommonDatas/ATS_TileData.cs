@@ -8,6 +8,16 @@ using UnityEngine;
 
 namespace ATS
 {
+    public static partial class ATS_AssetGroup
+    {
+        public const string ATS = "ATS";
+        public enum AssetType : int
+        {
+            ATS_TileData = 1,
+            ATS_Test,
+        }
+    }
+
     public enum TileType
     {
         /// <summary>
@@ -19,6 +29,10 @@ namespace ATS
         /// </summary>
         BuildingSlot,
     }
+
+
+    [UCL.Core.ATTR.UCL_GroupIDAttribute(ATS_AssetGroup.ATS)]
+    [UCL.Core.ATTR.UCL_Sort((int)ATS_AssetGroup.AssetType.ATS_TileData)]
     public class ATS_TileData : UCL_Asset<ATS_TileData>
     {
 

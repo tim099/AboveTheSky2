@@ -1,0 +1,31 @@
+{
+	"LocalizeType":"GoogleSheet",
+	"LangKeys":
+	[
+		"zh-Hant",
+		"en",
+		"zh-Hans",
+		"ja"
+	],
+	"DefaultLang":{
+		"ID":"en"
+	},
+	"SaveToModResources":"True",
+	"SavaPath":{
+		"ModuleID":"Core",
+		"FileName":""
+	},
+	"SaveFolderName":"Default",
+	"GoogleSheetData":{
+		"TableId":"1zLXwb8ASmI0B5_GxuUtQUopPFEOE29K18jp9mC9Auxo",
+		"GidTable":-1,
+		"GidDatas":
+		[
+			{
+				"Gid":269916767,
+				"Note":"UCL",
+				"Format":"csv"
+			}
+		]
+	}
+}

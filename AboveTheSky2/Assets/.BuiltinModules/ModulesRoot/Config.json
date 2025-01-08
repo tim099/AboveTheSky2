@@ -1,21 +1,38 @@
 {
-	"CurrentEditModule":"Core",
+	"State":"Main",
 	"BuiltinModules":
 	[
 		"Core",
 		"TestModule"
 	],
+	"ExportModules":{
+		"Core":{
+			"ExportModule":"True"
+		},
+		"TestModule":{
+			"ExportModule":"True"
+		}
+	},
 	"Playlist":{
 		"Playlist":
 		[
 			{
-				"ID":"Core"
-			},
-			{
-				"ID":"TestModule"
+				"IsEnable":"True",
+				"Module":{
+					"ID":"Core"
+				}
 			}
 		]
 	},
-	"ForceInstallInEditor":"True",
-	"Version":"1.0.4"
+	"ForceInstallInEditor":"False",
+	"Version":"1.0.4",
+	"AssetGroupSortingOrder":{
+		"":99,
+		"ATS":99,
+		"Build":99,
+		"Data":99,
+		"Config":99,
+		"Steam":99
+	},
+	"EditorInstallMode":"Default"
 }

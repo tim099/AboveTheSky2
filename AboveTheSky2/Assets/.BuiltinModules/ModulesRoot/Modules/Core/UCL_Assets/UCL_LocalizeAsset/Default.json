@@ -240,5 +240,19 @@
 				"Format":"csv"
 			}
 		]
+	},
+	"ParseStringConfigs":{
+		"en":{
+			"Parsers":
+			[
+				{
+					"ClassName":"UCL.Core.UCL_ParseStringReplace, UCL_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+					"ClassData":{
+						"OldValue":"\uff0c",
+						"NewValue":","
+					}
+				}
+			]
+		}
 	}
 }

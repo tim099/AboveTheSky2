@@ -1,0 +1,14 @@
+{
+	"Module":{
+		"ID":"Core"
+	},
+	"Title":"Core",
+	"Description":"Core Mod Description",
+	"SteamAPILangCode":"english",
+	"EWorkshopFileType":"k_EWorkshopFileTypeCommunity",
+	"Visibility":"k_ERemoteStoragePublishedFileVisibilityPublic",
+	"ChangeLog":"Change Log",
+	"PublishedFileId":{
+		"PublishedFileId":0
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"BuildProfile":"Assets/Settings/Build Profiles/DemoBuildProfile.asset",
+	"BuildTargetGroup":"Standalone",
+	"BuildTarget":"StandaloneWindows64",
+	"BuildOption":"None",
+	"OutputPath":"Build/PC",
+	"OutputName":"game.exe",
+	"OutputBuildLog":"False",
+	"PreBuildProcess":
+	[
+		{
+			"ClassName":"UCL.BuildLib.UCL_PreBuildAddressableSetting, UCL_BuildEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"ClassData":{
+				"CleanPlayerContent":"True",
+				"IsEnable":"True"
+			}
+		}
+	],
+	"PostBuildProcess":
+	[
+		{
+			"ClassName":"UCL.SteamLib.UCL_SteamPostBuildSetting, UCL_SteamworkBuildScripts, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+			"ClassData":{
+				"SteamConfig":{
+					"ID":"Default"
+				},
+				"IsEnable":"True"
+			}
+		}
+	]
+}

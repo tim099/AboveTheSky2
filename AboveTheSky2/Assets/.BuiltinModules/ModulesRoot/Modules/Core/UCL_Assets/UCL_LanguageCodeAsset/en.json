@@ -1,3 +1,7 @@
 {
-	"isPolished":"False"
+	"LanguageName":"English",
+	"IsPolished":"False",
+	"HideThisOption":"False",
+	"Order":9999,
+	"SteamAPILangCode":"english"
 }

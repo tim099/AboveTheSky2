@@ -84,52 +84,9 @@ namespace ATS.Page
 
             using (var aScope = new GUILayout.VerticalScope("box"))//, GUILayout.MaxWidth(320)
             {
-                using (var aScope2 = new GUILayout.HorizontalScope("box"))
-                {
-                    var aStyleData = UCL_GUIStyle.CurStyleData;
-                    float aScale = aStyleData.Scale;
-                    if(aScale < 0.1f)
-                    {
-                        aScale = 0.1f;
-                    }
-                    int aSize = Mathf.RoundToInt(30f / aScale);
-                    var aButtonStyle = UCL_GUIStyle.GetButtonStyle(Color.white, aSize);
-                    if (GUILayout.Button("Small", aButtonStyle))
-                    {
-                        aStyleData.SetScale(1f);
-                        s_RunTimeData.m_Scale = aStyleData.Scale;
-                        SaveRunTimeData();
-                    }
-                    GUILayout.Space(30);
-                    if (GUILayout.Button("Medium", aButtonStyle))
-                    {
-                        aStyleData.SetScale(1.5f);
-                        s_RunTimeData.m_Scale = aStyleData.Scale;
-                        SaveRunTimeData();
-                    }
-                    GUILayout.Space(30);
-                    if (GUILayout.Button("Big", aButtonStyle))
-                    {
-                        aStyleData.SetScale(2.5f);
-                        s_RunTimeData.m_Scale = aStyleData.Scale;
-                        SaveRunTimeData();
-                    }
-                    GUILayout.Space(30);
-                    if (GUILayout.Button("XL", aButtonStyle))
-                    {
-                        aStyleData.SetScale(4f);
-                        s_RunTimeData.m_Scale = aStyleData.Scale;
-                        SaveRunTimeData();
-                    }
-                    //aStyleData.SetScale(UCL_GUILayout.Slider("GUISize", aStyleData.Scale, 1f, 5f, m_Dic.GetSubDic("GUISize")));
-                    //if (aStyleData.Scale != s_RunTimeData.m_Scale)
-                    //{
-                    //    s_RunTimeData.m_Scale = aStyleData.Scale;
-                    //    SaveRunTimeData();
-                    //}
-                }
+                UCL_GUIStyle.SetSizeOnGUI();
 
-                
+
                 if (GUILayout.Button("DebugLog", UCL_GUIStyle.ButtonStyle))
                 {
                     UCL_DebugLogPage.Create();

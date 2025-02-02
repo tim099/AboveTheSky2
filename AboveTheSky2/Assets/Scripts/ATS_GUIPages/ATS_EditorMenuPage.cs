@@ -65,8 +65,8 @@ namespace ATS.Page
         {
             base.Init(iGUIPageController);
             s_RunTimeData = LoadRunTimeData();
-            var aStyleData = UCL_GUIStyle.CurStyleData;
-            aStyleData.SetScale(s_RunTimeData.m_Scale);
+            //var aStyleData = UCL_GUIStyle.CurStyleData;
+            //aStyleData.SetScale(s_RunTimeData.m_Scale);
             if (!UCL_ModuleService.Initialized)
             {
                 UCL_ModuleService.WaitUntilInitialized(default).Forget();

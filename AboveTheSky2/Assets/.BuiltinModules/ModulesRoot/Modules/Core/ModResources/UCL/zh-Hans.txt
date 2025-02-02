@@ -1,0 +1,124 @@
+﻿56
+3,15
+UCL:Unity CommonLib
+12,4
+Edit Modules:编辑模组
+8,3
+Playlist:播放集
+22,5
+UCL_ModulePlayListPage:编辑播放集
+17,5
+Create new module:创建新模组
+9,4
+Module ID:模组ID
+17,72
+EditModulewarning:对内建模组(Core)的编辑，会在更新后失效
+请建立新的模组，来新增或复盖原有内容
+不同模组中，若有相同ID的内容
+将会由后载入的模组的内容复盖
+8,4
+EditType:编辑模式
+26,4
+UCL_ModuleEditType_Builtin:内建模组
+26,4
+UCL_ModuleEditType_Runtime:游戏模组
+11,4
+Save Config:保存设定
+11,4
+Load Config:载入设定
+18,7
+Open Module Folder:开启模组资料夹
+20,6
+ModuleService Config:模组相关设定
+14,7
+Loaded modules:目前载入的模组
+6,2
+Config:设定
+16,8
+Current playlist:目前的模组播放集
+19,8
+Create new playlist:创建新模组播放集
+21,7
+Load current playlist:载入目前播放集
+17,34
+ModulePlayListTip:若要启用模组
+请按下「编辑播放集按钮」
+并将要启用的模组加入播放集中
+25,22
+UCL_ModulePlayListPageTip:请选取想要编辑的播放集
+或是创建新模组播放集
+29,35
+UCL_ModulePlayListPageSaveTip:编辑播放集后请按下「存档」
+若要套用当前播放集请按下「载入目前播放集」
+26,68
+UCL_CreateNewModulePageTip:模组ID请避免使用「纯数字」(例如3387893998)
+Steam订阅的模组以数字为ID
+若ID与Steam订阅的模组相同，将会被复盖
+15,7
+DeleteTargetDes:删除「{0}」
+17,5
+UCL_LocalizeAsset:本地化设定
+20,4
+UCL_ModResourceAsset:模组资源
+21,8
+UCL_LanguageCodeAsset:编辑支持的语言码
+22,8
+UCL_SteamWorkshopAsset:Steam工作坊
+14,4
+Module Content:模组内容
+10,4
+Asset Type:资产类型
+11,5
+Open Folder:开启资料夹
+16,11
+SteamAPILangCode:SteamAPI语言码
+17,7
+EWorkshopFileType:工作坊档案类型
+10,3
+Visibility:可见度
+12,3
+Dependencies:相依性
+15,7
+PublishedFileId:工作坊物品ID
+9,4
+ChangeLog:变更日誌
+20,7
+Create workshop item:生成工作坊物品
+23,8
+Update item to workshop:同步物品到工作坊
+83,2
+ERemoteStoragePublishedFileVisibility_k_ERemoteStoragePublishedFileVisibilityPublic:公开
+46,2
+EWorkshopFileType_k_EWorkshopFileTypeCommunity:社区
+24,7
+SteamAPILangCode_english:English
+25,4
+SteamAPILangCode_tchinese:繁體中文
+25,4
+SteamAPILangCode_schinese:简体中文
+25,3
+SteamAPILangCode_japanese:日本語
+24,3
+SteamAPILangCode_koreana:한국어
+24,7
+SteamAPILangCode_russian:Русский
+27,12
+AddModulesToCurrentPlaylist:将模组加入当前的播放清单
+37,30
+AddNewModulesToCurrentPlaylistContent:是否要将新订阅的模组{0}
+加入到目前的播放清单({1})?
+14,5
+HideThisOption:隐藏此选项
+11,7
+Asset Group:Asset分组
+7,2
+Confirm:确认
+6,2
+Cancel:取消
+25,18
+UCL_UnloadUnusedAssetsOML:UnloadUnusedAssets
+9,4
+ReInstall:重新安装
+14,49
+ReInstallAlert:重新安装将会删除所有模组，请问是否要进行重新安装？
+(若游戏无法正常执行或启动，可以尝试重新安装)

@@ -1,0 +1,46 @@
+{
+	"LocalizeType":"GoogleSheet",
+	"LoadOrder":0,
+	"LangKeys":
+	[
+		"zh-Hant",
+		"en",
+		"zh-Hans",
+		"ja"
+	],
+	"DefaultLang":{
+		"ID":"en"
+	},
+	"SaveToModResources":"True",
+	"SavaPath":{
+		"ModuleID":"Core",
+		"FileName":""
+	},
+	"SaveFolderName":"UCL",
+	"GoogleSheetData":{
+		"TableId":"1bZmKr3yWbYhHBMmthFcrFqncp2C6F8MvMAJRPpIl5UU",
+		"GidTable":-1,
+		"GidDatas":
+		[
+			{
+				"Gid":0,
+				"Note":"UCL",
+				"Format":"csv"
+			}
+		]
+	},
+	"ParseStringConfigs":{
+		"en":{
+			"Parsers":
+			[
+				{
+					"ClassName":"UCL.Core.UCL_ParseStringReplace, UCL_Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+					"ClassData":{
+						"OldValue":"\uff0c",
+						"NewValue":","
+					}
+				}
+			]
+		}
+	}
+}

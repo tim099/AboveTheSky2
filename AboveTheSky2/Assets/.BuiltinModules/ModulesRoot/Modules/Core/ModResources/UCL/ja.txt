@@ -1,0 +1,128 @@
+﻿56
+3,15
+UCL:Unity CommonLib
+12,12
+Edit Modules:Edit Modules
+8,6
+Playlist:プレイリスト
+22,11
+UCL_ModulePlayListPage:プレイリストを編集する
+17,17
+Create new module:Create new module
+9,9
+Module ID:Module ID
+17,131
+EditModulewarning:内蔵モジュール（Core）の編集は、更新後に無効になります。
+新しいモジュールを作成して、既存のコンテンツを追加または上書きしてください。 
+異なるモジュールに同じIDのコンテンツがある場合、 
+後から読み込まれたモジュールのコンテンツが前のものを上書きします。
+8,9
+EditType:Edit type
+26,7
+UCL_ModuleEditType_Builtin:Builtin
+26,7
+UCL_ModuleEditType_Runtime:Runtime
+11,11
+Save Config:Save Config
+11,11
+Load Config:Load Config
+18,18
+Open Module Folder:Open Module Folder
+20,20
+ModuleService Config:ModuleService Config
+14,14
+Loaded modules:Loaded modules
+6,2
+Config:設定
+16,16
+Current playlist:Current playlist
+19,19
+Create new playlist:Create new playlist
+21,14
+Load current playlist:現在のプレイリストを読み込む
+17,64
+ModulePlayListTip:モジュールを有効にするには、 
+「プレイリストを編集する」を押して、 
+有効にしたいモジュールをプレイリストに追加してください。
+25,43
+UCL_ModulePlayListPageTip:編集したいプレイリストを選択するか、
+新しいモジュールプレイリストを作成してください。
+29,71
+UCL_ModulePlayListPageSaveTip:プレイリストを編集した後、「保存」を押してください。
+ 現在のプレイリストを適用するには、
+「現在のプレイリストを読み込む」を押してください。
+26,119
+UCL_CreateNewModulePageTip:モジュールIDには「純粋な数字」（例：3387893998）
+を使用しないでください。
+Steamでサブスクライブされたモジュールは数字をIDとして使用します。
+IDがSteamでサブスクライブされたモジュールと同じ場合、上書きされます。
+15,11
+DeleteTargetDes:"{0}"を削除します
+17,8
+UCL_LocalizeAsset:ローカライズ資産
+20,11
+UCL_ModResourceAsset:ModResource
+21,10
+UCL_LanguageCodeAsset:編輯支援の言語コード
+22,12
+UCL_SteamWorkshopAsset:Steamワークショップ
+14,7
+Module Content:モジュール内容
+10,7
+Asset Type:アセットタイプ
+11,8
+Open Folder:フォルダーを開く
+16,13
+SteamAPILangCode:SteamAPI言語コード
+17,14
+EWorkshopFileType:ワークショップファイルタイプ
+10,3
+Visibility:視認性
+12,4
+Dependencies:依存関係
+15,13
+PublishedFileId:ワークショップアイテムID
+9,4
+ChangeLog:変更履歴
+20,16
+Create workshop item:ワークショップアイテムを生成する
+23,17
+Update item to workshop:アイテムをワークショップに同期する
+83,2
+ERemoteStoragePublishedFileVisibility_k_ERemoteStoragePublishedFileVisibilityPublic:公開
+46,6
+EWorkshopFileType_k_EWorkshopFileTypeCommunity:コミュニティ
+24,7
+SteamAPILangCode_english:English
+25,4
+SteamAPILangCode_tchinese:繁體中文
+25,4
+SteamAPILangCode_schinese:简体中文
+25,3
+SteamAPILangCode_japanese:日本語
+24,3
+SteamAPILangCode_koreana:한국어
+24,7
+SteamAPILangCode_russian:Русский
+27,20
+AddModulesToCurrentPlaylist:モジュールを現在のプレイリストに追加する
+37,39
+AddNewModulesToCurrentPlaylistContent:新しく購読したモジュールを{0}
+現在のプレイリストに追加しますか({1})？
+14,10
+HideThisOption:このオプションを隠す
+11,11
+Asset Group:Asset Group
+7,2
+Confirm:確認
+6,5
+Cancel:キャンセル
+25,18
+UCL_UnloadUnusedAssetsOML:UnloadUnusedAssets
+9,7
+ReInstall:再インストール
+14,91
+ReInstallAlert:再インストールすると、すべてのモジュールが削除されます。
+再インストールを実行しますか？
+（ゲームが正常に動作しない場合や起動しない場合は、再インストールを試みることができます。）
+

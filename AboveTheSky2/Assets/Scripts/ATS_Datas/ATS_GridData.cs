@@ -163,6 +163,7 @@ namespace ATS
                 {
                     aVal = 0;
                 }
+                Debug.Log($"Set Cell({x},{y}) aVal:{aVal}");
                 Grid[x, y] = aVal;
             }
         }
@@ -189,7 +190,7 @@ namespace ATS
             //    return;
             //}
 
-            DrawGrid(iDic.GetSubDic("DrawGrid"));
+            DrawGrid(iDic.GetSubDic(nameof(DrawGrid)));
         }
         #endregion
     }

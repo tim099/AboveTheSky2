@@ -70,6 +70,7 @@ namespace ATS
         public override int MaxIndex => ATS_TileData.Util.GetAllIDs().Count;
 
         public Vector2Int MousePos { get; private set; }
+        public Vector2Int ValidMousePos { get; private set; }
         private int m_TileIndex { get; set; } = 0;
         private GridEditMode EditMode { get; set; } = GridEditMode.None;
 
@@ -174,18 +175,31 @@ namespace ATS
                                 GUI.DrawTexture(aRect, aTileTexture);
                                 UCL_GUIStyle.PopGUIColor();
                             }
-
-                            var aCurrentEvent = Event.current;
-                            if (aCurrentEvent.clickCount > 0)
-                            {
-                                Grid[MousePos.x, MousePos.y] = m_TileIndex;
-                            }
                             break;
                         }
                 }
 
                 DrawMouseFrame();
             }
+            if (ValidMousePos != NullPos)
+            {
+                switch (EditMode)
+                {
+                    case GridEditMode.DrawTile:
+                        {
+                            //Debug.LogError($"Event.current.type:{Event.current.type}");
+                            //var aCurrentEvent = Event.current;
+                            if (Event.current.type == EventType.MouseDown)
+                            //if (aCurrentEvent.clickCount > 0)//Draw
+                            {
+                                //Debug.LogError($"Draw({ValidMousePos.x},{ValidMousePos.y}) m_TileIndex:{m_TileIndex}");
+                                if (ValidMousePos != NullPos) Grid[ValidMousePos.x, ValidMousePos.y] = m_TileIndex;
+                            }
+                            break;
+                        }
+                }
+            }
+
         }
         public void DrawMouseFrame()
         {
@@ -206,6 +220,10 @@ namespace ATS
             if (Event.current.type == EventType.Repaint)//只在Repaint時判斷
             {
                 MousePos = UCL_GUILayout.GetMousePosInGrid(GridRect, m_Width, m_Height);
+                if(MousePos != NullPos)
+                {
+                    ValidMousePos = MousePos;
+                }
             }
         }
 

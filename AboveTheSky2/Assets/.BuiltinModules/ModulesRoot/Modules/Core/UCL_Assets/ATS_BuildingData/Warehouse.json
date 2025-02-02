@@ -1,12 +1,16 @@
 {
-	"Work":100,
+	"RequireConstruct":"True",
+	"ConstructCost":{
+		"Work":100
+	},
 	"Sprite":{
 		"DataLoadType":"ModResources",
 		"ModResourcesData":{
 			"ModuleID":"Core",
 			"FolderPath":"Sprites/Buildings",
-			"FileName":"Warehouse.jfif"
-		}
+			"FileName":"Warehouse.png"
+		},
+		"FilterMode":"Bilinear"
 	},
 	"GridData":{
 		"Width":2,
@@ -17,6 +21,7 @@
 			256,
 			256,
 			256
-		]
+		],
+		"Index":-1
 	}
 }

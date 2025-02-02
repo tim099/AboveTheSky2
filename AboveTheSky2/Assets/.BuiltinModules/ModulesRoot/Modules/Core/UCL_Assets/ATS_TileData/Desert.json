@@ -4,5 +4,7 @@
 	},
 	"TileType":"None",
 	"Show":"True",
-	"Passable":"True"
+	"TilePathState":{
+		"PathState":14
+	}
 }

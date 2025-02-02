@@ -12,7 +12,8 @@ namespace ATS
         where T : class, ATSI_SandBox, new()
     {
         /// <summary>
-        /// 不能重複的Index
+        /// 不重複的Index
+        /// Unique Index
         /// </summary>
         virtual public int Index
         {

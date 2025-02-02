@@ -1,6 +1,10 @@
 {
 	"Version":"1.0.1",
+	"LastEditTime":"2025/02/02/21:31:03.6451",
+	"UTC_TimeStamp":1738503064,
 	"ID":"TestModule",
+	"Title":"Mod Title",
+	"Description":"Mod Description",
 	"DependenciesModules":
 	[
 		{

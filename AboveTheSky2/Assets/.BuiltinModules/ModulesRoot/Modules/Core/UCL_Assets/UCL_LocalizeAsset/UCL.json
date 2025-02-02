@@ -1,6 +1,6 @@
 {
 	"LocalizeType":"GoogleSheet",
-	"LoadOrder":0,
+	"LoadOrder":99,
 	"LangKeys":
 	[
 		"zh-Hant",

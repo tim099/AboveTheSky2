@@ -37,7 +37,7 @@ namespace ATS.UI
             IsInEditWindow = true;
             var aPrevCol = GUI.contentColor;
             GUI.contentColor = Color.white;
-            Debug.LogError($"1 Event.current.type:{Event.current.type}");
+            //Debug.LogError($"1 Event.current.type:{Event.current.type}");
             GUILayout.BeginVertical();
             if (m_GUIPageController.TopPage == null)//空的 新增一個選單頁面
             {

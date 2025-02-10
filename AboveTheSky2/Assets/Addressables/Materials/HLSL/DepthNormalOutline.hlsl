@@ -48,7 +48,7 @@ void EvaluateNormal_float(float2 screenPosition, float normalThreshold, float de
 	float3 sobelNormalY = 0;
 	float2 sobelNormalResults[9];
 	float2 thickness = 0.5 * float2(Div_Screen_Width, Div_Screen_Height);//1 pixel outline!!
-	[unroll] for(int i=0; i < 9; i++)
+	[unroll] for(int i = 0; i < 9; i++)
 	{
 		float2 uv = screenPosition + thickness * sobelSamplePoints[i];
 		float depth = SHADERGRAPH_SAMPLE_SCENE_DEPTH(uv);
@@ -56,7 +56,7 @@ void EvaluateNormal_float(float2 screenPosition, float normalThreshold, float de
 
 
 		float3 normal = SHADERGRAPH_SAMPLE_SCENE_NORMAL(uv);
-		sobelNormalResults[i] = normal;
+		sobelNormalResults[i] = normal.xy;
 		sobelNormalX += normal * sobelXMatrix[i];
 		sobelNormalY += normal * sobelYMatrix[i];
 	}

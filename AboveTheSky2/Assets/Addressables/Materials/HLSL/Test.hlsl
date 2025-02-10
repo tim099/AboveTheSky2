@@ -5,8 +5,8 @@ void Test_float (float2 screenPosition, float4 col,bool enableTestDot, out float
 		outCol = col;
 		return;
 	}
-	int x = floor(screenPosition.x * _ScreenParams.x);
-	int y = floor(screenPosition.y * _ScreenParams.y);
+	uint x = floor(screenPosition.x * _ScreenParams.x);
+	uint y = floor(screenPosition.y * _ScreenParams.y);
 	if(x % 2 == 0 || y % 2 == 0)
 	{
 		outCol = col;

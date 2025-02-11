@@ -3893,6 +3893,7 @@ GameObject:
   - component: {fileID: 1384071576}
   - component: {fileID: 1384071575}
   - component: {fileID: 1384071574}
+  - component: {fileID: 1384071577}
   m_Layer: 6
   m_Name: Cube (7)
   m_TagString: Untagged
@@ -3910,7 +3911,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -0.07, y: 0.71, z: 19.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 820593503}
@@ -3989,6 +3990,56 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1384071572}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1384071577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384071572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07496e38c5092ca4eba68d0b931910e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StartOption: 2
+  m_EndOnDestroy: 1
+  m_EndOnDisable: 1
+  m_Backfolding: 0
+  m_Looping: 1
+  m_StartEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_EndEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CompleteWhenKill: 0
+  m_Ease: 0
+  m_Duration: 6
+  m_DrawGizmos: 1
+  m_TimeManager: {fileID: 0}
+  m_TweenerComponents:
+  - m_Type: 9
+    m_Transform:
+    - {fileID: 1384071573}
+    - {fileID: 0}
+    m_RectTransform: []
+    m_Quaternion: []
+    m_UCL_Path: []
+    m_LookAtFront: []
+    m_UCL_TC_Event: []
+    m_Vector3:
+    - {x: 0, y: 360, z: 0}
+    m_Vector2: []
+    m_Boolean: 00
+    m_Byte: 
+    m_Int32: 
+    m_Single: []
+    m_Image: []
+    m_RawImage: []
+    m_Color: []
+    m_Version: 2
+    m_Foldout: 1
 --- !u!1 &1396770283
 GameObject:
   m_ObjectHideFlags: 0

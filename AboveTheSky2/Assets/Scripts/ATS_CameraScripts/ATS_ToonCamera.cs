@@ -67,6 +67,7 @@ namespace ATS
         /// </summary>
         private Vector3 m_DelUp = Vector3.zero;
         private Vector3 m_DelFoward = Vector3.zero;
+        private Vector3 m_DelRight = Vector3.zero;
 
         private Vector3 m_A = Vector3.zero;
 
@@ -779,7 +780,50 @@ namespace ATS
                 //aDel += m_FowardVec * m_DivPPU * aFowardPixel;
                 //aDel += m_RightVec * m_DivPPU * aRightPixel;//aOriginRight;
             }
+            if (m_IntPos.x != 0)//朝著CameraRight方向位移
+            {
+                m_DelRight = m_IntPos.x * m_RightVec / m_PPU;
+                aDel += m_DelRight;
+                //float aCosVal = Vector3.Dot(m_UpVecN, m_RightVec);
+                //float aSinVal = Mathf.Sqrt(1f - aCosVal * aCosVal);
+                //float aDivCosVal = 1f / aCosVal;
+                //float aDivSinVal = 1f / aSinVal;
 
+                //Vector3 aRight = m_IntPos.x * m_RightVec * m_DivPPU;//往右位移的距離
+                //Vector3 aUpCast = Vector3.Dot(aRight, m_UpVecN) * aDivCosVal * aDivCosVal * m_UpVecN;
+                //Vector3 aFoward = aUpCast - aRight;
+
+                ////https://www.rapidtables.com/calc/math/Arctan_Calculator.html
+
+                //float aFowardCosVal = Mathf.Abs(Vector3.Dot(m_RightVec, Vector3.forward));
+                //if (aFowardCosVal <= HalfSqrt)//0.70710678118f = Mathf.Sqrt(1/2)
+                //{
+                //    aFowardCosVal = Mathf.Abs(Vector3.Dot(m_RightVec, Vector3.right));
+                //}
+                ////float aFowardCosVal = Vector3.Dot(m_FowardVec, m_UpVecN);
+                //float aFowardSinVal = Mathf.Sqrt(1f - aFowardCosVal * aFowardCosVal);
+
+                ////Mathf.Sqrt(1 / 2f) *
+                //float aFVal = m_Test * 2f * aFowardCosVal;//Mathf.Sqrt(2f) * aFowardCosVal * aDivSinVal 
+                //float aFPPU = m_PPU * aFVal;//aCosVal;//m_TestY
+                //m_OnGUILog.AppendLine($"aFowardCosVal:{aFowardCosVal},aFowardSinVal:{aFowardSinVal},aFVal:{aFVal},aFoward:{aFoward.ToStringDetailValue()}");
+                //m_OnGUILog.AppendLine($"aCosVal:{aCosVal},aSinVal:{aSinVal},aDivCosVal:{aDivCosVal},aDivSinVal:{aDivSinVal}");
+                //int aFowardPixel = Mathf.RoundToInt(Vector3.Dot(aFoward, m_RightVec) * aFPPU);
+
+                //Vector3 aFowardOffset = aFowardPixel * (1f / aFPPU) * m_RightVec;
+
+                ////m_DelFoward = aFowardOffset;
+                //Debug.LogError($"m_PPU:{m_PPU},m_IntPos.y:{m_IntPos.y},aUp:{aRight.ToStringDetailValue()},aUpCast:{aUpCast.ToStringDetailValue()},aFoward:{aFoward.ToStringDetailValue()},m_DelUp:{m_DelUp.ToStringDetailValue()}" +
+                //    $"aFoward.magnitude:{aFoward.magnitude},aFowardOffset:{aFowardOffset.ToStringDetailValue()},aFowardPixel:{aFowardPixel},aFPPU:{aFPPU},aCosVal:{aCosVal},aSinVal:{aSinVal}");
+
+                ////aDel += m_DelUp;
+                //aDel += aFowardOffset;
+
+
+                //aDel += m_UpVec * m_DivPPU * aUpPixel;//aOriginUP;
+                //aDel += m_FowardVec * m_DivPPU * aFowardPixel;
+                //aDel += m_RightVec * m_DivPPU * aRightPixel;//aOriginRight;
+            }
             finalPos += aDel;
 
             transform.position = finalPos;//m_Pos
@@ -789,6 +833,7 @@ namespace ATS
             GUILayout.Label($"PPU:{m_PPU}", UCL_GUIStyle.LabelStyle);
             GUILayout.Label($"IntPos:{m_IntPos}", UCL_GUIStyle.LabelStyle);
             GUILayout.Label($"DelUp:{m_DelUp.ToStringDetailValue()}", UCL_GUIStyle.LabelStyle);
+            GUILayout.Label($"DelRight:{m_DelRight.ToStringDetailValue()}", UCL_GUIStyle.LabelStyle);
             GUILayout.Label($"DelFoward:{m_DelFoward.ToStringDetailValue()}", UCL_GUIStyle.LabelStyle);
             GUILayout.Label(m_OnGUILog.ToString(), UCL_GUIStyle.LabelStyle);
         }

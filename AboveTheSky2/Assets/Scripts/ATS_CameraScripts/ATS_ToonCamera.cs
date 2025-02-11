@@ -769,7 +769,7 @@ namespace ATS
                 Vector3 aFowardOffset = aFowardPixel * (1f/ aFPPU) * m_FowardVec;
 
                 m_DelFoward = aFowardOffset;
-                Debug.LogError($"m_PPU:{m_PPU},m_IntPos.y:{m_IntPos.y},aUp:{aUp.ToStringDetailValue()},aUpCast:{aUpCast.ToStringDetailValue()},aFoward:{aFoward.ToStringDetailValue()},m_DelUp:{m_DelUp.ToStringDetailValue()}" +
+                Debug.Log($"m_PPU:{m_PPU},m_IntPos.y:{m_IntPos.y},aUp:{aUp.ToStringDetailValue()},aUpCast:{aUpCast.ToStringDetailValue()},aFoward:{aFoward.ToStringDetailValue()},m_DelUp:{m_DelUp.ToStringDetailValue()}" +
                     $"aFoward.magnitude:{aFoward.magnitude},aFowardOffset:{aFowardOffset.ToStringDetailValue()},aFowardPixel:{aFowardPixel},aFPPU:{aFPPU},aCosVal:{aCosVal},aSinVal:{aSinVal}");
 
                 aDel += m_DelUp;

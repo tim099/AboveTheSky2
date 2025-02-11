@@ -2179,13 +2179,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743625686}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.26307133, y: -0, z: -0, w: 0.9647764}
   m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 100, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 820593503}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -30.505, y: 0, z: 0}
 --- !u!65 &743625688
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3577,7 +3577,7 @@ PrefabInstance:
     - target: {fileID: 1988025617893250342, guid: c6a512d95615f534cbe31aba1aaa354c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.510482
+      value: -5.18
       objectReference: {fileID: 0}
     - target: {fileID: 1988025617893250342, guid: c6a512d95615f534cbe31aba1aaa354c,
         type: 3}
@@ -3587,7 +3587,7 @@ PrefabInstance:
     - target: {fileID: 1988025617893250342, guid: c6a512d95615f534cbe31aba1aaa354c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.61
+      value: 5.55
       objectReference: {fileID: 0}
     - target: {fileID: 1988025617893250342, guid: c6a512d95615f534cbe31aba1aaa354c,
         type: 3}
@@ -4129,7 +4129,7 @@ Transform:
   m_GameObject: {fileID: 1472405996}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.17514, y: 0.14000005, z: 1.6600003}
+  m_LocalPosition: {x: -3.71, y: 0.14000005, z: 1.6600003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4363,13 +4363,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1521726677}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: -13.41, y: 0.5, z: 20.38}
+  m_LocalRotation: {x: -0.0070034033, y: 0.40793213, z: -0.39235634, w: 0.8243779}
+  m_LocalPosition: {x: -8.6, y: 0.5, z: 14.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 820593503}
-  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+  m_LocalEulerAnglesHint: {x: 17.973, y: 45.468, z: -43.322}
 --- !u!65 &1521726679
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5149,7 +5149,7 @@ Camera:
   far clip plane: 100
   field of view: 60
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5219,8 +5219,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
   m_AssetsPPU: 8
-  m_RefResolutionX: 64
-  m_RefResolutionY: 64
+  m_RefResolutionX: 128
+  m_RefResolutionY: 128
   m_CropFrame: 0
   m_GridSnapping: 1
   m_FilterMode: 0

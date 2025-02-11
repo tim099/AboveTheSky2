@@ -7,6 +7,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UCL.Core.UI;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 
 namespace ATS
@@ -27,6 +29,9 @@ namespace ATS
         public float m_TestY = 0;
         public float m_Acc = 0.03f;
         public float m_VelDec = 0.95f;
+
+        [SerializeField] private RawImage m_TargetImage;
+        RenderTexture m_RenderTexture;
 
         private bool m_Inited = false;
         private float m_Y = 20;
@@ -120,12 +125,36 @@ namespace ATS
             m_Origin = m_Pos = m_Camera.transform.position;
             m_Width = m_Camera.pixelWidth;
             m_Height = m_Camera.pixelHeight;
+            if(m_TargetImage != null)
+            {
+                //Debug.LogError($"Set m_TargetImage");
+                RenderTextureDescriptor desc = new();
+                desc.width = m_PixelPerfectCamera.refResolutionX;
+                desc.height = m_PixelPerfectCamera.refResolutionY;
+                desc.colorFormat = RenderTextureFormat.ARGB32;
+                desc.depthBufferBits = 24;
+                desc.volumeDepth = 1;
+                desc.dimension = TextureDimension.Tex2D;
+                desc.msaaSamples = 1;
+                RenderTexture renderTexture = new RenderTexture(desc);
 
+                m_RenderTexture = RenderTexture.GetTemporary(desc);
+                m_RenderTexture.filterMode = FilterMode.Point;
+                m_Camera.targetTexture = m_RenderTexture;
+                m_TargetImage.texture = m_RenderTexture;
+            }
 
 
             UpdateSetting();
 
             //Debug.LogError($"m_DivPPU:{m_DivPPU},m_PixelWidth:{m_PixelWidth},m_PixelHeight:{m_PixelHeight}");
+        }
+        private void OnDestroy()
+        {
+            if(m_RenderTexture != null)
+            {
+                RenderTexture.ReleaseTemporary(m_RenderTexture);
+            }
         }
         // Start is called before the first frame update
         void Start()

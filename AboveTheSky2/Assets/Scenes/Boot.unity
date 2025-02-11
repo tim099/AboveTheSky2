@@ -5251,6 +5251,7 @@ MonoBehaviour:
   m_TestY: 0.5773504
   m_Acc: 0.003
   m_VelDec: 0
+  m_TargetImage: {fileID: 1658140930}
   m_DrawCameraVec: 0
   m_DrawVisitedPoints: 1
   m_DrawCameraGrid: 0

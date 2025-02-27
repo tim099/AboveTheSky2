@@ -1,4 +1,4 @@
-﻿58
+﻿73
 3,15
 UCL:Unity CommonLib
 12,12
@@ -130,3 +130,33 @@ Do you want to proceed with the reinstallation?
 Edit:Edit
 7,7
 Preview:Preview
+8,8
+OpenFile:OpenFile
+20,16
+UCL_LocalizeEditPage:LocalizeEditPage
+12,8
+UCL_Download:Download
+3,3
+Key:Key
+11,12
+MoveElement:Move element
+22,25
+SelectAssetTemplateDes:Select {0} asset template
+20,18
+OpenModuleRootFolder:Open Module Folder
+23,19
+OpenModuleInstallFolder:Open Install Folder
+10,11
+OpenFolder:Open Folder
+15,17
+CopyToClipboard:Copy to clipboard
+18,20
+PasteFromClipboard:Paste from clipboard
+26,29
+CopyDescriptionToClipboard:Copy to description clipboard
+6,6
+Rename:Rename
+9,10
+EditGroup:Edit Group
+16,18
+ShowDeleteButton:Show Delete Button

@@ -1,4 +1,4 @@
-﻿58
+﻿73
 3,15
 UCL:Unity CommonLib
 12,12
@@ -130,3 +130,33 @@ ReInstallAlert:再インストールすると、すべてのモジュールが�
 Edit:編集
 7,5
 Preview:プレビュー
+8,7
+OpenFile:ファイルを開く
+20,9
+UCL_LocalizeEditPage:ローカライズの編集
+12,6
+UCL_Download:ダウンロード
+3,4
+Key:辞書キー
+11,7
+MoveElement:移動エレメント
+22,25
+SelectAssetTemplateDes:Select {0} asset template
+20,18
+OpenModuleRootFolder:Open Module Folder
+23,19
+OpenModuleInstallFolder:Open Install Folder
+10,7
+OpenFolder:フォルダを開く
+15,11
+CopyToClipboard:クリップボードにコピー
+18,14
+PasteFromClipboard:クリップボードから貼り付ける
+26,20
+CopyDescriptionToClipboard:複製説明文をクリップボードにコピーする。
+6,4
+Rename:リネーム
+9,10
+EditGroup:Edit Group
+16,18
+ShowDeleteButton:Show Delete Button

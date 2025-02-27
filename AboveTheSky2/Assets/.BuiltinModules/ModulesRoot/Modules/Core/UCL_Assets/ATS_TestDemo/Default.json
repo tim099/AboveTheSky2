@@ -1,0 +1,18 @@
+{
+	"TestInt":3,
+	"TestList":
+	[
+		"123",
+		"\u6e2c\u8a66\u7528\u5b57\u4e32"
+	],
+	"TestDictionary":{
+		"TestKey":3,
+		"\u6e2c\u8a66\u7528":1234
+	},
+	"RegionEntry":{
+		"ID":"AirShip_01"
+	},
+	"TestDemoEntry":{
+		"ID":"Default2"
+	}
+}

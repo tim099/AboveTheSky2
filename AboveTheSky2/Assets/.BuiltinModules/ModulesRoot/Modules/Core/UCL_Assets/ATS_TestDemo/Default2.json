@@ -1,3 +1,20 @@
 {
-	"TestInt":5
+	"Test":{
+		"ClassName":"ATS.ATS_TestDemo+C, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+		"ClassData":{
+			"A":{
+				"A":15
+			},
+			"B":{
+				"B":"Test234"
+			}
+		}
+	},
+	"TestInt":5,
+	"RegionEntry":{
+		"ID":"AirShip_01"
+	},
+	"TestDemoEntry":{
+		"ID":"Default2"
+	}
 }

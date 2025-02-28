@@ -8,8 +8,33 @@ using UnityEngine;
 
 namespace ATS
 {
+
+
     public class ATS_TestDemo : UCL_Asset<ATS_TestDemo>
     {
+        [UCL.Core.ATTR.UCL_IgnoreInTypeListable]
+        public class Test
+        {
+
+        }
+
+        public class A : Test
+        {
+            public int m_A = 5;
+        }
+        public class B : Test
+        {
+            public string m_B = "Test";
+        }
+        public class C : Test
+        {
+            public A m_A = new A();
+            public B m_B = new B();
+        }
+
+        [UCL.Core.ATTR.UCL_SerializeReference]
+        public Test m_Test = new A();
+
         /// <summary>
         /// 測試用
         /// </summary>

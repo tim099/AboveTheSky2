@@ -1,4 +1,10 @@
 {
+	"Test":{
+		"ClassName":"ATS.ATS_TestDemo+B, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+		"ClassData":{
+			"B":"Test2"
+		}
+	},
 	"TestInt":3,
 	"TestList":
 	[

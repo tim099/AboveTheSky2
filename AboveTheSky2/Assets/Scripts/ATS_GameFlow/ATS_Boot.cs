@@ -35,12 +35,11 @@ namespace ATS
             
             Init().Forget();
         }
-        async UniTask Init()
+        private async UniTask Init()
         {
             UCL_DebugLogService.Init();
             UCL_RTHandleService.Init();
 
-            var aToken = gameObject.GetCancellationTokenOnDestroy();
             //Debug.LogError("ATS_Boot.Init()");
             var token = gameObject.GetCancellationTokenOnDestroy();
             if (m_TestMode)
@@ -59,24 +58,25 @@ namespace ATS
             }
 
             await UnityEngine.AddressableAssets.Addressables.InitializeAsync();
-
+            token.ThrowIfCancellationRequested();
             var aCatalogUpdates = await Addressables.CheckForCatalogUpdates(false);
             //UCL.Core.UI.UCL_GUIPageController.CurrentRenderIns.Push(new Page.ATS_EditorMenuPage());
 
             //模組相關功能初始化
             await UCL_ModuleService.Ins.LoadModulePlaylistAsync(UCL_ModulePlaylist.CurPlaylist, token);//載入當前模組
-
+            token.ThrowIfCancellationRequested();
             //await UniTask.WaitUntil(()=> UCL_ModuleService.Initialized, cancellationToken: aCancellationToken);
             //Debug.LogError("UCL_ModuleService.Initialized");
             //Debug.LogError($"UCL_ModuleService.Modules:{UCL_ModuleService.Ins.LoadedModules.ConcatString(iModule => iModule.ID)}");
             if (!m_TestMode)
             {
-                var aGameManager = await m_GameManagerAssetEntry.GetData().LoadAsync(aToken);
+                var aGameManager = await m_GameManagerAssetEntry.GetData().LoadAsync(token);
                 m_GameManager = Instantiate(aGameManager, null);
                 var aGM = m_GameManager.GetComponent<UCL_GameManager>();
                 if (aGM != null)
                 {
                     await aGM.InitAsync();
+                    token.ThrowIfCancellationRequested();
                 }
                 else
                 {
@@ -87,9 +87,10 @@ namespace ATS
 
 
             await ATS_IconSprite.InitSpriteAsset(token);
+            token.ThrowIfCancellationRequested();
 
             await UI.ATS_MainMenu.CreateAsync();
-
+            token.ThrowIfCancellationRequested();
             //UCL.Core.MathLib.UCL_Noise.GeneratePerm();
             //Debug.LogError("ATS_IconSprite.InitSpriteAsset");
         }

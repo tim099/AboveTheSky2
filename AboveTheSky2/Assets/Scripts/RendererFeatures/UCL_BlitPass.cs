@@ -63,7 +63,7 @@ namespace UCL
                     aCmd.GetTemporaryRT(Shader.PropertyToID(s_RTHandle.name), renderingData.cameraData.cameraTargetDescriptor, FilterMode.Point);
                 }
 
-                RenderingUtils.ReAllocateIfNeeded(ref s_RTHandle, renderingData.cameraData.cameraTargetDescriptor, FilterMode.Point,
+                RenderingUtils.ReAllocateHandleIfNeeded(ref s_RTHandle, renderingData.cameraData.cameraTargetDescriptor, FilterMode.Point,
                     TextureWrapMode.Clamp, name: "CameraDepthTest");
                 RTHandles.SetReferenceSize(aCamera.pixelWidth, aCamera.pixelHeight);
 

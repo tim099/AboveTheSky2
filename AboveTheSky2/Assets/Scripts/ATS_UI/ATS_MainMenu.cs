@@ -137,9 +137,11 @@ namespace ATS.UI
             if (m_RawImage.gameObject.activeInHierarchy)
             {
                 m_Timer += Time.deltaTime;
-                if(m_Timer > 0.3f)
+                //Debug.LogError($"m_Timer:{m_Timer}");
+                if (m_Timer > 0.3f)
                 {
                     m_Timer = 0;
+                    m_OffSet += new Vector2(0.1f, 0.1f);
                     m_Texture.Draw((iX, iY) =>
                     {
                         float aVal = UCL_Noise.PerlinNoiseUnsigned(m_Scale * (iX) + m_OffSet.x, m_Scale * (iY) + m_OffSet.y);

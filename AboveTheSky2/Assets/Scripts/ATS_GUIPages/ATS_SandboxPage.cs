@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using UCL.Core;
 using UCL.Core.EditorLib.Page;
 using UCL.Core.JsonLib;
@@ -35,7 +37,8 @@ namespace ATS.Page
 
         protected UCL_ObjectDictionary m_Dic = new UCL_ObjectDictionary();
         protected ATS_SandBox m_SandBox = null;
-        #region
+        protected CancellationTokenSource m_CST = null;
+        #region RunTimeData
         const string RunTimeDataKey = "ATS_SandboxPage.RunTimeData";
 
         static RunTimeData s_RunTimeData = null;
@@ -64,6 +67,11 @@ namespace ATS.Page
         #endregion
         public override void OnClose()
         {
+            if(m_CST != null)
+            {
+                m_CST.Cancel();
+                m_CST.Dispose();
+            }
             if(m_SandBox != null)
             {
                 m_SandBox.End();
@@ -86,6 +94,25 @@ namespace ATS.Page
         {
             m_SandBox = new ATS_SandBox();
             m_SandBox.Init();
+
+            InitSandBoxAsync().Forget();
+        }
+        private async UniTask InitSandBoxAsync()
+        {
+            m_CST = new CancellationTokenSource();
+            var token = m_CST.Token;
+            for (int i = 0; i < 3; i++)
+            {
+                m_SandBox.m_AirShip.Spawn();
+                await UniTask.WaitForSeconds(0.5f, cancellationToken: token);
+                token.ThrowIfCancellationRequested();
+            }
+            for (int i = 0; i < 15; i++)
+            {
+                m_SandBox.m_AirShip.SpawnResource();
+                await UniTask.WaitForSeconds(0.1f, cancellationToken: token);
+                token.ThrowIfCancellationRequested();
+            }
         }
         private string SaveFolder => Path.Combine(Application.persistentDataPath, "Saves");
         private string SavePath => Path.Combine(SaveFolder, "Save01");
@@ -127,7 +154,6 @@ namespace ATS.Page
             {
                 return;
             }
-            GUILayout.Label("ATS_SandboxPage");
             m_SandBox.ContentOnGUI(m_Dic.GetSubDic("SandBox"));
         }
 

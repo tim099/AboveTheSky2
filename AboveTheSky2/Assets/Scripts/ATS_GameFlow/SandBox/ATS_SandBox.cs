@@ -59,7 +59,7 @@ namespace ATS
         const int LogicIntervalMS = 30;
 
 
-        protected ATS_AirShip m_AirShip = new ATS_AirShip();
+        public ATS_AirShip m_AirShip = new ATS_AirShip();
 
         //[UCL.Core.ATTR.UCL_HideInJson]
         [SerializeField]
@@ -122,18 +122,22 @@ namespace ATS
         }
         private async UniTask UpdateLoop()
         {
+            const int MaxUpdatePerFrame = 10;
             m_StartTime = m_PrevUpdateTime = System.DateTime.Now;
             //int aFrameCount = 0;
             double aOffSet = 0f;
+            int updateTimes = 0;//
             SetGameState(GameState.GameLoop);
             while (!m_End)
             {
                 var aNow = System.DateTime.Now;
-                double delMS = ((aNow - m_PrevUpdateTime).TotalMilliseconds);
-                if((delMS + aOffSet) >= LogicIntervalMS)
+                double delMS = (aNow - m_PrevUpdateTime).TotalMilliseconds;
+                double del = (delMS + aOffSet) - LogicIntervalMS;
+                if (del >= 0)
                 {
-                    aOffSet += delMS - LogicIntervalMS;
-
+                    //aOffSet += delMS - LogicIntervalMS;
+                    //Debug.LogError($"aOffSet:{aOffSet}, del:{del}");
+                    aOffSet = del;
                     if (!m_Pause)
                     {
                         GameUpdate();
@@ -153,7 +157,16 @@ namespace ATS
                 //    await Task.Delay(LogicIntervalMS - (int)delMS);
                 //}
                 //await Task.Delay(LogicIntervalMS);
-                await UniTask.Yield();
+                if (updateTimes >= MaxUpdatePerFrame || aOffSet < LogicIntervalMS)
+                {
+                    updateTimes = 0;
+                    await UniTask.Yield();
+                }
+                else
+                {
+                    ++updateTimes;
+                }
+                
             }
         }
 

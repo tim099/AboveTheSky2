@@ -97,7 +97,44 @@ namespace ATS
         //    }
         //}
 
+        /// <summary>
+        /// 隨機生成一個單位(船員或其他生物)
+        /// </summary>
+        public void Spawn()
+        {
+            var aIDs = ATS_CreatureData.Util.GetAllIDs();
+            var aID = UCL_Random.Instance.RandomPick(aIDs);
+            var aMinion = new ATS_Minion(aID, m_EntrancePos.x + 0.5f, m_EntrancePos.y + UCL_Random.Instance.Range(0, ATS_Const.GroundHeight));
+            //aMinion.m_Position = new Vector3(m_EntrancePos.x, m_EntrancePos.y, 0);
+            m_Region.Spawn(aMinion);
+        }
+        public void SpawnResource()
+        {
+            int aTargetDistance = UCL_Random.Instance.Range(1, 6);
+            //return true if find target
+            int CheckNode(Cell iCell, PathNode iNode)
+            {
+                if (iNode.m_Distance >= aTargetDistance)
+                {
+                    return 0;
+                }
+                return aTargetDistance - iNode.m_Distance;
+            }
+            var aPath = PathFinder.SearchPath(m_EntrancePos.x, m_EntrancePos.y, CheckNode);
+            //Debug.LogError($"({m_Pos.x},{m_Pos.y}), m_Path:{m_Path.m_Path.ConcatString(iPos => $"{iPos.m_Pos.x},{iPos.m_Pos.y}")}");
 
+
+            ATS_Resource aRes = new ATS_Resource(m_SpawnResType.m_ID, UCL_Random.Instance.Range(1, 99));
+            if (aPath != null && !aPath.m_Path.IsNullOrEmpty())
+            {
+                var aPos = aPath.m_Path.LastElement();
+
+                aRes.m_Pos.x = aPos.x + UCL_Random.Instance.Range(-0.4f, 0.4f);
+                aRes.m_Pos.y = aPos.y + ATS_Const.GroundHeight + UCL_Random.Instance.Range(0.1f, 0.5f);
+            }
+
+            m_Region.SpawnResource(aRes);
+        }
         private ATS_ResourceEntry m_SpawnResType = new ATS_ResourceEntry();
         /// <summary>
         /// 用在ATS_SandboxPage
@@ -109,40 +146,13 @@ namespace ATS
             {
                 if (GUILayout.Button("Spawn", UCL_GUIStyle.ButtonStyle))
                 {
-                    var aIDs = ATS_CreatureData.Util.GetAllIDs();
-                    var aID = UCL_Random.Instance.RandomPick(aIDs);
-                    var aMinion = new ATS_Minion(aID, m_EntrancePos.x + 0.5f, m_EntrancePos.y + UCL_Random.Instance.Range(0, ATS_Const.GroundHeight));
-                    //aMinion.m_Position = new Vector3(m_EntrancePos.x, m_EntrancePos.y, 0);
-                    m_Region.Spawn(aMinion);
+                    Spawn();
                 }
 
                 
                 if (GUILayout.Button("Spawn Resource", UCL_GUIStyle.ButtonStyle))
                 {
-                    int aTargetDistance = UCL_Random.Instance.Range(1, 6);
-                    //return true if find target
-                    int CheckNode(Cell iCell, PathNode iNode)
-                    {
-                        if (iNode.m_Distance >= aTargetDistance)
-                        {
-                            return 0;
-                        }
-                        return aTargetDistance - iNode.m_Distance;
-                    }
-                    var aPath = PathFinder.SearchPath(m_EntrancePos.x, m_EntrancePos.y, CheckNode);
-                    //Debug.LogError($"({m_Pos.x},{m_Pos.y}), m_Path:{m_Path.m_Path.ConcatString(iPos => $"{iPos.m_Pos.x},{iPos.m_Pos.y}")}");
-
-
-                    ATS_Resource aRes = new ATS_Resource(m_SpawnResType.m_ID, UCL_Random.Instance.Range(1, 99));
-                    if(aPath != null && !aPath.m_Path.IsNullOrEmpty())
-                    {
-                        var aPos = aPath.m_Path.LastElement();
-
-                        aRes.m_Pos.x = aPos.x + UCL_Random.Instance.Range(-0.4f,0.4f);
-                        aRes.m_Pos.y = aPos.y + ATS_Const.GroundHeight + UCL_Random.Instance.Range(0.1f, 0.5f);
-                    }
-
-                    m_Region.SpawnResource(aRes);
+                    SpawnResource();
                 }
                 switch (CurGameState)
                 {

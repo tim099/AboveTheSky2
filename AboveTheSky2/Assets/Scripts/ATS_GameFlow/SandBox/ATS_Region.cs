@@ -42,15 +42,15 @@ namespace ATS
         /// 建造模式中的緩存資料(包含建築與要建造的位置等)
         /// </summary>
         private BuildData m_BuildData = new BuildData();
+
+        /// <summary>
+        /// 尋路用
+        /// </summary>
         private ATS_PathFinder m_PathFinder = new ATS_PathFinder();
         /// <summary>
         /// 尋路用
         /// </summary>
         override public ATS_PathFinder PathFinder => m_PathFinder;
-        /// <summary>
-        /// 所有的建築格(地塊)
-        /// </summary>
-        //private Cell[,] m_Cells = null;
 
         /// <summary>
         /// 所有的建築格(地塊)
@@ -87,18 +87,8 @@ namespace ATS
 
             m_RuntimeData.Init(this);
 
-            //AddComponent(m_RuntimeData.m_Cells);
-            //AddComponent(m_RuntimeData.m_Buildings);
-            //AddComponent(m_RuntimeData.m_Minions);
-            //AddComponent(m_RuntimeData.m_Resources);
-
             m_RuntimeData.m_Cells.Init(m_Region.m_GridData);
 
-            //m_Cells = m_Region.m_GridData.CreateCells();
-            //foreach (Cell cell in m_Cells)
-            //{
-            //    m_RuntimeData.m_Cells.AddCell(cell);
-            //}
 
             AddComponent(m_PathFinder);
         }

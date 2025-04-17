@@ -122,6 +122,7 @@ namespace ATS.Page
 #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
             if (GUILayout.Button(UCL_LocalizeManager.Get("Open Saves"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
             {
+                Directory.CreateDirectory(SavePath);
                 UCL.Core.FileLib.WindowsLib.OpenExplorer(SaveFolder);
             }
 #endif

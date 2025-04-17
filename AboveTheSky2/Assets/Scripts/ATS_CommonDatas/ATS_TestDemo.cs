@@ -32,7 +32,7 @@ namespace ATS
             public B m_B = new B();
         }
 
-        [UCL.Core.ATTR.UCL_SerializeReference]
+        [SerializeReference]
         public Test m_Test = new A();
 
         /// <summary>

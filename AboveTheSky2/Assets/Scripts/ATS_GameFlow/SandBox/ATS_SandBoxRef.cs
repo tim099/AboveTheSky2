@@ -3,12 +3,14 @@
 // to change the auto header please go to ATS_AutoHeader.cs
 using System.Collections;
 using System.Collections.Generic;
+using UCL.Core;
 using UCL.Core.JsonLib;
+using UCL.Core.UI;
 using UnityEngine;
 
 namespace ATS
 {
-    public class ATS_SandBoxRef<T> : IJsonSerializable
+    public class ATS_SandBoxRef<T> : IJsonSerializable, UCLI_FieldOnGUI
         where T : class, ATSI_SandBox, new()
     {
         /// <summary>
@@ -65,6 +67,18 @@ namespace ATS
             }
 
             //JsonConvert.LoadFieldFromJsonUnityVer(this, iJson);
+        }
+
+        /// <summary>
+        /// return new data if the data of field altered
+        /// </summary>
+        /// <param name="iFieldName"></param>
+        /// <param name="iEditTmpDatas"></param>
+        /// <returns></returns>
+        virtual public object OnGUI(string iFieldName, UCL_ObjectDictionary iDataDic, UCL_GUILayout.DrawObjectParams iParams)
+        {
+            GUILayout.Label($"{iFieldName}:{Index}", UCL_GUIStyle.LabelStyle);
+            return this;
         }
     }
 }

@@ -56,7 +56,7 @@ namespace ATS
         }
 
 
-        const int LogicIntervalMS = 30;
+        public const int LogicIntervalMS = 30;
 
 
         public ATS_AirShip m_AirShip = new ATS_AirShip();
@@ -91,23 +91,11 @@ namespace ATS
                 return;
             }
             SetGameState(GameState.Boot);
-            //m_Components.Add(m_AirShip);
             base.Init(iSandBox, iParent);
             AddComponent(m_AirShip);
-
-
-            //if (m_Inited)
-            //{
-            //    return;
-            //}
-            //m_Inited = true;
-            //m_Components.Add(m_AirShip);
-            //foreach(var aComponent in m_Components)
-            //{
-            //    aComponent.Init(iSandBox);
-            //}
-            //m_AirShip.Init(iSandBox);
-            UpdateLoop().Forget();
+            SetGameState(GameState.GameLoop);
+            m_StartTime = System.DateTime.Now;
+            //UpdateLoop().Forget();
 
         }
 
@@ -120,55 +108,55 @@ namespace ATS
         {
             m_End = true;
         }
-        private async UniTask UpdateLoop()
-        {
-            const int MaxUpdatePerFrame = 10;
-            m_StartTime = m_PrevUpdateTime = System.DateTime.Now;
-            //int aFrameCount = 0;
-            double aOffSet = 0f;
-            int updateTimes = 0;//
-            SetGameState(GameState.GameLoop);
-            while (!m_End)
-            {
-                var aNow = System.DateTime.Now;
-                double delMS = (aNow - m_PrevUpdateTime).TotalMilliseconds;
-                double del = (delMS + aOffSet) - LogicIntervalMS;
-                if (del >= 0)
-                {
-                    //aOffSet += delMS - LogicIntervalMS;
-                    //Debug.LogError($"aOffSet:{aOffSet}, del:{del}");
-                    aOffSet = del;
-                    if (!m_Pause)
-                    {
-                        GameUpdate();
-                    }
-                    //Debug.LogError($"GameUpdate() delMS:{delMS}");
-                    m_PrevUpdateTime = aNow;
+        //private async UniTask UpdateLoop()
+        //{
+        //    const int MaxUpdatePerFrame = 10;
+        //    m_StartTime = m_PrevUpdateTime = System.DateTime.Now;
+        //    //int aFrameCount = 0;
+        //    double aOffSet = 0f;
+        //    int updateTimes = 0;//
+        //    SetGameState(GameState.GameLoop);
+        //    while (!m_End)
+        //    {
+        //        var aNow = System.DateTime.Now;
+        //        double delMS = (aNow - m_PrevUpdateTime).TotalMilliseconds;
+        //        double del = (delMS + aOffSet) - LogicIntervalMS;
+        //        if (del >= 0)
+        //        {
+        //            //aOffSet += delMS - LogicIntervalMS;
+        //            //Debug.LogError($"aOffSet:{aOffSet}, del:{del}");
+        //            aOffSet = del;
+        //            if (!m_Pause)
+        //            {
+        //                GameUpdate();
+        //            }
+        //            //Debug.LogError($"GameUpdate() delMS:{delMS}");
+        //            m_PrevUpdateTime = aNow;
 
-                    //{
-                    //    var aTotal = (aNow - m_StartTime).TotalMilliseconds;
-                    //    ++aFrameCount;
-                    //    Debug.LogError($"aFrameCount:{aFrameCount},aTotal:{aTotal},Average:{aTotal / aFrameCount},aOffSet:{aOffSet}");
-                    //}
+        //            //{
+        //            //    var aTotal = (aNow - m_StartTime).TotalMilliseconds;
+        //            //    ++aFrameCount;
+        //            //    Debug.LogError($"aFrameCount:{aFrameCount},aTotal:{aTotal},Average:{aTotal / aFrameCount},aOffSet:{aOffSet}");
+        //            //}
 
-                }
-                //if(delMS < LogicIntervalMS)
-                //{
-                //    await Task.Delay(LogicIntervalMS - (int)delMS);
-                //}
-                //await Task.Delay(LogicIntervalMS);
-                if (updateTimes >= MaxUpdatePerFrame || aOffSet < LogicIntervalMS)
-                {
-                    updateTimes = 0;
-                    await UniTask.Yield();
-                }
-                else
-                {
-                    ++updateTimes;
-                }
+        //        }
+        //        //if(delMS < LogicIntervalMS)
+        //        //{
+        //        //    await Task.Delay(LogicIntervalMS - (int)delMS);
+        //        //}
+        //        //await Task.Delay(LogicIntervalMS);
+        //        if (updateTimes >= MaxUpdatePerFrame || aOffSet < LogicIntervalMS)
+        //        {
+        //            updateTimes = 0;
+        //            await UniTask.Yield();
+        //        }
+        //        else
+        //        {
+        //            ++updateTimes;
+        //        }
                 
-            }
-        }
+        //    }
+        //}
 
 
         //System.DateTime m_Test;

@@ -38,6 +38,11 @@ namespace ATS.Page
         protected UCL_ObjectDictionary m_Dic = new UCL_ObjectDictionary();
         protected ATS_SandBox m_SandBox = null;
         protected CancellationTokenSource m_CST = null;
+
+        private bool m_End = false;
+        private bool m_Pause = false;
+        private System.DateTime m_PrevUpdateTime;
+        private System.DateTime m_StartTime;
         #region RunTimeData
         const string RunTimeDataKey = "ATS_SandboxPage.RunTimeData";
 
@@ -94,7 +99,7 @@ namespace ATS.Page
         {
             m_SandBox = new ATS_SandBox();
             m_SandBox.Init();
-
+            UpdateLoop().Forget();
             InitSandBoxAsync().Forget();
         }
         private async UniTask InitSandBoxAsync()
@@ -145,6 +150,20 @@ namespace ATS.Page
                 //aSaveData.Load(SavePath);
                 m_SandBox.LoadGame(aSaveData);
             }
+            if (!m_Pause)
+            {
+                if (GUILayout.Button(UCL_LocalizeManager.Get("Pause"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
+                {
+                    m_Pause = true;
+                }
+            }
+            else
+            {
+                if (GUILayout.Button(UCL_LocalizeManager.Get("Play"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
+                {
+                    m_Pause = false;
+                }
+            }
         }
         /// <summary>
         /// 繪製選單 開啟其他編輯器
@@ -156,6 +175,44 @@ namespace ATS.Page
                 return;
             }
             m_SandBox.ContentOnGUI(m_Dic.GetSubDic("SandBox"));
+        }
+
+
+        private async UniTask UpdateLoop()
+        {
+            const int MaxUpdatePerFrame = 10;
+            m_StartTime = m_PrevUpdateTime = System.DateTime.Now;
+            //int aFrameCount = 0;
+            double aOffSet = 0f;
+            int updateTimes = 0;//
+
+            while (!m_End)
+            {
+                var aNow = System.DateTime.Now;
+                double delMS = (aNow - m_PrevUpdateTime).TotalMilliseconds;
+                double del = (delMS + aOffSet) - ATS_SandBox.LogicIntervalMS;
+                if (del >= 0)
+                {
+                    aOffSet = del;
+                    if (!m_Pause)
+                    {
+                        m_SandBox.GameUpdate();
+                    }
+                    m_PrevUpdateTime = aNow;
+
+                }
+
+                if (updateTimes >= MaxUpdatePerFrame || aOffSet < ATS_SandBox.LogicIntervalMS)
+                {
+                    updateTimes = 0;
+                    await UniTask.Yield();
+                }
+                else
+                {
+                    ++updateTimes;
+                }
+
+            }
         }
 
     }

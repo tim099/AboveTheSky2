@@ -77,7 +77,15 @@ namespace ATS
         /// <returns></returns>
         virtual public object OnGUI(string iFieldName, UCL_ObjectDictionary iDataDic, UCL_GUILayout.DrawObjectParams iParams)
         {
-            GUILayout.Label($"{iFieldName}:{Index}", UCL_GUIStyle.LabelStyle);
+            //GUILayout.Label($"{iFieldName}:{Index}", UCL_GUIStyle.LabelStyle);
+            if(m_Value != null)
+            {
+                UCL_GUILayout.DrawObjectData(m_Value, iDataDic.GetSubDic("Value"), $"{iFieldName}:{Index}");
+            }
+            else
+            {
+                GUILayout.Label($"{iFieldName}:{Index}", UCL_GUIStyle.LabelStyle);
+            }
             return this;
         }
     }

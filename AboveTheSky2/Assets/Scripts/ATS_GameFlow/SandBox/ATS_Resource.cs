@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UCL.Core;
+using UCL.Core.UI;
 using UnityEngine;
 
 namespace ATS
@@ -60,7 +61,7 @@ namespace ATS
 
 
         public Texture2D Texture => m_ResourceAmount.Texture;
-        public string GetShortName() => $"{m_ResourceAmount},{m_Pos}({m_State})";
+        public override string GetShortName() => $"{m_ResourceAmount},{m_Pos}({m_State})";
         public override string ToString() => GetShortName();
         public ATS_Resource() { }
         public ATS_Resource(string iID, int iAmount)
@@ -81,7 +82,16 @@ namespace ATS
             }
             var aRect = iGrid.GetCellRect(m_Pos.x - 0.5f * ResourceSize, m_Pos.y, ResourceSize, ResourceSize);
             //GUI.DrawTexture(aRect, aTexture);
+            
             GUI.DrawTexture(aRect, aTexture);
+            UCL_GUI.Label($"{m_ResourceAmount.m_Amount}", Color.black, aRect.position);
+
+            //var restoreColor = GUI.color;
+            //GUI.color = Color.black;
+            //string name = $"{m_ResourceAmount.m_Amount}";
+            //Vector2 size = GUI.skin.label.CalcSize(new GUIContent(name));
+            //GUI.Label(new Rect(aRect.x,aRect.y, size.x, size.y), name);
+            //GUI.color = restoreColor;
             //GUI.Label(aRect, $"{m_ResourceAmount.m_Amount}");
         }
         /// <summary>

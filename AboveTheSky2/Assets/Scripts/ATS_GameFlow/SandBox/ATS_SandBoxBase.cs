@@ -306,7 +306,7 @@ namespace ATS
             var aSaveKey = SaveKey;
             var aSaveType = aSaveKey.Item1;
             var aKey = aSaveKey.Item2;
-            Debug.LogError($"SaveGame ${GetType().FullName}, aSaveType:{aSaveType}");
+            Debug.LogError($"SaveGame {GetType().FullName}, aSaveType:{aSaveType}");
             //return null;
             switch (aSaveType)
             {
@@ -378,6 +378,7 @@ namespace ATS
     }
     public class ATS_Indexer : UCL.Core.JsonLib.UnityJsonSerializable
     {
+        const int MaxIndex = int.MaxValue - 1;
         //https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/indexers/
         // Define the indexer to allow client code to use [] notation.
         public ATSI_Index this[int i]
@@ -416,9 +417,9 @@ namespace ATS
                 //}
                 //else
                 {
-                    while (m_Items.ContainsKey(m_CurIndex))//避免重複Index
+                    do
                     {
-                        if(m_CurIndex < int.MaxValue - 1)
+                        if (m_CurIndex < MaxIndex)
                         {
                             ++m_CurIndex;
                         }
@@ -426,9 +427,10 @@ namespace ATS
                         {
                             m_CurIndex = 0;
                         }
-                    }
-                    iItem.Index = m_CurIndex++;
+                    } while (m_Items.ContainsKey(m_CurIndex));//避免重複Index
+                    iItem.Index = m_CurIndex;//m_CurIndex++;
                 }
+                //Debug.LogError($"{iItem.GetType().Name}, m_CurIndex:{m_CurIndex}, MaxIndex:{MaxIndex}");
             }
             m_Items[iItem.Index] = iItem;
         }

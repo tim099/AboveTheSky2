@@ -4,9 +4,11 @@
 		"ModResourcesData":{
 			"ModuleID":"Core",
 			"FolderPath":"Sprites/Creatures",
-			"FileName":"Boss01.png"
-		}
+			"FileName":"Witch01.png"
+		},
+		"FilterMode":"Bilinear"
 	},
-	"Width":0.30000001192092896,
-	"Height":0.60000002384185791
+	"Width":0.375,
+	"Height":0.60000002384185791,
+	"Vel":0.019999999552965164
 }

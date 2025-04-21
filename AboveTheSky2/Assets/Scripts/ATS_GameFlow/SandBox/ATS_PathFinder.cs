@@ -168,7 +168,7 @@ namespace ATS
         /// <summary>
         /// 終點位置(可為空)
         /// </summary>
-        public ATS_Vector3 m_FinalPos = null;
+        //public ATS_Vector3 m_FinalPos = null;
 
         public ATS_Path() { }
     }

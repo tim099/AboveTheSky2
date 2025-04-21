@@ -112,7 +112,7 @@ namespace ATS.Page
                 await UniTask.WaitForSeconds(0.5f, cancellationToken: token);
                 token.ThrowIfCancellationRequested();
             }
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 9; i++)
             {
                 m_SandBox.m_AirShip.SpawnResource();
                 await UniTask.WaitForSeconds(0.1f, cancellationToken: token);

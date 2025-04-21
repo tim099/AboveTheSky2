@@ -30,7 +30,10 @@ namespace ATS
         /// 高度(基於房間尺寸)
         /// </summary>
         public float m_Height = 0.5f;
-
+        /// <summary>
+        /// 移動速度
+        /// </summary>
+        public float m_Vel = 0.02f;
 
         public Texture2D Texture => m_Sprite.Texture;
 

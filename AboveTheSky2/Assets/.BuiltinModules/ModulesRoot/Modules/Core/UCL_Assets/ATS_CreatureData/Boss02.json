@@ -5,8 +5,10 @@
 			"ModuleID":"Core",
 			"FolderPath":"Sprites/Creatures",
 			"FileName":"Boss02.png"
-		}
+		},
+		"FilterMode":"Bilinear"
 	},
 	"Width":0.60000002384185791,
-	"Height":0.699999988079071
+	"Height":0.699999988079071,
+	"Vel":0.0099999997764825821
 }

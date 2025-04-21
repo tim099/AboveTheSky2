@@ -3,6 +3,7 @@
 // to change the auto header please go to ATS_AutoHeader.cs
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UCL.Core;
 using UCL.Core.MathLib;
 using UCL.Core.UI;
@@ -214,7 +215,26 @@ namespace ATS
                     }
                     return aTargetDistance - iNode.m_Distance;//尚未找到目標 回傳與目標的距離
                 }
-                m_MoveData.m_Path = PathFinder.SearchPath(m_Pos.x, m_Pos.y, CheckNode);
+                var path = m_MoveData.m_Path = PathFinder.SearchPath(m_Pos.x, m_Pos.y, CheckNode);
+                var finalPos = path.m_Path.LastOrDefault();
+                int count = path.m_Path.Count;
+                if (count >= 2)
+                {
+                    var del = finalPos.x - path.m_Path[count - 2].x;
+                    if(del > 0)
+                    {
+                        path.m_Path.Add(finalPos + new ATS_Vector3(Random.Range(0, 0.5f), 0, 0));
+                    }
+                    else
+                    {
+                        path.m_Path.Add(finalPos + new ATS_Vector3(Random.Range(-0.5f, 0), 0, 0));
+                    }
+                }
+                else
+                {
+                    path.m_Path.Add(finalPos + new ATS_Vector3(Random.Range(-0.5f, 0.5f), 0, 0));
+                }
+                
                 //Debug.LogError($"({m_Pos.x},{m_Pos.y}), m_Path:{m_Path.m_Path.ConcatString(iPos => $"{iPos.m_Pos.x},{iPos.m_Pos.y}")}");
             }
             else
@@ -235,8 +255,8 @@ namespace ATS
                 return true;
             }
             var aPath = aCurPath.m_Path;
-            const float Vel = 0.02f;
-            const float Offset = 1.5f * Vel;
+            float Vel = CreatureData.m_Vel; //0.02f;
+            float Offset = 1.5f * Vel;
             //已經到達當前目標位置 尋找下一個位置
             if (m_MoveData.m_TargetPos == null)
             {

@@ -46,7 +46,7 @@ namespace ATS
         /// <summary>
         /// 建造成本(建築被拆除時會返還)
         /// </summary>
-        [UCL.Core.PA.Conditional("m_RequireConstruct", false, true)]
+        [UCL.Core.PA.Conditional(nameof(m_RequireConstruct), false, true)]
         public ATS_Recipe m_ConstructCost = new ATS_Recipe();
 
         /// <summary>

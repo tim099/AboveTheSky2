@@ -1,6 +1,9 @@
 ﻿
 // ATS_AutoHeader
 // to change the auto header please go to ATS_AutoHeader.cs
+
+// ATS_AutoHeader
+// to change the auto header please go to ATS_AutoHeader.cs
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -72,6 +75,29 @@ namespace ATS
         /// 被摧毀狀態
         /// </summary>
         Destroyed,
+        /// <summary>
+        /// 建築中
+        /// </summary>
+        Constructing,
+    }
+    public enum ConstructingState
+    {
+        /// <summary>
+        /// 尚未開始建造
+        /// </summary>
+        None = 0,
+        /// <summary>
+        /// 搬運建造資源
+        /// </summary>
+        Haul,
+        /// <summary>
+        /// 建造建築(需要建築工)
+        /// </summary>
+        Build,
+        /// <summary>
+        /// 建造完成
+        /// </summary>
+        Done,
     }
     public class ATS_BuildingRef : ATS_SandBoxRef<ATS_Building>
     {
@@ -92,6 +118,10 @@ namespace ATS
         /// </summary>
         public ATS_Vector2Int m_Pos = new ATS_Vector2Int();
         public BuildingState m_BuildingState = BuildingState.Constructed;
+        /// <summary>
+        /// 建造階段
+        /// </summary>
+        public ConstructingState m_ConstructingState = ConstructingState.None;
         /// <summary>
         /// 避免過度頻繁的判斷部分邏輯(例如搬運工作)
         /// </summary>
@@ -144,6 +174,7 @@ namespace ATS
             Color? aGUIColor = null;
             switch (m_BuildingState)
             {
+                case BuildingState.Constructing:
                 case BuildingState.Blueprint:
                     {
                         aGUIColor = UCL_Color.Half.White;
@@ -174,6 +205,52 @@ namespace ATS
         public override void GameUpdate()
         {
             base.GameUpdate();
+
+            switch (m_BuildingState)
+            {
+                case BuildingState.Blueprint://需要等待建造完成
+                    {
+                        m_BuildingState = BuildingState.Constructing;//切換到建築中的狀態
+                        m_ConstructingState = ConstructingState.None;
+                        return;
+                    }
+                case BuildingState.Constructing:
+                    {
+                        switch (m_ConstructingState)
+                        {
+                            case ConstructingState.None:
+                                {
+                                    //TODO 判斷當前是否有足夠建造的資源
+                                    var cost = BuildingData.m_ConstructCost;
+                                    if (cost.m_Consume.IsNullOrEmpty())//不需要資源則跳過搬運資源階段
+                                    {
+                                        m_ConstructingState = ConstructingState.Build;
+                                    }
+                                    else//搬運所需資源
+                                    {
+                                        m_ConstructingState = ConstructingState.Haul;
+                                    }
+                                    break;
+                                }
+                            case ConstructingState.Haul://搬運所需資源
+                                {
+                                    break;
+                                }
+                            case ConstructingState.Build:
+                                {
+                                    break;
+                                }
+                        }
+
+
+                        //TODO 生成搬運資源的工作
+                        //TODO 開始建造
+                        return;
+                    }
+            }
+
+
+
             if (m_LogicTimer > 0)
             {
                 --m_LogicTimer;
@@ -181,6 +258,7 @@ namespace ATS
             else
             {
                 m_LogicTimer = LogicUpdateInterval;
+
                 if (BuildingData.IsStorage)//倉庫 判斷附近是否有能搬運的資源
                 {
                     bool SearchResource(Cell iCell, PathNode iPathNode)
@@ -197,13 +275,6 @@ namespace ATS
                     {
                         var aCell = aResult[0].Item1;
                         aCell.GenerateHaulJob(this);//生成搬運的工作
-                        //if (!aCell.Resources.IsNullOrEmpty())
-                        //{
-                        //    var aTarget = aCell.Resources[0];
-
-                        //    Debug.LogError($"ATS_Building.GameUpdate, aTarget:{aTarget}");
-                        //}
-                        
                     }
                     else
                     {

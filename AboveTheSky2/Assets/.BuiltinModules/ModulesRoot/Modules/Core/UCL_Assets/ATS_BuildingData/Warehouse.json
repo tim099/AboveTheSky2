@@ -1,6 +1,15 @@
 {
 	"RequireConstruct":"True",
 	"ConstructCost":{
+		"Consume":
+		[
+			{
+				"Resource":{
+					"ID":"Clay"
+				},
+				"Amount":100
+			}
+		],
 		"Work":100
 	},
 	"Sprite":{
@@ -12,6 +21,10 @@
 		},
 		"FilterMode":"Bilinear"
 	},
+	"BuildingTypes":
+	[
+		"Storage"
+	],
 	"GridData":{
 		"Width":2,
 		"Height":2,

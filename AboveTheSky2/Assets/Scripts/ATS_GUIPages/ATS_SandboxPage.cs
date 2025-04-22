@@ -93,17 +93,21 @@ namespace ATS.Page
             UCL.Core.UCL_ModResourcesService.ReleaseAll();
             base.Init(iGUIPageController);
             s_RunTimeData = LoadRunTimeData();
-            InitSandBox();
+            InitSandBox(false);
         }
-        private void InitSandBox()
+        private void InitSandBox(bool isLoadGame)
         {
             m_SandBox = new ATS_SandBox();
             m_SandBox.Init();
             UpdateLoop().Forget();
-            InitSandBoxAsync().Forget();
+            InitSandBoxAsync(isLoadGame).Forget();
         }
-        private async UniTask InitSandBoxAsync()
+        private async UniTask InitSandBoxAsync(bool isLoadGame)
         {
+            if (isLoadGame)
+            {
+                return;
+            }
             m_CST = new CancellationTokenSource();
             var token = m_CST.Token;
             for (int i = 0; i < 3; i++)
@@ -145,7 +149,7 @@ namespace ATS.Page
             }
             if (GUILayout.Button(UCL_LocalizeManager.Get("Load"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
             {
-                InitSandBox();
+                InitSandBox(true);
                 ATS_SaveData aSaveData = new ATS_SaveData(SavePath);
                 //aSaveData.Load(SavePath);
                 m_SandBox.LoadGame(aSaveData);

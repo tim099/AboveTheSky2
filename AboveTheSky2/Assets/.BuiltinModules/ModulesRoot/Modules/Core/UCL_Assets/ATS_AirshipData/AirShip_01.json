@@ -12,7 +12,9 @@
 				"x":4,
 				"y":5
 			},
-			"BuildingState":"Constructed"
+			"BuildingState":"Constructed",
+			"LogicTimer":0,
+			"Index":-1
 		},
 		{
 			"BuildingDataEntry":{
@@ -22,7 +24,9 @@
 				"x":5,
 				"y":5
 			},
-			"BuildingState":"Constructed"
+			"BuildingState":"Constructed",
+			"LogicTimer":0,
+			"Index":-1
 		},
 		{
 			"BuildingDataEntry":{
@@ -32,7 +36,9 @@
 				"x":5,
 				"y":6
 			},
-			"BuildingState":"Constructed"
+			"BuildingState":"Constructed",
+			"LogicTimer":0,
+			"Index":-1
 		},
 		{
 			"BuildingDataEntry":{
@@ -42,7 +48,45 @@
 				"x":5,
 				"y":2
 			},
-			"BuildingState":"Blueprint"
+			"BuildingState":"Blueprint",
+			"LogicTimer":0,
+			"Index":-1
+		},
+		{
+			"BuildingDataEntry":{
+				"ID":"Stair"
+			},
+			"Pos":{
+				"x":5,
+				"y":4
+			},
+			"BuildingState":"Constructed",
+			"LogicTimer":0,
+			"Index":-1
+		},
+		{
+			"BuildingDataEntry":{
+				"ID":"Stair"
+			},
+			"Pos":{
+				"x":4,
+				"y":3
+			},
+			"BuildingState":"Constructed",
+			"LogicTimer":0,
+			"Index":-1
+		},
+		{
+			"BuildingDataEntry":{
+				"ID":"Stair"
+			},
+			"Pos":{
+				"x":4,
+				"y":2
+			},
+			"BuildingState":"Constructed",
+			"LogicTimer":0,
+			"Index":-1
 		}
 	]
 }

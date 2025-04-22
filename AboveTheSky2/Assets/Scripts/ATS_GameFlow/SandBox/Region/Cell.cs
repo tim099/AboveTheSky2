@@ -127,7 +127,7 @@ namespace ATS
             }
             foreach (var aRes in m_Resources.ToList())
             {
-                Debug.LogError($"Cell.GenerateHaulJob, aRes:{aRes}");
+                //Debug.LogError($"Cell.GenerateHaulJob, aRes:{aRes}");
                 //aRes.SetState(ATS_Resource.ResourceState.PrepareToHaul);
                 
                 JobHauling aJobHauling = new JobHauling();

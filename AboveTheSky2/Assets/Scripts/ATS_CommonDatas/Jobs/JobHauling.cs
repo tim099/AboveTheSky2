@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace ATS
 {
+    /// <summary>
+    /// 搬運工作 把資源搬到倉庫or搬運建築生產材料
+    /// </summary>
     public class JobHauling : ATS_Job
     {
         public enum HaulingState
@@ -14,7 +17,13 @@ namespace ATS
             Haul,
             Hauling,
         }
+        /// <summary>
+        /// 要搬到哪裡(目標建築)
+        /// </summary>
         public ATS_BuildingRef m_Building = new();
+        /// <summary>
+        /// 要搬運的資源
+        /// </summary>
         public ATS_ResourceRef m_Resource = new();
         public HaulingState m_HaulingState = HaulingState.Init;
 
@@ -23,7 +32,7 @@ namespace ATS
         {
             m_Building.Value = iBuilding;
             m_Resource.Value = iResource;
-            m_Resource.Value.SetState(ATS_Resource.ResourceState.PrepareToHaul);
+            m_Resource.Value.SetState(ATS_Resource.ResourceState.PrepareToHaul);//避免被重複搬運
         }
 
         override public void WorkingUpdate(ATS_Minion iMinion)
@@ -67,7 +76,7 @@ namespace ATS
                         if (iMinion.MoveUpdate())//Move Complete
                         {
                             //搬運完成
-                            m_Resource.Value.AddToStorage();
+                            m_Resource.Value.AddToStorage();//TODO 搬運到建築內(非進入倉庫)
                             SetJobState(JobState.Complete);
                             //m_Completed = true;
                         }

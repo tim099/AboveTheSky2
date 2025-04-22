@@ -426,6 +426,7 @@ namespace ATS
         }
         /// <summary>
         /// SearchPath(BFS)
+        /// 尋找符合的目標並回傳路徑
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -434,8 +435,8 @@ namespace ATS
         /// <returns></returns>
         public ATS_Path SearchPath(float x, float y, System.Func<Cell, PathNode, int> iCheckFunc, int iMaxDistance = 999, int iMaxSearchTimes = 9999)
         {
-            HashSet<ATS_Vector2Int> aVisited = new ();
-            Queue<PathNode> aNodes = new Queue<PathNode>();
+            HashSet<ATS_Vector2Int> aVisited = new ();//檢查過的所有節點
+            Queue<PathNode> aNodes = new Queue<PathNode>();//當前搜尋節點
 
             var aStartPos = new ATS_Vector2Int(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
             PathNode aStart = new PathNode(aStartPos, null, 0);

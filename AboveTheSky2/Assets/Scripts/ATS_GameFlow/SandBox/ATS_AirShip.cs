@@ -110,7 +110,7 @@ namespace ATS
         }
         public void SpawnResource()
         {
-            int aTargetDistance = UCL_Random.Instance.Range(1, 6);
+            int aTargetDistance = UCL_Random.Instance.Range(1, 8);//目標最遠距離
             //return true if find target
             int CheckNode(Cell iCell, PathNode iNode)
             {
@@ -118,10 +118,12 @@ namespace ATS
                 {
                     return 0;
                 }
-                return aTargetDistance - iNode.m_Distance;
+                int val = aTargetDistance - iNode.m_Distance;
+                //Debug.LogError($"val:{val},iNode:{iNode.m_Pos},iNode.m_Distance:{iNode.m_Distance}");
+                return val - Random.Range(0, aTargetDistance);//+ 
             }
             var aPath = PathFinder.SearchPath(m_EntrancePos.x, m_EntrancePos.y, CheckNode);
-            //Debug.LogError($"({m_Pos.x},{m_Pos.y}), m_Path:{m_Path.m_Path.ConcatString(iPos => $"{iPos.m_Pos.x},{iPos.m_Pos.y}")}");
+            //Debug.LogError($"m_Path:{aPath.m_Path.ConcatString(iPos => $"{iPos.x},{iPos.y}")}");
 
 
             ATS_Resource aRes = new ATS_Resource(m_SpawnResType.m_ID, UCL_Random.Instance.Range(1, 99));

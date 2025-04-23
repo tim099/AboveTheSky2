@@ -75,8 +75,9 @@ namespace ATS
                     {
                         if (iMinion.MoveUpdate())//Move Complete
                         {
-                            //搬運完成
-                            m_Resource.Value.AddToStorage();//TODO 搬運到建築內(非進入倉庫)
+                            m_Building.Value.AddToStorage(m_Resource.Value);//搬運完成 存入建築內
+
+
                             SetJobState(JobState.Complete);
                             //m_Completed = true;
                         }

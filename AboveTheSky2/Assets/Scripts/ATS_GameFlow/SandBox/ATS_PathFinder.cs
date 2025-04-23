@@ -506,7 +506,7 @@ namespace ATS
         /// <param name="iMaxDistance"></param>
         /// <param name="iMaxSearchTimes"></param>
         /// <returns></returns>
-        public List<(Cell, PathNode)> Search(float x, float y, System.Func<Cell, PathNode, bool> iCheckFunc, int iSearchCount = 1, int iMaxDistance = 999, int iMaxSearchTimes = 9999)
+        public List<(Cell cell, PathNode node)> Search(float x, float y, System.Func<Cell, PathNode, bool> iCheckFunc, int iSearchCount = 1, int iMaxDistance = 999, int iMaxSearchTimes = 9999)
         {
             HashSet<ATS_Vector2Int> aVisited = new ();
             Queue<PathNode> aNodes = new Queue<PathNode>();

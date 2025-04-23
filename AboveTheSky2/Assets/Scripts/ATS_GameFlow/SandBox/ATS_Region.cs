@@ -18,6 +18,9 @@ namespace ATS
             public RegionCells m_Cells = new RegionCells();
             public RegionBuildings m_Buildings = new RegionBuildings();
             public RegionMinions m_Minions = new RegionMinions();
+            /// <summary>
+            /// Region內所有已儲存的資源
+            /// </summary>
             public RegionResources m_Resources = new RegionResources();
             public RegionJobs m_Jobs = new RegionJobs();
 
@@ -406,6 +409,7 @@ namespace ATS
         public Dictionary<ATS_ResourceEntry, int> m_StorageResources = new Dictionary<ATS_ResourceEntry, int>();
 
         public override (SaveType, string) SaveKey => (SaveType.File, "RegionResources");
+
         public override JsonData SaveMain()
         {
             return SerializeToJson();
@@ -435,6 +439,50 @@ namespace ATS
             RemoveComponent(iResource);
             AddToStorage(iResource.m_ResourceAmount.m_Resource, iResource.m_ResourceAmount.m_Amount);
         }
+        /// <summary>
+        /// 銷毀資源(當被存放到建築時呼叫)
+        /// </summary>
+        /// <param name="iResource"></param>
+        public void RemoveResource(ATS_Resource iResource)
+        {
+            m_Resources.Remove(iResource);
+            RemoveComponent(iResource);
+        }
+        /// <summary>
+        /// 在指定位置(倉庫)取出資源
+        /// </summary>
+        /// <param name="resAmount"></param>
+        public ATS_Resource TakeResource(ResourceAmount resAmount, float x, float y)
+        {
+            var resType = resAmount.m_Resource;
+            int amount = resAmount.m_Amount;
+            //檢查是否有足夠資源 足夠時扣除資源
+            if (m_StorageResources.TryGetValue(resType, out int val))
+            {
+                if(val < amount)//數量不足
+                {
+                    Debug.LogError($"{GetType().Name}.TakeResource , resource:{resType.ID}, val:{val} < amount:{amount}");
+                    return null;
+                }
+                m_StorageResources[resType] -= amount;//扣除資源
+            }
+            else//資源不足 取出失敗
+            {
+                Debug.LogError($"{GetType().Name}.TakeResource ,no resource:{resAmount.m_Resource.ID}!!");
+                return null;
+            }
+            ATS_Resource res = new(resType.ID, amount);//生成資源
+
+            res.m_Pos.x = x; 
+            res.m_Pos.y = y;
+            p_SandBox.Region.SpawnResource(res);//將資源物件生成到區域中
+            return res;
+        }
+        /// <summary>
+        /// 存入資源
+        /// </summary>
+        /// <param name="iRes"></param>
+        /// <param name="iAmount"></param>
         public void AddToStorage(ATS_ResourceEntry iRes, int iAmount)
         {
             if (!m_StorageResources.ContainsKey(iRes))

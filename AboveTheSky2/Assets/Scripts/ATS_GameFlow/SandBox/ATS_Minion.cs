@@ -192,7 +192,7 @@ namespace ATS
                     var aResult = PathFinder.Search(m_Pos.x, m_Pos.y, SearchJob);
                     if (!aResult.IsNullOrEmpty())
                     {
-                        var aCell = aResult[0].Item1;
+                        var aCell = aResult[0].cell;
                         if(!aCell.m_Jobs.IsNullOrEmpty())//找到工作
                         {
                             var aJob = aCell.m_Jobs[0];

@@ -52,7 +52,18 @@ namespace ATS
             }
         }
         public ATS_TileData TileData => m_TileDataEntry.GetData();
-
+        /// <summary>
+        /// 是否為可用的倉庫(可取出資源)
+        /// </summary>
+        public bool IsStorage
+        {
+            get
+            {
+                var building = m_Building.Value;
+                if(building == null)return false;
+                return building.IsStorage;
+            }
+        }
 
         public string GetShortName() => $"Cell[{m_Pos}]";
         public Cell() { }

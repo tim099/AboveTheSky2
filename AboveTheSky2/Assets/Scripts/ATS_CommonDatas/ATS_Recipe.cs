@@ -84,5 +84,28 @@ namespace ATS
             ID = "New Recipe";
         }
         #endregion
+
+        /// <summary>
+        /// 判斷資源是否滿足m_Consume需求
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckResourceEnough(Dictionary<ATS_ResourceEntry, int> storageResources)
+        {
+            foreach (var resource in m_Consume)
+            {
+                if (storageResources.TryGetValue(resource.m_Resource, out int amount))
+                {
+                    if(amount < resource.m_Amount)
+                    {
+                        return false;//資源數量不足
+                    }
+                }
+                else
+                {
+                    return false;//缺少此項資源
+                }
+            }
+            return true;//滿足m_Consume需求
+        }
     }
 }

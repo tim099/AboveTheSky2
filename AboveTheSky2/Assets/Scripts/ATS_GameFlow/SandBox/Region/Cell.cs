@@ -143,9 +143,11 @@ namespace ATS
                 
                 JobHauling aJobHauling = new JobHauling();
                 aJobHauling.Init(iBuilding, aRes);
-                iBuilding.Region.Data.m_Jobs.Add(aJobHauling);
+                iBuilding.Region.AddJob(aJobHauling, this);
+
+                //iBuilding.Region.Data.m_Jobs.Add(aJobHauling);
                 
-                m_Jobs.Add(new ATS_JobRef(aJobHauling));
+                //m_Jobs.Add(new ATS_JobRef(aJobHauling));//把工作註冊到這個Cell 才能被搜尋到
             }
 
         }

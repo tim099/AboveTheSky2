@@ -42,7 +42,7 @@ namespace ATS
         virtual public string TypeName => typeof(T).Name;
 
         private T m_Value = null;
-
+        public override string ToString() => $"{base.ToString()}[{Index}]";
         virtual public JsonData SerializeToJson()
         {
             //m_Index = Index;
@@ -68,7 +68,10 @@ namespace ATS
 
             //JsonConvert.LoadFieldFromJsonUnityVer(this, iJson);
         }
-
+        virtual public string GetDisplayName(string iFieldName)
+        {
+            return $"[{Index}]{iFieldName}";
+        }
         /// <summary>
         /// return new data if the data of field altered
         /// </summary>
@@ -80,11 +83,11 @@ namespace ATS
             //GUILayout.Label($"{iFieldName}:{Index}", UCL_GUIStyle.LabelStyle);
             if(m_Value != null)
             {
-                UCL_GUILayout.DrawObjectData(m_Value, iDataDic.GetSubDic("Value"), $"{iFieldName}:{Index}");
+                UCL_GUILayout.DrawObjectData(m_Value, iDataDic.GetSubDic("Value"), GetDisplayName(iFieldName));
             }
             else
             {
-                GUILayout.Label($"{iFieldName}:{Index}", UCL_GUIStyle.LabelStyle);
+                GUILayout.Label(GetDisplayName(iFieldName), UCL_GUIStyle.LabelStyle);
             }
             return this;
         }

@@ -13,8 +13,17 @@ namespace ATS
     /// <summary>
     /// Sanbox中使用的實際Job
     /// </summary>
-    public class ATS_Job : ATS_SandBoxBase, UCLI_TypeList
+    [UCL.Core.ATTR.UCL_IgnoreInTypeListable]
+    public class ATS_Job : ATS_SandBoxBase, UCLI_TypeListable
     {
+
+        /// <summary>
+        /// 作為自動賦予Index的Key 有相同TypeName的類型會共用同一組Indexer
+        /// UCLI_TypeListable都要特別處理 因為不同Type要共用TypeName
+        /// </summary>
+        public override string TypeName => typeof(ATS_Job).Name;
+
+
         public enum JobState
         {
             /// <summary>
@@ -35,21 +44,22 @@ namespace ATS
             Complete,
         }
 
-        #region Interface
-        static List<System.Type> s_Types = null;
-        virtual public IList<System.Type> GetAllTypes()
-        {
-            if(s_Types == null)
-            {
-                s_Types = new List<System.Type>();
-                s_Types.Add(typeof(JobHauling));
-            }
-            return s_Types;
-        }
-        #endregion
+        //#region Interface
+        //static List<System.Type> s_Types = null;
+        //virtual public IList<System.Type> GetAllTypes()
+        //{
+        //    if(s_Types == null)
+        //    {
+        //        s_Types = new List<System.Type>();
+        //        s_Types.Add(typeof(JobHauling));
+        //    }
+        //    return s_Types;
+        //}
+        //#endregion
 
         public JobState m_JobState = JobState.Pending;
 
+        public ATS_MinionRef m_Worker = new();
         /// <summary>
         /// 工作已完成
         /// </summary>
@@ -58,20 +68,21 @@ namespace ATS
         /// 工作中斷
         /// </summary>
         public bool Cancel => m_JobState == JobState.Cancel;
-        public override string TypeName => typeof(ATS_Job).Name;
+        
 
         /// <summary>
         /// 開始執行工作
         /// </summary>
-        virtual public void Start()
+        virtual public void Start(ATS_Minion worker)
         {
+            m_Worker.Value = worker;
             SetJobState(JobState.Working);
         }
         virtual public void End()
         {
             Region.Data.m_Jobs.Remove(this);
         }
-        virtual public void WorkingUpdate(ATS_Minion iMinion)
+        virtual public void WorkingUpdate()
         {
 
         }
@@ -110,40 +121,40 @@ namespace ATS
     /// <summary>
     /// 工作(例如 搬運 建造)
     /// </summary>
-    public class ATS_JobData : UCL_Asset<ATS_JobData>
-    {
-        /// <summary>
-        /// 工作類型
-        /// </summary>
-        public enum JobType
-        {
-            /// <summary>
-            /// 搬運
-            /// </summary>
-            Haul,
+    //public class ATS_JobData : UCL_Asset<ATS_JobData>
+    //{
+    //    /// <summary>
+    //    /// 工作類型
+    //    /// </summary>
+    //    public enum JobType
+    //    {
+    //        /// <summary>
+    //        /// 搬運
+    //        /// </summary>
+    //        Haul,
 
-            /// <summary>
-            /// 工作(包含建造等在建築內作業的工作)
-            /// </summary>
-            Work,
-        }
-
-
-        public JobType m_JobType = JobType.Haul;
-
-        public override void Preview(UCL_ObjectDictionary iDataDic, bool iIsShowEditButton = false)
-        {
-            base.Preview(iDataDic, iIsShowEditButton);
-        }
-    }
-    public class ATS_JobEntry : UCL_AssetEntryDefault<ATS_JobData>
-    {
-        public const string DefaultID = "Haul";
+    //        /// <summary>
+    //        /// 工作(包含建造等在建築內作業的工作)
+    //        /// </summary>
+    //        Work,
+    //    }
 
 
-        public ATS_JobEntry() { m_ID = DefaultID; }
-        public ATS_JobEntry(string iID) { m_ID = iID; }
+    //    public JobType m_JobType = JobType.Haul;
+
+    //    public override void Preview(UCL_ObjectDictionary iDataDic, bool iIsShowEditButton = false)
+    //    {
+    //        base.Preview(iDataDic, iIsShowEditButton);
+    //    }
+    //}
+    //public class ATS_JobEntry : UCL_AssetEntryDefault<ATS_JobData>
+    //{
+    //    public const string DefaultID = "Haul";
 
 
-    }
+    //    public ATS_JobEntry() { m_ID = DefaultID; }
+    //    public ATS_JobEntry(string iID) { m_ID = iID; }
+
+
+    //}
 }

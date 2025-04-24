@@ -43,6 +43,10 @@ namespace ATS.Page
         private bool m_Pause = false;
         private System.DateTime m_PrevUpdateTime;
         private System.DateTime m_StartTime;
+        /// <summary>
+        /// 標記要讀檔
+        /// </summary>
+        private bool m_LoadGame = false;
         #region RunTimeData
         const string RunTimeDataKey = "ATS_SandboxPage.RunTimeData";
 
@@ -72,15 +76,12 @@ namespace ATS.Page
         #endregion
         public override void OnClose()
         {
-            if(m_CST != null)
-            {
-                m_CST.Cancel();
-                m_CST.Dispose();
-            }
+            Cancel();
             if(m_SandBox != null)
             {
                 m_SandBox.End();
             }
+            m_End = true;
             base.OnClose();
         }
         public override void OnPause()
@@ -97,8 +98,12 @@ namespace ATS.Page
         }
         private void InitSandBox(bool isLoadGame)
         {
+            Cancel();
+
             m_SandBox = new ATS_SandBox();
             m_SandBox.Init();
+            m_SandBox.GameInit();
+
             UpdateLoop().Forget();
             InitSandBoxAsync(isLoadGame).Forget();
         }
@@ -122,6 +127,16 @@ namespace ATS.Page
                 await UniTask.WaitForSeconds(0.1f, cancellationToken: token);
                 token.ThrowIfCancellationRequested();
             }
+        }
+        private void Cancel()
+        {
+            if(m_CST == null)
+            {
+                return;
+            }
+            if(!m_CST.IsCancellationRequested) m_CST.Cancel();
+            m_CST.Dispose();
+            m_CST = null;
         }
         private string SaveFolder => Path.Combine(Application.persistentDataPath, "Saves");
         private string SavePath => Path.Combine(SaveFolder, "Save01");
@@ -149,10 +164,8 @@ namespace ATS.Page
             }
             if (GUILayout.Button(UCL_LocalizeManager.Get("Load"), UCL_GUIStyle.ButtonStyle, GUILayout.ExpandWidth(false)))
             {
-                InitSandBox(true);
-                ATS_SaveData aSaveData = new ATS_SaveData(SavePath);
-                //aSaveData.Load(SavePath);
-                m_SandBox.LoadGame(aSaveData);
+                m_LoadGame = true;
+                Cancel();
             }
             if (!m_Pause)
             {
@@ -215,7 +228,17 @@ namespace ATS.Page
                 {
                     ++updateTimes;
                 }
+                if (m_LoadGame)
+                {
+                    m_SandBox = new ATS_SandBox();
+                    m_SandBox.Init();
 
+                    ATS_SaveData aSaveData = new ATS_SaveData(SavePath);
+                    //aSaveData.Load(SavePath);
+                    m_SandBox.LoadGame(aSaveData);
+                    m_LoadGame = false;
+                    //return;//中斷Loop
+                }
             }
         }
 

@@ -49,10 +49,12 @@ namespace ATS
             m_AirshipData = aAirshipDataEntry.GetData(false);
             var aRegion = m_AirshipData.m_Region.GetData(false);
             m_Region = new ATS_Region(aRegion);
-            AddComponent(m_Region);          
-
-
-            foreach(var aBuilding in m_AirshipData.m_Buildings)//建造預設建築
+            AddComponent(m_Region);   
+        }
+        public override void GameInit()
+        {
+            base.GameInit();
+            foreach (var aBuilding in m_AirshipData.m_Buildings)//建造預設建築
             {
                 try
                 {
@@ -64,13 +66,18 @@ namespace ATS
                     }
                     m_Region.Build(aNewBuilding);//建造並設定為已建造完成
                 }
-                catch(System.Exception ex)
+                catch (System.Exception ex)
                 {
                     Debug.LogException(ex);
                 }
             }
+        }
+        public override void LoadGame(ATS_SaveData iSaveData)
+        {
+            base.LoadGame(iSaveData);
+            //m_Region = new();
+            //AddComponent(m_Region);
 
-            //throw new System.Exception("Test");
         }
 
         /// <summary>

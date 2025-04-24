@@ -35,14 +35,15 @@ namespace ATS
             m_Resource.Value.SetState(ATS_Resource.ResourceState.PrepareToHaul);//避免被重複搬運
         }
 
-        override public void WorkingUpdate(ATS_Minion iMinion)
+        override public void WorkingUpdate()
         {
+            ATS_Minion worker = m_Worker.Value;
             switch (m_HaulingState)
             {
                 case HaulingState.Init:
                     {
                         //走到資源位置
-                        var aPath = iMinion.PathFinder.FindPath(iMinion.m_Pos, m_Resource.Value.m_Pos);
+                        var aPath = worker.PathFinder.FindPath(worker.m_Pos, m_Resource.Value.m_Pos);
                         if (aPath == null)//找不到前往資源的路
                         {
                             SetJobState(JobState.Cancel);
@@ -50,14 +51,14 @@ namespace ATS
                             //中斷
                             return;
                         }
-                        iMinion.m_MoveData.m_Path = aPath;
+                        worker.m_MoveData.m_Path = aPath;
 
                         m_HaulingState = HaulingState.MoveToResource;
                         break;
                     }
                 case HaulingState.MoveToResource:
                     {
-                        if (iMinion.MoveUpdate())//Move Complete
+                        if (worker.MoveUpdate())//Move Complete
                         {
                             m_Resource.Value.SetState(ATS_Resource.ResourceState.Hauling);
                             m_HaulingState = HaulingState.Haul;
@@ -66,14 +67,14 @@ namespace ATS
                     }
                 case HaulingState.Haul:
                     {
-                        var aPath = iMinion.PathFinder.FindPath(iMinion.m_Pos, m_Building.Value.m_Pos.ToATS_Vector3);
-                        iMinion.m_MoveData.m_Path = aPath;
+                        var aPath = worker.PathFinder.FindPath(worker.m_Pos, m_Building.Value.m_Pos.ToATS_Vector3);
+                        worker.m_MoveData.m_Path = aPath;
                         m_HaulingState = HaulingState.Hauling;
                         break;
                     }
                 case HaulingState.Hauling:
                     {
-                        if (iMinion.MoveUpdate())//Move Complete
+                        if (worker.MoveUpdate())//Move Complete
                         {
                             m_Building.Value.AddToStorage(m_Resource.Value);//搬運完成 存入建築內
 
@@ -83,7 +84,7 @@ namespace ATS
                         }
                         else//搬運中
                         {
-                            m_Resource.Value.m_Pos.Set(iMinion.m_Pos + new ATS_Vector3(0, iMinion.Height - 0.5f * ATS_Resource.ResourceSize, 0));
+                            m_Resource.Value.m_Pos.Set(worker.m_Pos + new ATS_Vector3(0, worker.Height - 0.5f * ATS_Resource.ResourceSize, 0));
                         }
                         break;
                     }

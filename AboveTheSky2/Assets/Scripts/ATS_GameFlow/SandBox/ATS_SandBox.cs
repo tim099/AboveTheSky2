@@ -65,15 +65,15 @@ namespace ATS
         [SerializeField]
         protected Dictionary<string, ATS_Indexer> m_SandBoxItems = new ();
 
-        private bool m_End = false;
-        private bool m_Pause = false;
-        //private float m_TimeScale = 1f;
-
 
         private System.DateTime m_PrevUpdateTime;
         private System.DateTime m_StartTime;
         private List<System.Action> m_OnLoadEndAction = new List<System.Action>();
-
+        /// <summary>
+        /// 每次Update時+1
+        /// </summary>
+        public long m_Timer = 0;
+        //TODO 可以設定要在Timer等於特定值時執行的事
 
         override public GameState CurGameState => m_GameState;
         public override (SaveType, string) SaveKey => (SaveType.Folder, "SandBox");
@@ -99,73 +99,28 @@ namespace ATS
 
         }
 
-
+        public override void GameInit()
+        {
+            base.GameInit();
+        }
         public void SetGameState(GameState gameState)
         {
             m_GameState = gameState;
         }
         public void End()
         {
-            m_End = true;
+            //m_End = true;
         }
-        //private async UniTask UpdateLoop()
-        //{
-        //    const int MaxUpdatePerFrame = 10;
-        //    m_StartTime = m_PrevUpdateTime = System.DateTime.Now;
-        //    //int aFrameCount = 0;
-        //    double aOffSet = 0f;
-        //    int updateTimes = 0;//
-        //    SetGameState(GameState.GameLoop);
-        //    while (!m_End)
-        //    {
-        //        var aNow = System.DateTime.Now;
-        //        double delMS = (aNow - m_PrevUpdateTime).TotalMilliseconds;
-        //        double del = (delMS + aOffSet) - LogicIntervalMS;
-        //        if (del >= 0)
-        //        {
-        //            //aOffSet += delMS - LogicIntervalMS;
-        //            //Debug.LogError($"aOffSet:{aOffSet}, del:{del}");
-        //            aOffSet = del;
-        //            if (!m_Pause)
-        //            {
-        //                GameUpdate();
-        //            }
-        //            //Debug.LogError($"GameUpdate() delMS:{delMS}");
-        //            m_PrevUpdateTime = aNow;
 
-        //            //{
-        //            //    var aTotal = (aNow - m_StartTime).TotalMilliseconds;
-        //            //    ++aFrameCount;
-        //            //    Debug.LogError($"aFrameCount:{aFrameCount},aTotal:{aTotal},Average:{aTotal / aFrameCount},aOffSet:{aOffSet}");
-        //            //}
-
-        //        }
-        //        //if(delMS < LogicIntervalMS)
-        //        //{
-        //        //    await Task.Delay(LogicIntervalMS - (int)delMS);
-        //        //}
-        //        //await Task.Delay(LogicIntervalMS);
-        //        if (updateTimes >= MaxUpdatePerFrame || aOffSet < LogicIntervalMS)
-        //        {
-        //            updateTimes = 0;
-        //            await UniTask.Yield();
-        //        }
-        //        else
-        //        {
-        //            ++updateTimes;
-        //        }
-                
-        //    }
-        //}
-
-
-        //System.DateTime m_Test;
         /// <summary>
         /// Logic base update
         /// </summary>
         override public void GameUpdate()
         {
+            //Debug.LogError($"GameUpdate():{++m_Test}");
+
             base.GameUpdate();
+            ++m_Timer;
             //var aNow = System.DateTime.Now;
             //Debug.LogError($"GameUpdate() TotalMilliseconds:{(aNow - m_Test).TotalMilliseconds}");
             //m_Test = aNow;
@@ -180,7 +135,7 @@ namespace ATS
         /// </summary>
         override public void ContentOnGUI(UCL_ObjectDictionary iDic)
         {
-            GUILayout.Label($"SandBox Time:{(System.DateTime.Now - m_StartTime).TotalSeconds}", UCL_GUIStyle.LabelStyle);
+            GUILayout.Label($"Timer:{m_Timer}, SandBox Time:{(System.DateTime.Now - m_StartTime).TotalSeconds}", UCL_GUIStyle.LabelStyle);
             GUILayout.BeginHorizontal();
             GUILayout.Label("CurGameState", UCL_GUIStyle.LabelStyle, GUILayout.ExpandWidth(false));
             m_GameState = UCL_GUILayout.PopupAuto(CurGameState, iDic, "GameState");

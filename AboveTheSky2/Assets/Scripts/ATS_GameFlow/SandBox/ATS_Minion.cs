@@ -73,8 +73,11 @@ namespace ATS
         /// </summary>
         public ATS_Vector2Int PosInt => m_Pos.ToVector2Int;
 
-        
 
+        public List<(PathState, ATS_Vector2Int)> m_DebugPaths = new();
+        public PathState m_Dir = PathState.None;
+        public float m_VelX = 0f;
+        public float m_VelY = 0f;
 
         public ATS_Minion() { }
         public ATS_Minion(string iID, float iX, float iY) {
@@ -103,12 +106,11 @@ namespace ATS
         #endregion
 
 
+        public override string GetShortName()
+        {
+            return $"({Index}){m_CreatureDataEntry.ID}({m_Pos})";
+        }
 
-
-        public List<(PathState, ATS_Vector2Int)> m_DebugPaths = new ();
-        public PathState m_Dir = PathState.None;
-        public float m_VelX = 0f;
-        public float m_VelY = 0f;
         public override void ContentOnGUI(UCL_ObjectDictionary iDic)
         {
             DrawOnGrid(RegionGrid);
@@ -165,9 +167,9 @@ namespace ATS
             }
             if(aCurJob.m_JobState == ATS_Job.JobState.Pending)
             {
-                aCurJob.Start();
+                aCurJob.Start(this);
             }
-            aCurJob.WorkingUpdate(this);
+            aCurJob.WorkingUpdate();
             if(aCurJob.Complete || aCurJob.Cancel)//工作已完成 或 取消
             {
                 m_Jobs.RemoveAt(0);
@@ -336,6 +338,19 @@ namespace ATS
                 GUI.DrawTexture(aRect, ATS_StaticTextures.White);
                 UCL_GUIStyle.PopGUIColor();
             }
+        }
+    }
+
+    public class ATS_MinionRef : ATS_SandBoxRef<ATS_Minion>
+    {
+        public override string GetDisplayName(string iFieldName)
+        {
+            var data = Value;
+            if (data != null)
+            {
+                return $"[{Index}]{iFieldName}({data.GetShortName()})";
+            }
+            return $"[{Index}]{iFieldName}";
         }
     }
 }

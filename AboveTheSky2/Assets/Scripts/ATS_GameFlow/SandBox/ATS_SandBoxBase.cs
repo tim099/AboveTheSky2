@@ -18,6 +18,10 @@ namespace ATS
     {
         void Init(ATS_SandBox iSandBox, ATSI_SandBox iParent);
         /// <summary>
+        /// 只在遊戲開始時觸發的初始化(讀檔時略過)
+        /// </summary>
+        void GameInit();
+        /// <summary>
         /// Logic base update
         /// </summary>
         void GameUpdate();
@@ -45,7 +49,9 @@ namespace ATS
     public class ATS_SandBoxBase : UCL.Core.JsonLib.UnityJsonSerializable, ATSI_SandBox, UCLI_FieldOnGUI, UCLI_ShortName
     {
         public const string MainFileKey = "Main";
-
+        /// <summary>
+        /// 最上層的SandBox
+        /// </summary>
         public ATS_SandBox p_SandBox { get; private set; } = null;
         public ATSI_SandBox Parent { get; private set; } = null;
 
@@ -60,6 +66,9 @@ namespace ATS
                 return null;//p_SandBox.GetAirShipRegionGrid();
             }
         }
+        /// <summary>
+        /// 當前所處的Region(可以有多個Region)
+        /// </summary>
         virtual public ATS_Region Region
         {
             get
@@ -155,6 +164,16 @@ namespace ATS
             //    aComponent.Init(iSandBox);
             //}
         }
+        /// <summary>
+        /// 只在遊戲開始時觸發的初始化(讀檔時略過)
+        /// </summary>
+        virtual public void GameInit()
+        {
+            foreach (var aComponent in m_Components)
+            {
+                aComponent.GameInit();
+            }
+        }
         virtual public void AddComponent(ATSI_SandBox iComponent)
         {
             try
@@ -235,7 +254,6 @@ namespace ATS
             base.DeserializeFromJson(iJson);
         }
         #region Save & Load
-        const string ComponentsKey = "Components";
 
         virtual public JsonData SaveMain()
         {

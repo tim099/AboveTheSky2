@@ -105,7 +105,15 @@ namespace ATS
     }
     public class ATS_BuildingRef : ATS_SandBoxRef<ATS_Building>
     {
-
+        public override string GetDisplayName(string iFieldName)
+        {
+            var data = Value;
+            if(data != null)
+            {
+                return $"[{Index}]{iFieldName}({data.GetShortName()})";
+            }
+            return $"[{Index}]{iFieldName}";
+        }
     }
     /// <summary>
     /// Sandbox中使用的建築
@@ -129,10 +137,31 @@ namespace ATS
         /// 建造階段
         /// </summary>
         public ConstructingState m_ConstructingState = ConstructingState.None;
+        //{
+        //    get
+        //    {
+        //        return _ConstructingState;
+        //    }
+        //    set
+        //    {
+        //        //if (_ConstructingState != value)
+        //        {
+        //            Debug.LogError($"({Index}){GetShortName()}({m_BuildingState}), _ConstructingState:{_ConstructingState}, value:{value}");
+        //        }
+                
+        //        _ConstructingState = value;
+        //    }
+        //}
+        //public ConstructingState _ConstructingState;
         /// <summary>
         /// 避免過度頻繁的判斷部分邏輯(例如搬運工作)
         /// </summary>
         public int m_LogicTimer = 0;
+
+        /// <summary>
+        /// 目前的工作隊列
+        /// </summary>
+        public List<ATS_WorkRef> m_Works = new();
 
         /// <summary>
         /// 所有儲藏在區域內的資源
@@ -170,14 +199,6 @@ namespace ATS
             return BuildingData.GetPathState(x - m_Pos.x, y - m_Pos.y);//傳入相對位置
         }
 
-
-
-        public override void DeserializeFromJson(JsonData iJson)
-        {
-            base.DeserializeFromJson(iJson);
-            //m_Pos.m_X = m_X;
-            //m_Pos.m_Y = m_Y;
-        }
 
         /// <summary>
         /// 根據ATS_RegionGrid繪製在GUI上
@@ -251,7 +272,15 @@ namespace ATS
         public override void GameUpdate()
         {
             base.GameUpdate();
-
+            try
+            {
+                m_Works.UpdateWork();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"{GetShortName()},ex:{e}");
+            }
+            
 
             if (m_LogicTimer > 0)
             {
@@ -266,77 +295,17 @@ namespace ATS
                     case BuildingState.Blueprint://需要等待建造完成
                         {
                             m_BuildingState = BuildingState.Constructing;//切換到建築中的狀態
+                            var work = new ATS_WorkConstruct();
+                            work.m_Target.Value = this;
+                            Region.Data.m_Jobs.Add(work);//註冊工作
+                            m_Works.Add(new ATS_WorkRef(work));//記錄到當前工作隊列
+
                             m_ConstructingState = ConstructingState.None;
                             break;
                         }
                     case BuildingState.Constructing:
                         {
-                            switch (m_ConstructingState)
-                            {
-                                case ConstructingState.None:
-                                    {
-                                        //TODO 判斷當前是否有足夠建造的資源
-                                        var cost = BuildingData.m_ConstructCost;
-                                        if (cost.m_Consume.IsNullOrEmpty())//不需要資源則跳過搬運資源階段
-                                        {
-                                            m_ConstructingState = ConstructingState.Build;
-                                        }
-                                        else//搬運所需資源
-                                        {
-                                            m_ConstructingState = ConstructingState.Haul;
-                                        }
-                                        break;
-                                    }
-                                case ConstructingState.Haul://搬運所需資源
-                                    {
-                                        //只在所有資源滿足時開始搬運
-                                        ATS_Recipe cost = BuildingData.m_ConstructCost;
-                                        if (cost.CheckResourceEnough(Region.Data.m_Resources.m_StorageResources))//先確認是否滿足建造資源需求
-                                        {
-                                            Debug.LogError($"cost.CheckResourceEnough");
-                                            bool SearchStorage(Cell iCell, PathNode iPathNode)
-                                            {
-                                                return iCell.IsStorage;
-                                            }
-                                            //先確定有到達倉庫的路徑
-                                            var result = Region.PathFinder.Search(m_Pos.x, m_Pos.y, SearchStorage);
-                                            if (!result.IsNullOrEmpty())//有到達倉庫的路徑
-                                            {
-                                                var cell = result[0].cell;
-                                                var storage = cell.m_Building.Value;//倉庫建築
-                                                //從倉庫取出資源
-                                                Debug.LogError($"storage:{storage.BuildingData.ID},Pos:{cell.m_Pos}");
-
-                                                //生成搬運資源的Job
-                                                foreach (var consume in cost.m_Consume)
-                                                {
-                                                    var res = Region.Data.m_Resources.TakeResource(consume, cell.m_Pos.x, cell.m_Pos.y);
-                                                    JobHauling aJobHauling = new JobHauling();
-                                                    aJobHauling.Init(this, res);//搬運到這個建築
-                                                    Region.Data.m_Jobs.Add(aJobHauling);//註冊Job
-                                                    //TODO記錄所有搬運工作 或是動態判斷當前庫存資源是否滿足建造
-                                                }
-
-                                                m_ConstructingState = ConstructingState.Hauling;
-                                            }
-                                        }
-
-
-                                        break;
-                                    }
-                                case ConstructingState.Hauling:
-                                    {
-                                        break;
-                                    }
-                                case ConstructingState.Build:
-                                    {
-                                        break;
-                                    }
-                            }
-
-
-                            //TODO 生成搬運資源的工作
-                            //TODO 開始建造
+                            //等待ATS_WorkConstruct完成
                             break;
                         }
                     case BuildingState.Constructed://建造完成的建築
@@ -370,5 +339,51 @@ namespace ATS
             }
             
         }
+
+        public override JsonData SerializeToJson()
+        {
+            //if (!m_Works.IsNullOrEmpty())
+            //{
+            //    Debug.LogError($"DeserializeFromJson m_Works:{m_Works.AllFieldToString()}");
+            //}
+            return base.SerializeToJson();
+        }
+        public override void DeserializeFromJson(JsonData iJson)
+        {
+            base.DeserializeFromJson(iJson);
+            //if (!m_Works.IsNullOrEmpty())
+            //{
+            //    Debug.LogError($"DeserializeFromJson m_Works:{m_Works.AllFieldToString()}");
+            //    Debug.LogError($"iJson:{iJson.ToJsonBeautify()}");
+            //}
+            //m_Pos.m_X = m_X;
+            //m_Pos.m_Y = m_Y;
+        }
+
+        //public override void LoadComponents(ATS_SaveData iSaveData)
+        //{
+        //    base.LoadComponents(iSaveData);
+        //    if (!m_Works.IsNullOrEmpty())
+        //    {
+        //        Debug.LogError($"LoadGame m_Works:{m_Works.AllFieldToString()}");
+        //    }
+        //}
+
+        //public override void LoadGame(ATS_SaveData iSaveData)
+        //{
+        //    base.LoadGame(iSaveData);
+        //    if (!m_Works.IsNullOrEmpty())
+        //    {
+        //        Debug.LogError($"LoadGame m_Works:{m_Works.AllFieldToString()}");
+        //    }
+        //}
+        //public override void LoadMain(JsonData iJson)
+        //{
+        //    base.LoadMain(iJson);
+        //    if (!m_Works.IsNullOrEmpty())
+        //    {
+        //        Debug.LogError($"LoadGame m_Works:{m_Works.AllFieldToString()}");
+        //    }
+        //}
     }
 }

@@ -27,6 +27,11 @@ namespace ATS
         /// 睡眠
         /// </summary>
         Sleep,
+
+        /// <summary>
+        /// 進入建築內工作(暫時隱藏)
+        /// </summary>
+        WorkingInBuilding,
     }
 
     /// <summary>
@@ -127,6 +132,7 @@ namespace ATS
                         break;
                     }
                 case MinionState.Working:
+                case MinionState.WorkingInBuilding:
                     {
                         WorkingUpdate();
                         break;
@@ -319,6 +325,10 @@ namespace ATS
             {
                 return;
             }
+            if (m_State == MinionState.WorkingInBuilding)
+            {
+                return;
+            }
             var aRect = iGrid.GetCenterCellRect(m_Pos.x, m_Pos.y, Width, Height);
             //GUI.DrawTexture(aRect, aTexture);
             if (m_VelX < 0)
@@ -335,7 +345,7 @@ namespace ATS
             {
                 aRect = iGrid.GetCenterCellRect(aTargetPos.x, aTargetPos.y, 0.3f, 0.3f);
                 UCL_GUIStyle.PushGUIColor(UCL_Color.Half.Green);
-                GUI.DrawTexture(aRect, ATS_StaticTextures.White);
+                GUI.DrawTexture(aRect, UCL_StaticTextures.White);
                 UCL_GUIStyle.PopGUIColor();
             }
         }
@@ -343,6 +353,8 @@ namespace ATS
 
     public class ATS_MinionRef : ATS_SandBoxRef<ATS_Minion>
     {
+        public ATS_MinionRef() { }
+        public ATS_MinionRef(ATS_Minion minion) { Value = minion; }
         public override string GetDisplayName(string iFieldName)
         {
             var data = Value;

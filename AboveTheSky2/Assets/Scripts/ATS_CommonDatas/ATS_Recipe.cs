@@ -32,9 +32,9 @@ namespace ATS
         /// </summary>
         public List<ResourceAmount> m_Product = new List<ResourceAmount>();
         /// <summary>
-        /// 工作量
+        /// 完成所需工作量
         /// </summary>
-        public int m_Work = 100;
+        public int m_RequireWork = 100;
 
         #region must override 一定要override的部份
         /// <summary>
@@ -70,7 +70,7 @@ namespace ATS
                     //GUILayout.Label($"{aProduct.ToString()}", UCL.Core.UI.UCL_GUIStyle.LabelStyle);
                 }
 
-                GUILayout.Label($"{UCL_LocalizeManager.Get("Work")} : {m_Work}", UCL.Core.UI.UCL_GUIStyle.LabelStyle);
+                GUILayout.Label($"{UCL_LocalizeManager.Get("Work")} : {m_RequireWork}", UCL.Core.UI.UCL_GUIStyle.LabelStyle);
                 //UCL.Core.UI.UCL_GUILayout.LabelAutoSize(LocalizeName);
 
 

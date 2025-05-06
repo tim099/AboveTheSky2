@@ -675,7 +675,7 @@ namespace ATS
                                     var aDir = PathStateDic[aKey];//方向
                                     var aRect = aGrid.GetCellRect(x + OffSet + Delta * aDir.x, y + OffSet + Delta * aDir.y, Size, Size);
 
-                                    GUI.DrawTexture(aRect, ATS_StaticTextures.White);
+                                    GUI.DrawTexture(aRect, UCL_StaticTextures.White);
                                 }
                             }
                             //GUILayout.Box(aCell.m_PathState.ToString("D4"), UCL_GUIStyle.LabelStyle);

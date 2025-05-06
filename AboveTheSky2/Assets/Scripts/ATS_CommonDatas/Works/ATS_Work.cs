@@ -46,6 +46,22 @@ namespace ATS
         public List<ATS_MinionRef> m_Workers = new();
 
         public WorkState m_WorkState = WorkState.Pending;
+
+        /// <summary>
+        /// 建造總工作量
+        /// </summary>
+        public int m_RequireWork = 0;
+
+        /// <summary>
+        /// 當前工作量
+        /// </summary>
+        public float m_Work = 0;
+
+        /// <summary>
+        /// 工作進度(0~1)
+        /// </summary>
+        virtual public float Progress => m_Work / m_RequireWork;
+
         virtual public void Start()
         {
             m_WorkState = WorkState.Working;

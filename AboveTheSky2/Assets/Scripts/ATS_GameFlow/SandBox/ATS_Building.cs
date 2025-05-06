@@ -7,6 +7,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UCL.Core;
 using UCL.Core.JsonLib;
 using UCL.Core.UI;
@@ -162,7 +163,10 @@ namespace ATS
         /// 目前的工作隊列
         /// </summary>
         public List<ATS_WorkRef> m_Works = new();
-
+        /// <summary>
+        /// 建築內的工人(生產or建造)
+        /// </summary>
+        public List<ATS_MinionRef> m_Workers = new();
         /// <summary>
         /// 所有儲藏在區域內的資源
         /// </summary>
@@ -221,6 +225,38 @@ namespace ATS
             BuildingData.DrawOnGrid(iGrid, m_Pos.x, m_Pos.y);
 
             if (aGUIColor.HasValue) UCL_GUIStyle.PopGUIColor();
+
+            if (m_BuildingState == BuildingState.Constructing)//Show progress
+            {
+                
+                const float Width = 0.8f;
+                const float Height = 0.2f;
+                float x = m_Pos.x + 0.5f * (BuildingData.m_GridData.m_Width) - 0.5f * Width;// + 0.5f;
+                float y = m_Pos.y + 0.5f * (BuildingData.m_GridData.m_Height);// + 0.5f;
+                
+
+                float progress = 0f;// 0.4f;
+                if (!m_Works.IsNullOrEmpty())
+                {
+                    progress = Mathf.Clamp01(m_Works.FirstOrDefault().Value.Progress);
+                }
+                var rect = iGrid.GetCellRect(x, y, Width, Height);
+                UCL_GUILayout.ProgressBar(rect, progress);
+
+                //const float offSet = 0.02f;
+                //var rect = iGrid.GetCellRect(x, y, Width, Height);
+                //using (new UCL_GUIStyle.UCL_GUIColorScope(Color.black))
+                //{
+                //    GUI.DrawTexture(rect, UCL_StaticTextures.White);
+                //}
+                //rect = iGrid.GetCellRect(x + offSet, y + offSet, progress * (Width - 2f * offSet), Height - 2f * offSet);
+                //using (new UCL_GUIStyle.UCL_GUIColorScope(Color.green))
+                //{
+                //    GUI.DrawTexture(rect, UCL_StaticTextures.White);
+                //}
+
+            }
+
         }
 
         public override void Init(ATS_SandBox iSandBox, ATSI_SandBox iParent)
@@ -267,6 +303,16 @@ namespace ATS
             }
             m_StorageResources[iRes] += iAmount;
         }
+        /// <summary>
+        /// 進入建築
+        /// </summary>
+        /// <param name="worker"></param>
+        public void EnterBuilding(ATS_Minion worker)
+        {
+            m_Workers.Add(new ATS_MinionRef(worker));
+            worker.SetState(MinionState.WorkingInBuilding);
+        }
+
         const int LogicUpdateInterval = 10;
         const int ResourceNotFindInterval = 30;
         public override void GameUpdate()
@@ -296,7 +342,7 @@ namespace ATS
                         {
                             m_BuildingState = BuildingState.Constructing;//切換到建築中的狀態
                             var work = new ATS_WorkConstruct();
-                            work.m_Target.Value = this;
+                            work.Init(this);
                             Region.Data.m_Jobs.Add(work);//註冊工作
                             m_Works.Add(new ATS_WorkRef(work));//記錄到當前工作隊列
 

@@ -60,11 +60,16 @@ namespace ATS
         public List<ATS_RecipeEntry> m_Recipes = new ();
 
         public List<BuildingType> m_BuildingTypes = new List<BuildingType>();
+
         /// <summary>
         /// 包含建築額外提供的路徑(例如 梯子可以往上爬)
         /// </summary>
         public ATS_BuildingGrid m_GridData = new ATS_BuildingGrid();
 
+        /// <summary>
+        /// 最多能同時有多少工人
+        /// </summary>
+        public int m_MaxWorker = 1;
 
         public Texture2D Texture => m_Sprite.Texture;
         public int Width => m_GridData.m_Width;

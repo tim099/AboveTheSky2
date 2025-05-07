@@ -17,15 +17,20 @@ namespace ATS
             Working,
         }
         /// <summary>
-        /// 目標建築
+        /// 工作的目標建築(建造or生產)
         /// </summary>
         public ATS_BuildingRef m_Building = new();
+        /// <summary>
+        /// 對應的工作
+        /// </summary>
+        public ATS_WorkRef m_Work = new();
         public WorkingState m_WorkingState = WorkingState.Init;
 
         public JobWorking() { }
-        public void Init(ATS_Building iBuilding)
+        public void Init(ATS_Building iBuilding, ATS_Work iWork)
         {
             m_Building.Value = iBuilding;
+            m_Work.Value = iWork;
         }
 
         override public void WorkingUpdate()
@@ -60,7 +65,11 @@ namespace ATS
                     }
                 case WorkingState.Working:
                     {
-
+                        var work = m_Work.Value;
+                        if (work == null || work.m_WorkState is ATS_Work.WorkState.Complete or ATS_Work.WorkState.Cancel)//工作完成 或 取消
+                        {
+                            SetJobState(JobState.Complete);
+                        }
                         break;
                     }
             }

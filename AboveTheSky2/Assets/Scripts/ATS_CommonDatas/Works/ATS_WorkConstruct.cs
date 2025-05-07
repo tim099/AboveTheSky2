@@ -39,7 +39,7 @@ namespace ATS
             /// <summary>
             /// 建造完成
             /// </summary>
-            Done,
+            Complete,
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace ATS
                         for (int i = 0; i < building.BuildingData.m_MaxWorker; i++)
                         {
                             JobWorking job = new JobWorking();
-                            job.Init(building);//建造這個建築
+                            job.Init(building, this);//建造這個建築
                             Region.AddJob(job, cell);//註冊Job
                             m_Jobs.Add(new ATS_JobRef(job));//記錄所有搬運工作 或是動態判斷當前庫存資源是否滿足建造
                         }
@@ -160,6 +160,12 @@ namespace ATS
                         foreach(var worker in building.m_Workers)
                         {
                             m_Work += 1f;//目前寫死每個工人工作效率
+                        }
+                        if(m_Work >= m_RequireWork)//完成
+                        {
+                            building.Constructed();
+                            m_ConstructingState = ConstructingState.Complete;
+                            m_WorkState = WorkState.Complete;
                         }
                         break;
                     }

@@ -312,7 +312,13 @@ namespace ATS
             m_Workers.Add(new ATS_MinionRef(worker));
             worker.SetState(MinionState.WorkingInBuilding);
         }
-
+        /// <summary>
+        /// 建造完成
+        /// </summary>
+        public void Constructed()
+        {
+            m_BuildingState = BuildingState.Constructed;
+        }
         const int LogicUpdateInterval = 10;
         const int ResourceNotFindInterval = 30;
         public override void GameUpdate()

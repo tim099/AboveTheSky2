@@ -209,7 +209,7 @@ namespace ATS
                 GUI.DrawTexture(aRect, ATS_StaticTextures.TileFrame);
                 //https://stackoverflow.com/questions/62224353/how-to-show-an-outlined-gui-box-in-unity
                 string aText = $"{MousePos.x},{MousePos.y}";
-                GUI.Label(aRect, aText, UCL_GUIStyle.GetLabelStyle(Color.green, 14));
+                GUI.Label(aRect, aText, UCL_GUIStyle.GetLabelStyle(Color.black, 14));
                 //GUI.Label(aRect, aText, UCL_GUIStyle.GetLabelStyle(Color.white, 15));
             }
         }

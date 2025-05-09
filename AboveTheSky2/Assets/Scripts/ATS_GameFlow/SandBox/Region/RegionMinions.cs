@@ -15,7 +15,7 @@ namespace ATS
     {
         public List<ATS_Minion> m_Minions = new();
 
-        public override (SaveType, string) SaveKey => (SaveType.File, "RegionMinions");
+        public override SaveInfo SaveKey => new SaveInfo(SaveType.File, "RegionMinions");
         public void Spawn(ATS_Minion iMinion)
         {
             m_Minions.Add(iMinion);

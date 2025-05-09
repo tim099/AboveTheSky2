@@ -55,11 +55,17 @@ namespace ATS
             private set;
         }
 
+        /// <summary>
+        /// 對應的ATS_SandBoxData
+        /// </summary>
+        public ATS_SandBoxData Data { get; set; } = null;
 
         public const int LogicIntervalMS = 30;
 
-
-        public ATS_AirShip m_AirShip = new ATS_AirShip();
+        /// <summary>
+        /// TODO 同時支援多個AirShip
+        /// </summary>
+        public ATS_AirShip m_AirShip { get; set; } = null;
 
         //[UCL.Core.ATTR.UCL_HideInJson]
         [SerializeField]
@@ -76,10 +82,13 @@ namespace ATS
         //TODO 可以設定要在Timer等於特定值時執行的事
 
         override public GameState CurGameState => m_GameState;
-        public override (SaveType, string) SaveKey => (SaveType.Folder, "SandBox");
+        public override SaveInfo SaveKey => new SaveInfo(SaveType.Folder, "SandBox");
 
         public GameState m_GameState = GameState.Boot;
-
+        /// <summary>
+        /// 當前選取的建築
+        /// </summary>
+        public ATS_BuildingRef m_SelectedBuilding = new();
         public void Init()
         {
             Init(this, null);
@@ -92,20 +101,37 @@ namespace ATS
             }
             SetGameState(GameState.Boot);
             base.Init(iSandBox, iParent);
-            AddComponent(m_AirShip);
+
+            //SetAirShip(Data.m_InitAirship.GetData().Create());
+
             SetGameState(GameState.GameLoop);
             m_StartTime = System.DateTime.Now;
-            //UpdateLoop().Forget();
-
         }
+        public void SetAirShip(ATS_AirShip airShip)
+        {
+            m_AirShip = airShip;
 
+            AddComponent(m_AirShip);
+        }
+        /// <summary>
+        /// 只在遊戲開始時觸發的初始化(讀檔時略過)
+        /// </summary>
         public override void GameInit()
         {
+            //SetAirShip(Data.m_InitAirship.GetData().Create());
             base.GameInit();
         }
         public void SetGameState(GameState gameState)
         {
             m_GameState = gameState;
+            switch (m_GameState)
+            {
+                case GameState.GameLoop:
+                    {
+                        m_SelectedBuilding.Value = null;//clear
+                        break;
+                    }
+            }
         }
         public void End()
         {
@@ -130,6 +156,7 @@ namespace ATS
             //}
             //m_AirShip.GameUpdate();
         }
+        private ATS_ResourceEntry m_SpawnResType = new ATS_ResourceEntry();
         /// <summary>
         /// 用在ATS_SandboxPage
         /// </summary>
@@ -140,6 +167,41 @@ namespace ATS
             GUILayout.Label("CurGameState", UCL_GUIStyle.LabelStyle, GUILayout.ExpandWidth(false));
             m_GameState = UCL_GUILayout.PopupAuto(CurGameState, iDic, "GameState");
             GUILayout.EndHorizontal();
+            UCL_GUILayout.DrawObjectData(m_SpawnResType, iDic.GetSubDic("m_SpawnResType"));
+            using (var aScope = new GUILayout.HorizontalScope())
+            {
+                if (GUILayout.Button("Spawn", UCL_GUIStyle.ButtonStyle))
+                {
+                    m_AirShip.Spawn();
+                }
+
+
+                if (GUILayout.Button("Spawn Resource", UCL_GUIStyle.ButtonStyle))
+                {
+                    m_AirShip.SpawnResource();
+                }
+                switch (CurGameState)
+                {
+                    case GameState.Build:
+                        {
+                            if (GUILayout.Button("Cancel", UCL_GUIStyle.ButtonStyle))
+                            {
+                                SetGameState(GameState.GameLoop);
+                            }
+                            break;
+                        }
+                    case GameState.GameLoop:
+                        {
+                            if (GUILayout.Button("Build", UCL_GUIStyle.ButtonStyle))
+                            {
+                                SetGameState(GameState.Build);
+                            }
+                            break;
+                        }
+                }
+
+            }
+
             int aIndex = 0;
             foreach (var aComponent in m_Components)
             {
@@ -214,10 +276,10 @@ namespace ATS
         public override void LoadGame(ATS_SaveData iSaveData)
         {
             s_CurSaveSandBox = this;
-            
+            SetAirShip(new ATS_AirShip());
             base.LoadGame(iSaveData);
-
-            foreach(var aAct in m_OnLoadEndAction)
+            
+            foreach (var aAct in m_OnLoadEndAction)
             {
                 try
                 {

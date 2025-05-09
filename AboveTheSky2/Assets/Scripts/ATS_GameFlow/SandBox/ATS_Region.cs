@@ -294,7 +294,7 @@ namespace ATS
         }
 
         //public override string SaveKey => "Region";
-        public override (SaveType, string) SaveKey => (SaveType.Folder, "Region");
+        public override SaveInfo SaveKey => new SaveInfo(SaveType.Folder, "Region");
 
         //public override JsonData SaveMain()
         //{

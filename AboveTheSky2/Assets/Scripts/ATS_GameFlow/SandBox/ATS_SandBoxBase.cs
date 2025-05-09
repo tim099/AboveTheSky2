@@ -41,10 +41,21 @@ namespace ATS
         void SaveGame(ATS_SaveData iSaveData);
         void LoadGame(ATS_SaveData iJson);
 
-        (SaveType, string) SaveKey { get; }
+        SaveInfo SaveKey { get; }
         Dictionary<string, ATSI_SandBox> SaveComponentsDic { get; }
         string TypeName { get; }
         #endregion
+    }
+    public class SaveInfo
+    {
+        public SaveType SaveType;
+        public string Key;
+        public SaveInfo() { }
+        public SaveInfo(SaveType saveType, string key)
+        {
+            SaveType = saveType;
+            Key = key;
+        }
     }
     public class ATS_SandBoxBase : UCL.Core.JsonLib.UnityJsonSerializable, ATSI_SandBox, UCLI_FieldOnGUI, UCLI_ShortName
     {
@@ -115,13 +126,13 @@ namespace ATS
                 foreach (var component in m_Components)
                 {
                     var saveKey = component.SaveKey;
-                    switch (saveKey.Item1)
+                    switch (saveKey.SaveType)
                     {
                         case SaveType.Json:
                         case SaveType.File:
                         case SaveType.Folder:
                             {
-                                var key = saveKey.Item2;
+                                var key = saveKey.Key;
                                 if (!string.IsNullOrEmpty(key))
                                 {
                                     if (dic == null)
@@ -138,7 +149,7 @@ namespace ATS
                 return dic;
             }
         }
-        virtual public (SaveType, string) SaveKey => (SaveType.None, string.Empty);
+        virtual public SaveInfo SaveKey => new SaveInfo(SaveType.None, string.Empty);
 
         protected List<ATSI_SandBox> m_Components = new List<ATSI_SandBox>();//[UCL.Core.PA.UCL_FieldOnGUI]
         protected bool m_Inited = false;
@@ -322,8 +333,8 @@ namespace ATS
         virtual public void SaveGame(ATS_SaveData iSaveData)
         {
             var aSaveKey = SaveKey;
-            var aSaveType = aSaveKey.Item1;
-            var aKey = aSaveKey.Item2;
+            var aSaveType = aSaveKey.SaveType;
+            var aKey = aSaveKey.Key;
             Debug.LogError($"SaveGame {GetType().FullName}, aSaveType:{aSaveType}");
             //return null;
             switch (aSaveType)
@@ -352,8 +363,8 @@ namespace ATS
         {
 
             var aSaveKey = SaveKey;
-            var aSaveType = aSaveKey.Item1;
-            var aKey = aSaveKey.Item2;
+            var aSaveType = aSaveKey.SaveType;
+            var aKey = aSaveKey.Key;
             //Debug.LogError($"LoadGame aKey:{aKey} path:{iSaveData.m_Dir}");
             switch (aSaveType)
             {

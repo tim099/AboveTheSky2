@@ -115,6 +115,11 @@ namespace ATS
             x = iPos.x;
             y = iPos.y;
         }
+        public void Set(ATS_Vector2Int iPos)
+        {
+            x = iPos.x;
+            y = iPos.y;
+        }
         public string GetShortName() => $"({x},{y})";
         public override string ToString() => GetShortName();
         /// <summary>
@@ -508,15 +513,22 @@ namespace ATS
         /// <returns></returns>
         public List<(Cell cell, PathNode node)> Search(float x, float y, System.Func<Cell, PathNode, bool> iCheckFunc, int iSearchCount = 1, int iMaxDistance = 999, int iMaxSearchTimes = 9999)
         {
+            var aCells = Cells;
+            List<(Cell, PathNode)> aTargets = new();
+            if (x < 0 || y < 0 || x >= Cells.GetLength(0) || y >= Cells.GetLength(1))
+            {
+                Debug.LogError($"Out of Range({x},{y})");
+                return aTargets;
+            }
             HashSet<ATS_Vector2Int> aVisited = new ();
             Queue<PathNode> aNodes = new Queue<PathNode>();
-            List<(Cell, PathNode)> aTargets = new ();
+            
 
             var aStartPos = new ATS_Vector2Int(Mathf.FloorToInt(x), Mathf.FloorToInt(y));
             PathNode aStart = new PathNode(aStartPos, null, 0);
             aVisited.Add(aStartPos);
             aNodes.Enqueue(aStart);
-            var aCells = Cells;
+            
             int aSearchTimes = 0;
             while (aNodes.Count > 0 && aSearchTimes++ < iMaxSearchTimes)
             {

@@ -36,6 +36,8 @@ namespace ATS
         /// </summary>
         Storage,
     }
+
+    [UCL.Core.ATTR.UCL_GroupIDAttribute(ATS_AssetGroup.ATS)]
     public class ATS_BuildingData : UCL_Asset<ATS_BuildingData>
     {
         /// <summary>

@@ -22,7 +22,7 @@ namespace ATS
         /// </summary>
         public Dictionary<ATS_ResourceEntry, int> m_StorageResources = new Dictionary<ATS_ResourceEntry, int>();
 
-        public override (SaveType, string) SaveKey => (SaveType.File, "RegionResources");
+        public override SaveInfo SaveKey => new SaveInfo(SaveType.File, "RegionResources");
 
         public override JsonData SaveMain()
         {
@@ -35,7 +35,12 @@ namespace ATS
             {
                 AddComponent(aRes);//還原
             }
-            //Debug.LogError($"LoadMain RegionResources iJson:{iJson.ToJsonBeautify()}");
+            Debug.LogError($"LoadMain RegionResources iJson:{iJson.ToJsonBeautify()}");
+        }
+        public override void LoadGame(ATS_SaveData iSaveData)
+        {
+            Debug.LogError($"LoadGame RegionResources");
+            base.LoadGame(iSaveData);
         }
         //public override string SaveKey => "RegionResources";
         public void Add(ATS_Resource iResource)

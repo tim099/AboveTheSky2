@@ -14,7 +14,7 @@ namespace ATS
     public class RegionBuildings : ATS_SandBoxBase
     {
         public List<ATS_Building> m_Buildings = new List<ATS_Building>();
-        public override (SaveType, string) SaveKey => (SaveType.File, "RegionBuildings");
+        public override SaveInfo SaveKey => new SaveInfo(SaveType.File, "RegionBuildings");
         public void Build(ATS_Building iBuilding)
         {
             m_Buildings.Add(iBuilding);

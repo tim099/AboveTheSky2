@@ -68,6 +68,8 @@ namespace ATS
 
 
     }
+
+    [UCL.Core.ATTR.UCL_GroupIDAttribute(ATS_AssetGroup.ATS)]
     public class ATS_ResourceData : UCL_Asset<ATS_ResourceData>
     {
         public ATS_IconSpriteEntry m_Icon = new ATS_IconSpriteEntry();

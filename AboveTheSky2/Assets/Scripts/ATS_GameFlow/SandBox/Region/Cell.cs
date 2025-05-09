@@ -36,7 +36,6 @@ namespace ATS
         [UCL.Core.ATTR.UCL_HideInJson]
         public List<ATS_Resource> m_Resources = new();// { get; private set; } = new ();
 
-
         /// <summary>
         /// 對應建築中的哪個格子(一個建築可以占用多個格子)
         /// </summary>

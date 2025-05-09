@@ -1,4 +1,4 @@
-
+﻿
 // ATS_AutoHeader
 // to change the auto header please go to ATS_AutoHeader.cs
 // Create time : 02/27 2024 12:52
@@ -46,7 +46,7 @@ namespace ATS.UI
         public RawImage m_RawImage2;
         public Material m_BlitMat;
         //[SerializeField] Button m_LoadAutoSaveButton = null;
-        private bool m_LoadingUI = false;
+        //private bool m_LoadingUI = false;
         private bool m_Inited = false;
         private UCL_Texture2D m_Texture;
         public Vector2 m_OffSet = Vector2.zero;

@@ -18,7 +18,7 @@ namespace ATS
     {
         public List<ATS_Job> m_Jobs = new();
         public List<ATS_Work> m_Work = new();
-        public override (SaveType, string) SaveKey => (SaveType.File, "RegionJobs");
+        public override SaveInfo SaveKey => new SaveInfo(SaveType.File, "RegionJobs");
         public void Add(ATS_Job job)
         {
             m_Jobs.Add(job);

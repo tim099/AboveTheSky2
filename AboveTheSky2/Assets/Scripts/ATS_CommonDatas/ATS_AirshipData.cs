@@ -11,6 +11,7 @@ using UnityEngine;
 
 namespace ATS
 {
+    [UCL.Core.ATTR.UCL_GroupIDAttribute(ATS_AssetGroup.ATS)]
     public class ATS_AirshipData : UCL_Asset<ATS_AirshipData>
     {
         public ATS_RegionEntry m_Region = new ATS_RegionEntry();
@@ -40,6 +41,13 @@ namespace ATS
             GUILayout.EndVertical();
         }
 
+
+        public ATS_AirShip Create()
+        {
+            ATS_AirShip airShip = new ATS_AirShip();
+
+            return airShip;
+        }
 
         //#region Runtime
         //public void Init(ATS_SandBox iSandBox)

@@ -100,9 +100,8 @@ namespace ATS.Page
         {
             Cancel();
 
-            m_SandBox = new ATS_SandBox();
-            m_SandBox.Init();
-            m_SandBox.GameInit();
+            m_SandBox = ATS_SandBoxData.Default.Create(); //new ATS_SandBox();
+
 
             UpdateLoop().Forget();
             InitSandBoxAsync(isLoadGame).Forget();
@@ -230,8 +229,8 @@ namespace ATS.Page
                 }
                 if (m_LoadGame)
                 {
-                    m_SandBox = new ATS_SandBox();
-                    m_SandBox.Init();
+                    m_SandBox = ATS_SandBoxData.Default.Create(true);
+                    //m_SandBox.Init();
 
                     ATS_SaveData aSaveData = new ATS_SaveData(SavePath);
                     //aSaveData.Load(SavePath);

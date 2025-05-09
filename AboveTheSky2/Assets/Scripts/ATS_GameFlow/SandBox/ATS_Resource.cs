@@ -55,13 +55,16 @@ namespace ATS
         /// 當前速度
         /// </summary>
         public ATS_Vector3 m_Vel = new ATS_Vector3();
-
+        /// <summary>
+        /// 當前位置(在哪個Cell)
+        /// </summary>
+        public ATS_Vector2Int m_CellPos = new ATS_Vector2Int();
         public ResourceState m_State = ResourceState.Dropping;
 
 
 
         public Texture2D Texture => m_ResourceAmount.Texture;
-        public override string GetShortName() => $"{m_ResourceAmount},{m_Pos}({m_State})";
+        public override string GetShortName() => $"{m_ResourceAmount},{m_Pos}[{m_CellPos}]({m_State})";
         public override string ToString() => GetShortName();
         public ATS_Resource() { }
         public ATS_Resource(string iID, int iAmount)
@@ -109,17 +112,23 @@ namespace ATS
         /// </summary>
         public void UpdateCell()
         {
+            
             ClearCell();
 
-            var aPos = m_Pos.ToVector2Int;
-            p_Cell = Region.Cells[aPos.x, aPos.y];
+            m_CellPos = m_Pos.ToVector2Int;
+            p_Cell = Region.Cells[m_CellPos.x, m_CellPos.y];
+            Debug.LogError($"UpdateCell m_CellPos:{m_CellPos},m_Pos:{m_Pos}");
             p_Cell.m_Resources.Add(this);//紀錄掉落位置
         }
         public override void LoadGame(ATS_SaveData iSaveData)
         {
+            //TODO 目前流程會導致LoadGame觸發在Resource AddComponent之前
             base.LoadGame(iSaveData);
+
+            Debug.LogError($"LoadGame, m_Pos:{m_Pos}");
             p_SandBox.AddOnLoadEndAction(() =>
             {
+                Debug.LogError($"LoadGame, OnLoadEndAction m_Pos:{m_Pos}");
                 switch (m_State)
                 {
                     case ResourceState.Dropped:

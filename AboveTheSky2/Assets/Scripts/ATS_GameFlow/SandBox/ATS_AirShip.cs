@@ -11,9 +11,6 @@ using UnityEngine;
 
 namespace ATS
 {
-
-
-
     /// <summary>
     /// Runtime airship
     /// </summary>
@@ -27,11 +24,12 @@ namespace ATS
         private int m_GameUpdateCount = 0;
         private ATS_AirshipData m_AirshipData = null;
 
-        private ATS_Region m_Region;
+        [SerializeField] private ATS_Region m_Region;
         /// <summary>
         /// 入口位置(船員進入或離開的位置)
         /// </summary>
-        private Vector2Int m_EntrancePos;
+        [SerializeField] private ATS_Vector2Int m_EntrancePos = new();
+        [SerializeField] private ATS_AirshipDataEntry m_AirshipDataEntry = new ATS_AirshipDataEntry();
         #endregion
 
 
@@ -40,20 +38,31 @@ namespace ATS
         override public ATS_RegionGrid RegionGrid => m_Region.RegionGrid;
         public override ATS_PathFinder PathFinder => m_Region.PathFinder;
         #endregion
-
+        public ATS_AirShip()
+        {
+            //Debug.LogError("new ATS_AirShip");
+        }
+        public ATS_AirShip(ATS_AirshipDataEntry airshipDataEntry)
+        {
+            m_AirshipDataEntry.ID = airshipDataEntry.ID;
+            //Debug.LogError("new ATS_AirShip");
+        }
         override public void Init(ATS_SandBox iSandBox, ATSI_SandBox iParent)
         {
             base.Init(iSandBox, iParent);
             //暫時抓取預設的AirShip(初始飛船)
-            ATS_AirshipDataEntry aAirshipDataEntry = new ATS_AirshipDataEntry();
-            m_AirshipData = aAirshipDataEntry.GetData(false);
-            var aRegion = m_AirshipData.m_Region.GetData(false);
-            m_Region = new ATS_Region(aRegion);
-            AddComponent(m_Region);   
+
+            m_AirshipData = m_AirshipDataEntry.GetData(false);
+            var region = m_AirshipData.m_Region.GetData(false);
+            SetRegion(new ATS_Region(region));
+            //Debug.LogError("Init Airship");
         }
         public override void GameInit()
         {
             base.GameInit();
+
+
+
             foreach (var aBuilding in m_AirshipData.m_Buildings)//建造預設建築
             {
                 try
@@ -61,7 +70,7 @@ namespace ATS
                     var aNewBuilding = aBuilding.CloneObject();
                     if (aNewBuilding.BuildingData.CheckBuildingType(BuildingType.Entrance))
                     {
-                        m_EntrancePos = aNewBuilding.m_Pos.ToVector2Int;
+                        m_EntrancePos.Set(aNewBuilding.m_Pos);
                         //Debug.LogError($"EntrancePos:{m_EntrancePos}");
                     }
                     m_Region.Build(aNewBuilding);//建造並設定為已建造完成
@@ -71,6 +80,11 @@ namespace ATS
                     Debug.LogException(ex);
                 }
             }
+        }
+        public void SetRegion(ATS_Region region)
+        {
+            m_Region = region;
+            AddComponent(m_Region);
         }
         public override void LoadGame(ATS_SaveData iSaveData)
         {
@@ -92,7 +106,7 @@ namespace ATS
         }
 
 
-        public override (SaveType, string) SaveKey => (SaveType.Folder, "AirShip");
+        public override SaveInfo SaveKey => new SaveInfo(SaveType.Folder, "AirShip");
 
         //public override Dictionary<string, ISandBox> SaveComponentsDic
         //{
@@ -113,6 +127,11 @@ namespace ATS
             var aID = UCL_Random.Instance.RandomPick(aIDs);
             var aMinion = new ATS_Minion(aID, m_EntrancePos.x + 0.5f, m_EntrancePos.y + UCL_Random.Instance.Range(0, ATS_Const.GroundHeight));
             //aMinion.m_Position = new Vector3(m_EntrancePos.x, m_EntrancePos.y, 0);
+            if(m_Region == null)
+            {
+                Debug.LogError("m_Region == null");
+                return;
+            }
             m_Region.Spawn(aMinion);
         }
         public void SpawnResource()
@@ -150,40 +169,7 @@ namespace ATS
         /// </summary>
         override public void ContentOnGUI(UCL_ObjectDictionary iDic)
         {
-            UCL_GUILayout.DrawObjectData(m_SpawnResType, iDic.GetSubDic("m_SpawnResType"));
-            using (var aScope = new GUILayout.HorizontalScope())
-            {
-                if (GUILayout.Button("Spawn", UCL_GUIStyle.ButtonStyle))
-                {
-                    Spawn();
-                }
 
-                
-                if (GUILayout.Button("Spawn Resource", UCL_GUIStyle.ButtonStyle))
-                {
-                    SpawnResource();
-                }
-                switch (CurGameState)
-                {
-                    case GameState.Build:
-                        {
-                            if (GUILayout.Button("Cancel", UCL_GUIStyle.ButtonStyle))
-                            {
-                                p_SandBox.SetGameState(GameState.GameLoop);
-                            }
-                            break;
-                        }
-                    case GameState.GameLoop:
-                        {
-                            if (GUILayout.Button("Build", UCL_GUIStyle.ButtonStyle))
-                            {
-                                p_SandBox.SetGameState(GameState.Build);
-                            }
-                            break;
-                        }
-                }
-
-            }
 
             base.ContentOnGUI(iDic);
             GUILayout.Label($"ATS_AirShip m_GameUpdateCount:{m_GameUpdateCount}", UCL_GUIStyle.LabelStyle);
@@ -207,6 +193,15 @@ namespace ATS
             
             //UCL_GUILayout.DrawObjectData(m_RuntimeData.m_Buildings, iDic.GetSubDic("m_Buildings"), "Buildings");
             //GUILayout.Space(20);
+        }
+
+        public override void DeserializeFromJson(JsonData iJson)
+        {
+            //m_AirshipData = new();
+            //SetRegion(new());
+
+            base.DeserializeFromJson(iJson);
+            //Debug.LogError($"DeserializeFromJson m_EntrancePos:{m_EntrancePos}");
         }
     }
 }

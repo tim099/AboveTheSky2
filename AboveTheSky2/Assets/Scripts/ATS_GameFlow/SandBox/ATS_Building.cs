@@ -135,26 +135,6 @@ namespace ATS
         /// </summary>
         public BuildingState m_BuildingState = BuildingState.Constructed;
         /// <summary>
-        /// 建造階段
-        /// </summary>
-        public ConstructingState m_ConstructingState = ConstructingState.None;
-        //{
-        //    get
-        //    {
-        //        return _ConstructingState;
-        //    }
-        //    set
-        //    {
-        //        //if (_ConstructingState != value)
-        //        {
-        //            Debug.LogError($"({Index}){GetShortName()}({m_BuildingState}), _ConstructingState:{_ConstructingState}, value:{value}");
-        //        }
-                
-        //        _ConstructingState = value;
-        //    }
-        //}
-        //public ConstructingState _ConstructingState;
-        /// <summary>
         /// 避免過度頻繁的判斷部分邏輯(例如搬運工作)
         /// </summary>
         public int m_LogicTimer = 0;
@@ -317,6 +297,8 @@ namespace ATS
         /// </summary>
         public void Constructed()
         {
+            //消耗掉建築材料
+            m_StorageResources.Clear();
             m_BuildingState = BuildingState.Constructed;
         }
         const int LogicUpdateInterval = 10;
@@ -352,11 +334,14 @@ namespace ATS
                             Region.Data.m_Jobs.Add(work);//註冊工作
                             m_Works.Add(new ATS_WorkRef(work));//記錄到當前工作隊列
 
-                            m_ConstructingState = ConstructingState.None;
                             break;
                         }
                     case BuildingState.Constructing:
                         {
+                            if (m_Works.IsNullOrEmpty())//建造中斷? 理論上不會發生
+                            {
+                                m_BuildingState = BuildingState.Blueprint;
+                            }
                             //等待ATS_WorkConstruct完成
                             break;
                         }

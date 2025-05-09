@@ -24,7 +24,7 @@ namespace ATS
         /// </summary>
         [SerializeField] private List<Cell> m_Cells = new List<Cell>();
         //public override string SaveKey => "RegionCells";
-        public override (SaveType, string) SaveKey => (SaveType.File, "RegionCells");
+        public override SaveInfo SaveKey => new SaveInfo(SaveType.File, "RegionCells");
 
         public void Init(ATS_RegionGrid iGridData)
         {

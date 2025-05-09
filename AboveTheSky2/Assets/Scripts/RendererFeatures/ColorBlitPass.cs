@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
@@ -23,12 +23,14 @@ internal class ColorBlitPass : ScriptableRenderPass
         m_Intensity = intensity;
     }
 
+    [System.Obsolete]
     public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
     {
         //Debug.LogError($"ColorBlitPass.OnCameraSetup");
         ConfigureTarget(m_CameraColorTarget);
     }
 
+    [System.Obsolete]
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
     {
         //Debug.LogError($"ColorBlitPass.Execute");

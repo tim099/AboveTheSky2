@@ -88,7 +88,6 @@ namespace ATS
             {
                 case ConstructingState.WaitForResource://搬運所需資源
                     {
-                        
                         //只在所有資源滿足時開始搬運
                         ATS_Recipe cost = BuildingData.m_ConstructCost;
                         if (cost.CheckResourceEnough(Region.Data.m_Resources.m_StorageResources))//先確認是否滿足建造資源需求
@@ -144,7 +143,6 @@ namespace ATS
                         var pos = building.m_Pos;
                         var cell = Region.Cells[pos.x, pos.y];
                         //尋找工人
-                        //生成搬運資源的Job
                         for (int i = 0; i < building.BuildingData.m_MaxWorker; i++)
                         {
                             JobWorking job = new JobWorking();

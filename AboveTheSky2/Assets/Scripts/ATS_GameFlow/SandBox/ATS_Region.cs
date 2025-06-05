@@ -75,13 +75,17 @@ namespace ATS
         public int Width => m_Region.Width;
         public int Height => m_Region.Height;
         #endregion
-        public ATS_Region() { }
+        public ATS_Region() {
+            //Debug.LogError($"1 ATS_Region:{this.GetHashCode()}");
+        }
         public ATS_Region(ATS_RegionData iRegionData)
         {
+            //Debug.LogError($"2 ATS_Region:{this.GetHashCode()}");
             m_Region = iRegionData;
         }
         override public void Init(ATS_SandBox iSandBox, ATSI_SandBox iParent)
         {
+            //Debug.LogError($"ATS_Region Init:{this.GetHashCode()}");
             base.Init(iSandBox, iParent);
             //暫時抓取預設的AirShip(初始飛船)
             //ATS_AirshipDataEntry aAirshipDataEntry = new ATS_AirshipDataEntry();

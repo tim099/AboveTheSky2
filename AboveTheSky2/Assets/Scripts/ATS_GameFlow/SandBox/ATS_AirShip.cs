@@ -24,7 +24,10 @@ namespace ATS
         private int m_GameUpdateCount = 0;
         private ATS_AirshipData m_AirshipData = null;
 
-        [SerializeField] private ATS_Region m_Region;
+        /// <summary>
+        /// Region不Serialize 因為會覆蓋掉Init時new出來的
+        /// </summary>
+        private ATS_Region m_Region;
         /// <summary>
         /// 入口位置(船員進入或離開的位置)
         /// </summary>

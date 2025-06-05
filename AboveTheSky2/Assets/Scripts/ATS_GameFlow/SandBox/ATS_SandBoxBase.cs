@@ -244,6 +244,10 @@ namespace ATS
         }
         virtual public object OnGUI(string iFieldName, UCL_ObjectDictionary iDataDic, UCL_GUILayout.DrawObjectParams iParams)
         {
+            if (Parent == null)
+            {
+                GUILayout.Label("Parent == null", UCL_GUIStyle.LabelStyle);
+            }
             var aDrawObjExSetting = new UCL_GUILayout.DrawObjExSetting();
             void ShowComponents()
             {

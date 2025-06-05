@@ -35,16 +35,24 @@ namespace ATS
             {
                 AddComponent(aRes);//還原
             }
-            Debug.LogError($"LoadMain RegionResources iJson:{iJson.ToJsonBeautify()}");
+            p_SandBox.AddOnLoadEndAction(() =>
+            {
+                foreach (var aRes in m_Resources)
+                {
+                    aRes.OnLoadEnd();
+                }
+            });
+            //Debug.LogError($"LoadMain RegionResources iJson:{iJson.ToJsonBeautify()}");
         }
         public override void LoadGame(ATS_SaveData iSaveData)
         {
-            Debug.LogError($"LoadGame RegionResources");
+            //Debug.LogError($"LoadGame RegionResources, Components:{m_Components.ConcatToString(comp => comp.ToString())}");
             base.LoadGame(iSaveData);
         }
         //public override string SaveKey => "RegionResources";
         public void Add(ATS_Resource iResource)
         {
+            //Debug.LogError($"Add iResource:{iResource.Index}");
             m_Resources.Add(iResource);
             AddComponent(iResource);
         }

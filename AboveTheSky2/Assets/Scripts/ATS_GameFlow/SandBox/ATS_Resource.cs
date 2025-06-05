@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UCL.Core;
+using UCL.Core.JsonLib;
 using UCL.Core.UI;
 using UnityEngine;
 
@@ -117,27 +118,45 @@ namespace ATS
 
             m_CellPos = m_Pos.ToVector2Int;
             p_Cell = Region.Cells[m_CellPos.x, m_CellPos.y];
-            Debug.LogError($"UpdateCell m_CellPos:{m_CellPos},m_Pos:{m_Pos}");
+            //Debug.LogError($"UpdateCell m_CellPos:{m_CellPos},m_Pos:{m_Pos}");
             p_Cell.m_Resources.Add(this);//紀錄掉落位置
+        }
+        public override void DeserializeFromJson(JsonData iJson)
+        {
+            base.DeserializeFromJson(iJson);
+        }
+        /// <summary>
+        /// 讀檔結束觸發
+        /// </summary>
+        public void OnLoadEnd()
+        {
+            switch (m_State)
+            {
+                case ResourceState.Dropped:
+                    {
+                        UpdateCell();
+                        break;
+                    }
+            }
         }
         public override void LoadGame(ATS_SaveData iSaveData)
         {
-            //TODO 目前流程會導致LoadGame觸發在Resource AddComponent之前
+            //TODO 目前流程會導致LoadGame觸發在Resource AddComponent之前 導致不會觸發到
             base.LoadGame(iSaveData);
 
-            Debug.LogError($"LoadGame, m_Pos:{m_Pos}");
-            p_SandBox.AddOnLoadEndAction(() =>
-            {
-                Debug.LogError($"LoadGame, OnLoadEndAction m_Pos:{m_Pos}");
-                switch (m_State)
-                {
-                    case ResourceState.Dropped:
-                        {
-                            UpdateCell();
-                            break;
-                        }
-                }
-            });
+            //Debug.LogError($"LoadGame, m_Pos:{m_Pos}");
+            //p_SandBox.AddOnLoadEndAction(() =>
+            //{
+            //    Debug.LogError($"LoadGame, OnLoadEndAction m_Pos:{m_Pos}");
+            //    switch (m_State)
+            //    {
+            //        case ResourceState.Dropped:
+            //            {
+            //                UpdateCell();
+            //                break;
+            //            }
+            //    }
+            //});
         }
         /// <summary>
         /// 把散落在地上的資源放入倉庫

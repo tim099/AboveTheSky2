@@ -296,14 +296,28 @@ namespace ATS
         }
         public static Dictionary<PathState, Vector2Int> s_PathStateDic = null; 
 
-        public Cell[,] Cells => Region.Cells;
+        public Cell[,] Cells
+        {
+            get
+            {
+                if(Region == null)
+                {
+                    Debug.LogError($"Region == null");
+                    return null;
+                }
+                return Region.Cells;
+            }
+        }
         public int Width { get; private set; }
         public int Height { get; private set; }
         /// <summary>
         /// 是否需要刷新路徑
         /// </summary>
         public bool RequireRefreshAllPathState { get; set; } = false;
-
+        public ATS_PathFinder()
+        {
+            //Debug.LogError($"ATS_PathFinder:{this.GetHashCode()}");
+        }
 
         public override void Init(ATS_SandBox iSandBox, ATSI_SandBox iParent)
         {
@@ -311,7 +325,7 @@ namespace ATS
             var aRegion = Region;
             Width = aRegion.Width;
             Height = aRegion.Height;
-
+            //Debug.LogError($"ATS_PathFinder Init:{this.GetHashCode()}");
             RefreshAllPathState();
         }
         public override void GameUpdate()

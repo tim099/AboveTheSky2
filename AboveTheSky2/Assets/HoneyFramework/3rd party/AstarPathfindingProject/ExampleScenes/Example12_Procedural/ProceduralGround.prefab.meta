@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 61432558c555740a38a88fa99d358883
+NativeFormatImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/ExampleScenes/Example12_Procedural/ProceduralGround.prefab
+  uploadId: 187533

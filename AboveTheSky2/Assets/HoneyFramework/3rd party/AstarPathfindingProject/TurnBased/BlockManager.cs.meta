@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: df8c077ca577944689559bb9e97f9576
+timeCreated: 1453722739
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/TurnBased/BlockManager.cs
+  uploadId: 187533

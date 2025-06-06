@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 36ffd708bbb02c44e9b35652d8f025f0
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/OvenAssets/Materials/1MixerShader.shader
+  uploadId: 187533

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 15c1a00768b91406da1023481bb6b04e
+timeCreated: 1454764999
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/ExampleScenes/Example15_2D/2D.unity
+  uploadId: 187533

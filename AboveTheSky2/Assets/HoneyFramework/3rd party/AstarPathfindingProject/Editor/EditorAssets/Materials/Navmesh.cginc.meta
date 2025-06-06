@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1b135520270114849b121a628fe61ba8
+timeCreated: 1472987846
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Editor/EditorAssets/Materials/Navmesh.cginc
+  uploadId: 187533

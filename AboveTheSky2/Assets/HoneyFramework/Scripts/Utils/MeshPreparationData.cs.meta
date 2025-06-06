@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f7505f0882657194ab82b68e1aef125d
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Scripts/Utils/MeshPreparationData.cs
+  uploadId: 187533

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3084bffce0ab3ea4ba88131d21a54f27
+timeCreated: 1432310535
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/ChunkMarkers.prefab
+  uploadId: 187533

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ec73ac2d3bd6342faace3242ff3e6f79
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Editor/ModifierEditors/RaycastModifierEditor.cs
+  uploadId: 187533

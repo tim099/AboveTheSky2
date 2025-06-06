@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 020a780e335ed425d880563ecb66db5e
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/UFTAtlasEditor/Editor/UFTCreatePlane.cs
+  uploadId: 187533

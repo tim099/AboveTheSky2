@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 607c2fe546631ec4aa79ab3020d8478c
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Materials/TerrainDx11Markers.shader
+  uploadId: 187533

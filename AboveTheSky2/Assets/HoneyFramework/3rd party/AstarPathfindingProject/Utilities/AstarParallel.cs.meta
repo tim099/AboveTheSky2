@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d2732cd9dd00b43f181cb3cf438a68e9
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Utilities/AstarParallel.cs
+  uploadId: 187533

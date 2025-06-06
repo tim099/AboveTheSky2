@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d17f79865340a1c4da6ea8bac460081a
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Scripts/RiverFactory.cs
+  uploadId: 187533

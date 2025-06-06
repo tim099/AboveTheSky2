@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e6a8344fd0d1c453cbaf5c5eb8f55ca5
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Core/Misc/ThreadControlQueue.cs
+  uploadId: 187533

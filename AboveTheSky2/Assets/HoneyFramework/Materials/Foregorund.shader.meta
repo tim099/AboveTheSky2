@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 4947560ac2fe12743a079ae1377b224d
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Materials/Foregorund.shader
+  uploadId: 187533

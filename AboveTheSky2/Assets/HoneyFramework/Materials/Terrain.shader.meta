@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: a4b53e37c332d7a4697cbf1031d900e9
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Materials/Terrain.shader
+  uploadId: 187533

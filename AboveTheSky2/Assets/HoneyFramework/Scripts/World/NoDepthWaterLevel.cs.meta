@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8e5e1ca9395ec91488b930f8e547385b
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Scripts/World/NoDepthWaterLevel.cs
+  uploadId: 187533

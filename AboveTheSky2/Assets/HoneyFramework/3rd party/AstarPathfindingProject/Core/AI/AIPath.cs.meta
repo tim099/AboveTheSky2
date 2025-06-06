@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: f6eb1402c17e84a9282a7f0f62eb584f
+timeCreated: 1491225739
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Core/AI/AIPath.cs
+  uploadId: 187533

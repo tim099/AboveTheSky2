@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 93b29ae2f4c9a412b9c9546b80d645f7
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Utilities/LockFreeStack.cs
+  uploadId: 187533

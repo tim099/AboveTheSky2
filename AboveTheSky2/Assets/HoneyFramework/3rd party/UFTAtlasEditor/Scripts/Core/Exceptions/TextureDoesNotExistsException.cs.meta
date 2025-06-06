@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 18733d72493a240cdbaa77e1011b9ba4
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/UFTAtlasEditor/Scripts/Core/Exceptions/TextureDoesNotExistsException.cs
+  uploadId: 187533

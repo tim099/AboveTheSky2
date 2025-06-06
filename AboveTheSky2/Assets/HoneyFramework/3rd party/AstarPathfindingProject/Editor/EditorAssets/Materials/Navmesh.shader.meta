@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 488ff07845673ad43a8ece20763d770d
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Editor/EditorAssets/Materials/Navmesh.shader
+  uploadId: 187533

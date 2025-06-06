@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e888da03e89953e46b3589b694cd72b0
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Scripts/World/HexTools/HexGraph.cs
+  uploadId: 187533

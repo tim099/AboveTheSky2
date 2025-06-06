@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: f5a229b10f2ac8f4b91e68de950b77e9
+NativeFormatImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/ChunkDx11Markers.prefab
+  uploadId: 187533

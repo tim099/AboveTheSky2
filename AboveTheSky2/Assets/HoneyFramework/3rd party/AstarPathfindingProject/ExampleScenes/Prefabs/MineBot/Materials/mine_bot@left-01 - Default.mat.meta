@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 84be6514d56e743dd9b8f1a1fca98f50
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/ExampleScenes/Prefabs/MineBot/Materials/mine_bot@left-01
+    - Default.mat
+  uploadId: 187533

@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: d12a97df81502fd46a9088e799f6880c
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/OvenAssets/Materials/HexOutline.shader
+  uploadId: 187533

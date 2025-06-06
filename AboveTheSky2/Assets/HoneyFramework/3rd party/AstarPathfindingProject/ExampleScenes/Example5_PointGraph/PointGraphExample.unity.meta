@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 1cd57dbb745d9402f97fa830e41cd128
+DefaultImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/ExampleScenes/Example5_PointGraph/PointGraphExample.unity
+  uploadId: 187533

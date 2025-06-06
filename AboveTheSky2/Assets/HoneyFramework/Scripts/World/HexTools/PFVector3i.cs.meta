@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e8fc7875d6fee28478be4f91ecd1a048
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Scripts/World/HexTools/PFVector3i.cs
+  uploadId: 187533

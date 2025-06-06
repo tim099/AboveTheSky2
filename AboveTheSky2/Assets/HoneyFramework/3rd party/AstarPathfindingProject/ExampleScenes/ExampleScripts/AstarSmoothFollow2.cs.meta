@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 46fb00c7e6ad9485282a146ad398a2a5
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/ExampleScenes/ExampleScripts/AstarSmoothFollow2.cs
+  uploadId: 187533

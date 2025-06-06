@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 6c3437ad35206c64a9c138605aa876bf
+timeCreated: 1428773484
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Scripts/Roads.cs
+  uploadId: 187533

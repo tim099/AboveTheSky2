@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f5b34727e6d0b6740a93c983dfa185ac
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Scripts/DataModel/MHSimpleCounter.cs
+  uploadId: 187533

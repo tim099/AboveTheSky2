@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6a634230476dc478b88eceac73b1c8a4
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/ExampleScenes/Example12_Procedural/ProceduralGridMover.cs
+  uploadId: 187533

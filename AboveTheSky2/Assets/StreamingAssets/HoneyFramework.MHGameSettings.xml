@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMHGameSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <MHGameSettings name="" OID="0">
+    <qualitySettings>
+      <QualityOptions>
+        <name>Fantastic</name>
+        <chunkTextureSize>2048</chunkTextureSize>
+      </QualityOptions>
+      <QualityOptions>
+        <name>High Fidelity</name>
+        <chunkTextureSize>2048</chunkTextureSize>
+      </QualityOptions>
+    </qualitySettings>
+    <worldSeed>0</worldSeed>
+    <dx11Mode>true</dx11Mode>
+    <markers>true</markers>
+  </MHGameSettings>
+</ArrayOfMHGameSettings>

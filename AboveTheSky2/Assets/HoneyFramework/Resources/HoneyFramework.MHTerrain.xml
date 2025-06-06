@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMHTerrain xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MHTerrain name="Dirt1_d" OID="1">
+    <mode>normal</mode>
+    <typeList />
+    <diffusePath>Terrain/Ground/Dirt1_d</diffusePath>
+    <heightPath>Terrain/Ground/Dirt1_h</heightPath>
+    <mixerPath>Terrain/Ground/Dirt1_m</mixerPath>
+    <fgTypes>
+      <MHSimpleCounter name="deadtree02" count="5" />
+      <MHSimpleCounter name="deadtree07" count="5" />
+    </fgTypes>
+    <foregroundColor>71792f</foregroundColor>
+  </MHTerrain>
+  <MHTerrain name="Mountain1_d" OID="2">
+    <mode>normal</mode>
+    <typeList />
+    <diffusePath>Terrain/Ground/Mountain1_d</diffusePath>
+    <heightPath>Terrain/Ground/Mountain1_h</heightPath>
+    <mixerPath>Terrain/Ground/Mountain1_m</mixerPath>
+    <fgTypes>
+      <MHSimpleCounter name="tree07" count="7" />
+      <MHSimpleCounter name="tree14" count="17" />
+    </fgTypes>
+    <foregroundColor>71792f</foregroundColor>
+  </MHTerrain>
+  <MHTerrain name="Hill3_d" OID="3">
+    <mode>normal</mode>
+    <typeList />
+    <diffusePath>Terrain/Ground/Hill3_d</diffusePath>
+    <heightPath>Terrain/Ground/Hill3_h</heightPath>
+    <mixerPath>Terrain/Ground/Hill3_m</mixerPath>
+    <fgTypes />
+    <foregroundColor>A39382</foregroundColor>
+  </MHTerrain>
+  <MHTerrain name="Plains1_d" OID="4">
+    <mode>normal</mode>
+    <typeList />
+    <diffusePath>Terrain/Ground/Plains1_d</diffusePath>
+    <heightPath>Terrain/Ground/Common_h</heightPath>
+    <mixerPath>Terrain/Ground/Plains1_m</mixerPath>
+    <fgTypes />
+    <foregroundColor>71792f</foregroundColor>
+  </MHTerrain>
+  <MHTerrain name="Plains1_d" OID="5">
+    <mode>normal</mode>
+    <typeList />
+    <diffusePath>Terrain/Ground/Plains1_d</diffusePath>
+    <heightPath>Terrain/Ground/Common_h</heightPath>
+    <mixerPath>Terrain/Ground/Plains1_m</mixerPath>
+    <fgTypes>
+      <MHSimpleCounter name="tree14" count="15" />
+      <MHSimpleCounter name="tree04" count="30" />
+      <MHSimpleCounter name="tree07" count="40" />
+    </fgTypes>
+    <foregroundColor>71792f</foregroundColor>
+  </MHTerrain>
+  <MHTerrain name="River1_d" OID="6">
+    <mode>IsRiverType</mode>
+    <typeList />
+    <diffusePath>Terrain/Ground/River1_d</diffusePath>
+    <heightPath>Terrain/Ground/River1_h</heightPath>
+    <mixerPath>Terrain/Ground/River1_m</mixerPath>
+    <fgTypes />
+    <foregroundColor>71792f</foregroundColor>
+  </MHTerrain>
+  <MHTerrain name="Sand1_d" OID="7">
+    <mode>IsBorderType</mode>
+    <typeList>
+      <Type>Sea</Type>
+    </typeList>
+    <diffusePath>Terrain/Ground/Sand1_d</diffusePath>
+    <heightPath>Terrain/Ground/Water_h</heightPath>
+    <mixerPath>Terrain/Ground/Water_m</mixerPath>
+    <fgTypes />
+    <foregroundColor>71792f</foregroundColor>
+  </MHTerrain>
+  <MHTerrain name="Marsh1_d" OID="8">
+    <mode>normal</mode>
+    <typeList />
+    <diffusePath>Terrain/Ground/Marsh1_d</diffusePath>
+    <heightPath>Terrain/Ground/Common_h</heightPath>
+    <mixerPath>Terrain/Ground/Marsh1_m</mixerPath>
+    <fgTypes />
+    <foregroundColor>71792f</foregroundColor>
+  </MHTerrain>
+  <MHTerrain name="Plains1_d" OID="9">
+    <mode>normal</mode>
+    <typeList />
+    <diffusePath>Terrain/Ground/Plains1_d</diffusePath>
+    <heightPath>Terrain/Ground/Common_h</heightPath>
+    <mixerPath>Terrain/Ground/Plains1_m</mixerPath>
+    <fgTypes>
+      <MHSimpleCounter name="tree07" count="25" />
+      <MHSimpleCounter name="deadtree02" count="30" />
+    </fgTypes>
+    <foregroundColor>3D5C3E</foregroundColor>
+  </MHTerrain>
+</ArrayOfMHTerrain>

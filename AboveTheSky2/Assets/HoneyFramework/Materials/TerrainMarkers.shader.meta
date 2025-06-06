@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: ef216ca83f519034e962362554c9bf4d
+timeCreated: 1432308815
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Materials/TerrainMarkers.shader
+  uploadId: 187533

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b4ce9f0dfcb7f3c4381f0b21551d92e0
+timeCreated: 1432308815
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Materials/TerrainMarkers.mat
+  uploadId: 187533

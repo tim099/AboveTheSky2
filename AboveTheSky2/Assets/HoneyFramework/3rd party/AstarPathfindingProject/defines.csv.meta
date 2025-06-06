@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 0efbe2d04dbb642a8833e41b8e8c7275
+TextScriptImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/defines.csv
+  uploadId: 187533

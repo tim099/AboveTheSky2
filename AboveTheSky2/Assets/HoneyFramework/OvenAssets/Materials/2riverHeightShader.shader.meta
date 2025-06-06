@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 86e988c44dd051d498dca36bee7e1cc7
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/OvenAssets/Materials/2riverHeightShader.shader
+  uploadId: 187533

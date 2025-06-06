@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 73a1c6ccf0cfd9049a420460c1488a54
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Materials/DrawNormals.shader
+  uploadId: 187533

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6c78a6dd468954643a87ebf0014bc305
+timeCreated: 1442945130
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Editor/EditorAssets/Materials/NavmeshOutline.shader
+  uploadId: 187533

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5c7b8c8c87b600c48bd036add847f634
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Scripts/CharacterActor.cs
+  uploadId: 187533

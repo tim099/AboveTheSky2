@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 9da6b0533dfacc54daceaeec5bff60ba
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Materials/Water.shader
+  uploadId: 187533

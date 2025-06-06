@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 960fd9020b1f74f939fee737c3c0f491
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Core/AstarMath.cs
+  uploadId: 187533

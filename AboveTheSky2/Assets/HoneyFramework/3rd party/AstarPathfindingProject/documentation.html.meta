@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dce0963632ce645668a75aa6d2681d3d
+timeCreated: 1493655662
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/documentation.html
+  uploadId: 187533

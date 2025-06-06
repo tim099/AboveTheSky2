@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 373b52eb9bf8c40f785bb6947a1aee66
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Core/AI/Seeker.cs
+  uploadId: 187533

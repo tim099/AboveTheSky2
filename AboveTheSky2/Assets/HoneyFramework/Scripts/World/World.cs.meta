@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cd32b6b8a78d7844a80dbff54c984f5a
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Scripts/World/World.cs
+  uploadId: 187533

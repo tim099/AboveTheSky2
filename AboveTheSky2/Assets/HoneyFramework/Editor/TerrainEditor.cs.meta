@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 12cbe483b09188948b0a347420c5ad19
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Editor/TerrainEditor.cs
+  uploadId: 187533

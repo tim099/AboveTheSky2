@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 40a4a5de54fff694183072bfc461ece8
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Scripts/Utils/Vector3i.cs
+  uploadId: 187533

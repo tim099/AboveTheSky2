@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 11864e433166f3b4a869fe2600e5264f
+NativeFormatImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/ChunkDx11.prefab
+  uploadId: 187533

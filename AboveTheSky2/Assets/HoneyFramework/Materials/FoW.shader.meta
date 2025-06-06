@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 9961ba954e0c3db488db55eda63f0ffe
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Materials/FoW.shader
+  uploadId: 187533

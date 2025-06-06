@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: edd6db33319e94141bb849f4f58261c3
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Core/Serialization/JsonSerializer.cs
+  uploadId: 187533

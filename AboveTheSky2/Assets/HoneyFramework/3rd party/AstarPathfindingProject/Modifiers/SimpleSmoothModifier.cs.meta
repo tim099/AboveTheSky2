@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cb6a34d769a1e4ac7b0b30e433aa443c
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Modifiers/SimpleSmoothModifier.cs
+  uploadId: 187533

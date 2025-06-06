@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: ab4eeab9df88a4d069163baf60aad496
+timeCreated: 1489745284
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Editor/AIBaseEditor.cs
+  uploadId: 187533

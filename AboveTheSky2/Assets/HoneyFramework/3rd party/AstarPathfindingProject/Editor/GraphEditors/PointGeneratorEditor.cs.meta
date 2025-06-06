@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b563cffdf75ee4497b91d4ac8e106260
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Editor/GraphEditors/PointGeneratorEditor.cs
+  uploadId: 187533

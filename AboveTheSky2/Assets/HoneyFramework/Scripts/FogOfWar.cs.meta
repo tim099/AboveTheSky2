@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7f21e5101c037b64fbb788b8ccdc0675
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Scripts/FogOfWar.cs
+  uploadId: 187533

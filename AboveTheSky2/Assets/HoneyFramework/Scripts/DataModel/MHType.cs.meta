@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c59cfea9184ebf14ea46f26f849a7551
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Scripts/DataModel/MHType.cs
+  uploadId: 187533

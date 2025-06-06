@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: eb4d4eb943bd7b04bbe00e5d67db96ac
+NativeFormatImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/Materials/TerrainDx11.mat
+  uploadId: 187533

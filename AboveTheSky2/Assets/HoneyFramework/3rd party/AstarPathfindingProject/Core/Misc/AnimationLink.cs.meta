@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d2e8b1fd6fa484fc29f8a26fb5e8662b
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Core/Misc/AnimationLink.cs
+  uploadId: 187533

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3850d0dc2bead45568e6b5bbcc011606
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Core/Misc/NodeLink3.cs
+  uploadId: 187533

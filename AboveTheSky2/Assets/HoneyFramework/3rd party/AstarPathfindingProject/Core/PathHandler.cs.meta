@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7cc885607b0534cc6a4a34c4caa58d89
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/AstarPathfindingProject/Core/PathHandler.cs
+  uploadId: 187533

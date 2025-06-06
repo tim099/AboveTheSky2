@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 934d8d438941ed54786b3598395ce3cc
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/OvenAssets/Materials/3ShadowsAndHeightShader.shader
+  uploadId: 187533

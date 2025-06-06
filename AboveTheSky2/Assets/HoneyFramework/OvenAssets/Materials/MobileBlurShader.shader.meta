@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: f9d5fa183cd6b45eeb1491f74863cd91
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/OvenAssets/Materials/MobileBlurShader.shader
+  uploadId: 187533

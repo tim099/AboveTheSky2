@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 219675e13816b234e9816fcebbdb49b3
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/OvenAssets/Materials/RiverSmoothener.shader
+  uploadId: 187533

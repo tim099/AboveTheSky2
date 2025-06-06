@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6cfe3e17bd62a4580bab1d7b8e8898f5
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 21650
+  packageName: Honey Hex Framework
+  packageVersion: 1.5.5
+  assetPath: Assets/HoneyFramework/3rd party/UFTAtlasEditor/Editor/UFTAtlasEditor.cs
+  uploadId: 187533

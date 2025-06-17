@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 namespace ATS
 {
 
-    public class ATS_TestGrid : MonoBehaviour
+    public class ATS_GridMap : MonoBehaviour
     {
         public Grid m_Grid;
         public Tilemap m_Tilemap;
@@ -16,6 +16,7 @@ namespace ATS
         public TMPro.TextMeshPro m_Info;
         public TileBase m_TileBase;
 
+        public ATS_Unit m_UnitTmp;
         void Start()
         {
 
@@ -35,8 +36,9 @@ namespace ATS
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
                 m_TilePosition = m_Tilemap.WorldToCell(worldPosition);
                 m_Tilemap.SetTile(m_TilePosition, m_TileBase);
-                Debug.LogError($"Down mousePosition:{mousePosition}, worldPosition:{worldPosition}, m_TilePosition:{m_TilePosition}");
-                
+                //Debug.LogError($"Down mousePosition:{mousePosition}, worldPosition:{worldPosition}, m_TilePosition:{m_TilePosition}");
+                var unit = Instantiate(m_UnitTmp);
+                unit.transform.position = m_TilePosition;
             }
             if (Input.GetMouseButtonDown(1))
             {
@@ -48,7 +50,7 @@ namespace ATS
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
                 m_TilePosition = m_Tilemap.WorldToCell(worldPosition);
                 m_Tilemap.SetTile(m_TilePosition, null);
-                Debug.LogError($"Down mousePosition:{mousePosition}, worldPosition:{worldPosition}, m_TilePosition:{m_TilePosition}");
+                //Debug.LogError($"Down mousePosition:{mousePosition}, worldPosition:{worldPosition}, m_TilePosition:{m_TilePosition}");
 
             }
             {
@@ -59,7 +61,7 @@ namespace ATS
                 if (tile != null)
                 {
                     info = $"tilePosition:{m_TilePosition}, Tile:{tile.name}";
-                    
+
                 }
                 else
                 {

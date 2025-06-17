@@ -1,4 +1,4 @@
-
+ï»¿
 // ATS_AutoHeader
 // to change the auto header please go to ATS_AutoHeader.cs
 // Create time : 03/09 2024 12:22
@@ -9,7 +9,7 @@ using UnityEngine;
 namespace ATS
 {
     /// <summary>
-    /// ­t³d³B²z¦a¹Ï¬ÛÃöÅŞ¿è
+    /// è² è²¬è™•ç†åœ°åœ–ç›¸é—œé‚è¼¯
     /// </summary>
     public class ATS_MapService : UCL.Core.Game.UCL_GameService
     {

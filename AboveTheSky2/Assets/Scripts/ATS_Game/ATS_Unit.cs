@@ -18,5 +18,13 @@ namespace ATS
         {
         
         }
+        //private void OnCollisionEnter(Collision collision)
+        //{
+        //    Debug.LogError($"OnCollisionEnter collision:{collision.collider.name}");
+        //}
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            Debug.LogError($"OnCollisionEnter2D collision:{collision.collider.name}");
+        }
     }
 }

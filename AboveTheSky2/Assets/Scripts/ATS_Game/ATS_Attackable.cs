@@ -13,7 +13,19 @@ namespace ATS
     {
         public static List<ATS_Attackable> s_Attackables = new();
 
+        public ATS_HPBar m_HPBar;
 
+        public Transform m_Center;
+
+
+        public Vector3 Center
+        {
+            get
+            {
+                if (m_Center != null) return m_Center.position;
+                return transform.position;
+            }
+        }
         /// <summary>
         /// 陣營
         /// </summary>
@@ -34,6 +46,21 @@ namespace ATS
         virtual protected void OnDestroy()
         {
             s_Attackables.Remove(this);
+        }
+
+        virtual public void OnHit(int damage)
+        {
+            m_HP -= damage;
+            if (m_HP <= 0)//die
+            {
+                m_HP = 0;
+                GameObject.Destroy(gameObject);
+                return;
+            }
+            if (m_HPBar != null)
+            {
+                m_HPBar.UpdateHP(m_HP, m_MaxHP);
+            }
         }
     }
 }

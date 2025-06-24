@@ -2,8 +2,6 @@
 // ATS_AutoHeader
 // to change the auto header please go to ATS_AutoHeader.cs
 
-// ATS_AutoHeader
-// to change the auto header please go to ATS_AutoHeader.cs
 using System.Collections.Generic;
 using UnityEngine;
 

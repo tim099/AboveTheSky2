@@ -30,17 +30,24 @@ namespace ATS
                 m_CurCoolDown -= Time.deltaTime;
                 return;
             }
-
-            foreach(var target in ATS_Attackable.s_Attackables)
+            var target = ATS_Attackable.FindEnemy(Faction);
+            if (target != null)
             {
-                if(target.m_Faction != Faction)
-                {
-                    //Fire
-                    m_CurCoolDown = m_CoolDown;
-                    var bullet = Instantiate(m_Bullet);
-                    bullet.Init(this, target);
-                }
+                //Fire
+                m_CurCoolDown = m_CoolDown;
+                var bullet = Instantiate(m_Bullet);
+                bullet.Init(this, target);
             }
+            //foreach (var target in ATS_Attackable.s_Attackables)
+            //{
+            //    if(target.m_Faction != Faction)
+            //    {
+            //        //Fire
+            //        m_CurCoolDown = m_CoolDown;
+            //        var bullet = Instantiate(m_Bullet);
+            //        bullet.Init(this, target);
+            //    }
+            //}
 
 
         }
